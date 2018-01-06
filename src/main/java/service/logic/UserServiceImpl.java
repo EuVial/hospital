@@ -33,6 +33,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLoginAndPassword(String login, String password) throws ServiceException {
+        try {
+            return userDao.readByLoginAndPassword(login, password);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public List<User> findAll() throws ServiceException {
         try {
             return userDao.getAll();

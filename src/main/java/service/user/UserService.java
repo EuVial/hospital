@@ -15,4 +15,6 @@ public interface UserService {
     boolean canDelete(User user) throws ServiceException;
 
     void delete(User user) throws ServiceException;
+
+    User findByLoginAndPassword(String login, String password) throws ServiceException;
 }

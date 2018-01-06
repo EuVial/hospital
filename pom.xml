@@ -106,17 +106,6 @@
                             <includes>resources_ru.properties</includes>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>native2ascii-utf8-email</id>
-                        <goals>
-                            <goal>native2ascii</goal>
-                        </goals>
-                        <configuration>
-                            <dest>target/resources/email</dest>
-                            <src>src/main/templates/email</src>
-                            <encoding>UTF8</encoding>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>
