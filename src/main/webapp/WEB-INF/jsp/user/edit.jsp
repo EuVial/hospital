@@ -70,6 +70,7 @@
             </c:forEach>
         </select>
 
+            <%--TODO: ADD PASSWORD RESET BUTTON--%>
         <button class="save"><fmt:message key="user.edit.button.save"/></button>
 
         <c:if test="${not empty user.id}">

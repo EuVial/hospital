@@ -23,6 +23,7 @@
             <td>&nbsp;</td>
         </tr>
         <%--<jsp:useBean id="users" scope="request" type="java.util.List"/>--%>
+        <%--TODO: delete current logged user from list--%>
         <c:forEach var="user" items="${users}">
             <tr>
                 <td class="content">${user.login}</td>

@@ -1,9 +1,6 @@
 package controller;
 
-import controller.patient.PatientDeleteAction;
-import controller.patient.PatientEditAction;
-import controller.patient.PatientListAction;
-import controller.patient.PatientSaveAction;
+import controller.patient.*;
 import controller.user.UserDeleteAction;
 import controller.user.UserEditAction;
 import controller.user.UserListAction;
@@ -31,6 +28,7 @@ public class ActionFactory {
         actions.put("/patient/edit", PatientEditAction.class);
         actions.put("/patient/save", PatientSaveAction.class);
         actions.put("/patient/delete", PatientDeleteAction.class);
+        actions.put("/patient/view", PatientViewAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {
