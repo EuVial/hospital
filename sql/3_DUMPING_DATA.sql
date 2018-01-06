@@ -49,9 +49,9 @@ VALUES
 INSERT INTO `type`
 (id, title)
 VALUES
-  (1,'medicament'),
-  (2,'procedure'),
-  (3,'surgery');
+  (0,'medicament'),
+  (1,'procedure'),
+  (2,'surgery');
 
 --
 -- Dumping data for table `role_type`
@@ -59,14 +59,14 @@ VALUES
 INSERT INTO `role_type`
 (id, role_id, type_id, allow)
 VALUES
-  (1,1,1,'PERFORM'),
-  (2,1,2,'PERFORM'),
-  (3,1,3,'PERFORM'),
-  (4,1,1,'ASSIGN'),
-  (5,1,2,'ASSIGN'),
-  (6,1,3,'ASSIGN'),
-  (7,2,1,'PERFORM'),
-  (8,2,2,'PERFORM');
+  (1,1,0,'PERFORM'),
+  (2,1,1,'PERFORM'),
+  (3,1,2,'PERFORM'),
+  (4,1,0,'ASSIGN'),
+  (5,1,1,'ASSIGN'),
+  (6,1,2,'ASSIGN'),
+  (7,2,0,'PERFORM'),
+  (8,2,1,'PERFORM');
 
 --
 -- Dumping data for table `user`
