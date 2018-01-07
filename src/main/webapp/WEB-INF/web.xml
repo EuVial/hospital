@@ -6,7 +6,7 @@
          metadata-complete="true">
 
     <!--display name-->
-    <display-name>Больница "Ходоки"</display-name>
+    <display-name>Больница</display-name>
 
     <!--context parameters-->
     <context-param>

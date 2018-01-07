@@ -37,9 +37,9 @@ public class SecurityFilter implements Filter {
 
         permissions.put("/patient/list", employees);
         permissions.put("/patient/view", employees);
-        permissions.put("/patient/edit", employees);
-        permissions.put("/patient/save", employees);
 
+        permissions.put("/patient/edit", doctor);
+        permissions.put("/patient/save", doctor);
         permissions.put("/patient/delete", doctor);
     }
 

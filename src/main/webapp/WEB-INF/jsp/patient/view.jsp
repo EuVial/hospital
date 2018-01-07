@@ -29,7 +29,11 @@
     <c:url var="urlPatientEdit" value="/patient/edit.html">
         <c:param name="id" value="${patient.id}"/>
     </c:url>
-    <a href="${urlPatientEdit}" class="edit-button"><fmt:message key="patient.view.button.edit"/></a>
+
+    <c:if test="${currentUser.role eq 'DOCTOR'}">
+        <a href="${urlPatientEdit}" class="edit-button"><fmt:message key="patient.view.button.edit"/></a>
+    </c:if>
+
     <c:url var="urlPatientList" value="/patient/list.html"/>
     <a href="${urlPatientList}" class="back"><fmt:message key="patient.view.button.cancel"/></a>
     <%--<h3><fmt:message key="patient.view.subtitle"/></h3>--%>

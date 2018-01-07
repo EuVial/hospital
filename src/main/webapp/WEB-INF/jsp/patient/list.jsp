@@ -34,6 +34,8 @@
             </tr>
         </c:forEach>
     </table>
-    <c:url var="urlPatientEdit" value="/patient/edit.html"/>
-    <a href="${urlPatientEdit}" class="add-button"><fmt:message key="patient.list.button.add"/></a>
+    <c:if test="${currentUser.role eq 'DOCTOR'}">
+        <c:url var="urlPatientEdit" value="/patient/edit.html"/>
+        <a href="${urlPatientEdit}" class="add-button"><fmt:message key="patient.list.button.add"/></a>
+    </c:if>
 </u:html>
