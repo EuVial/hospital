@@ -14,6 +14,7 @@
     <form action="${urlLogin}" method="post">
         <label for="login"><fmt:message key="login.form.login"/>:</label>
         <input id="login" name="login">
+            <%--TODO: hide password symbols while printing--%>
         <label for="password"><fmt:message key="login.form.password"/>:</label>
         <input id="password" name="password">
         <button class="login"><fmt:message key="login.button.login"/></button>

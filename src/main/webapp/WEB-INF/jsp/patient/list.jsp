@@ -34,6 +34,6 @@
             </tr>
         </c:forEach>
     </table>
-    <c:url var="urlPatientView" value="/patient/view.html"/>
-    <a href="${urlPatientView}" class="add-button"><fmt:message key="patient.list.button.add"/></a>
+    <c:url var="urlPatientEdit" value="/patient/edit.html"/>
+    <a href="${urlPatientEdit}" class="add-button"><fmt:message key="patient.list.button.add"/></a>
 </u:html>
