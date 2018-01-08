@@ -44,9 +44,9 @@ VALUES
   (2,'nurse');
 
 --
--- Dumping data for table `type`
+-- Dumping data for table `treatment_type`
 --
-INSERT INTO `type`
+INSERT INTO `treatment_type`
 (id, title)
 VALUES
   (0,'medicament'),
@@ -54,10 +54,10 @@ VALUES
   (2,'surgery');
 
 --
--- Dumping data for table `role_type`
+-- Dumping data for table `role_treatment_type`
 --
-INSERT INTO `role_type`
-(id, role_id, type_id, allow)
+INSERT INTO `role_treatment_type`
+(id, role_id, treatment_type_id, allow)
 VALUES
   (1,1,0,'PERFORM'),
   (2,1,1,'PERFORM'),
