@@ -1,6 +1,6 @@
 package service;
 
-import dao.entity.Entity;
+import domain.Entity;
 
 import java.util.List;
 

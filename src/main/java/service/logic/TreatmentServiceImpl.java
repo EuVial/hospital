@@ -1,7 +1,7 @@
 package service.logic;
 
 import dao.PersistException;
-import dao.entity.patient.Treatment;
+import domain.patient.Treatment;
 import dao.mysql.patient.MySqlTreatmentDao;
 import service.EntityNotExistsException;
 import service.ServiceException;

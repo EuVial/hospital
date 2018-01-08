@@ -1,4 +1,4 @@
-package dao.entity.user;
+package domain.user;
 
 public enum UserRole {
     ADMIN("role.admin"),

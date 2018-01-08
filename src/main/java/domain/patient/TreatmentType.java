@@ -1,4 +1,4 @@
-package dao.entity.patient;
+package domain.patient;
 
 public enum  TreatmentType {
     MEDICAMENT("treatment.medicament"),

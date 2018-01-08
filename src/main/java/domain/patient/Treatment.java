@@ -1,8 +1,8 @@
-package dao.entity.patient;
+package domain.patient;
 
 import dao.Identified;
-import dao.entity.Entity;
-import dao.entity.user.User;
+import domain.Entity;
+import domain.user.User;
 
 public class Treatment extends Entity implements Identified<Integer> {
     private String title;

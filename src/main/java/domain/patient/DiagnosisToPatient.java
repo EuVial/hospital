@@ -1,12 +1,13 @@
-package dao.entity.patient;
+package domain.patient;
 
-import dao.entity.Entity;
+import domain.Entity;
 
 import java.util.Date;
 
 public class DiagnosisToPatient extends Entity {
     private Patient patient;
     private Diagnosis diagnosis;
+    //TODO: consultationDate might be deleted?
     private Date consultationDate;
 
     public Patient getPatient() {

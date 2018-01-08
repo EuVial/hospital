@@ -1,6 +1,6 @@
 package service.user;
 
-import dao.entity.user.User;
+import domain.user.User;
 import service.EntityService;
 import service.ServiceException;
 

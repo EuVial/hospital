@@ -1,4 +1,4 @@
-package dao.entity;
+package domain;
 
 import java.io.Serializable;
 

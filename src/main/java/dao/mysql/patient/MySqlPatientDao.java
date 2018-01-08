@@ -1,7 +1,7 @@
 package dao.mysql.patient;
 
 import dao.PersistException;
-import dao.entity.patient.Patient;
+import domain.patient.Patient;
 import dao.mysql.AbstractJDBCDao;
 import org.apache.log4j.Logger;
 

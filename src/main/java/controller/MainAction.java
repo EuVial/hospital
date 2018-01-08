@@ -1,6 +1,6 @@
 package controller;
 
-import dao.entity.user.User;
+import domain.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

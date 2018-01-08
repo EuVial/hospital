@@ -1,7 +1,7 @@
 package dao.mysql.user;
 
-import dao.entity.user.User;
-import dao.entity.user.UserRole;
+import domain.user.User;
+import domain.user.UserRole;
 import dao.mysql.AbstractJDBCDao;
 import dao.PersistException;
 import org.apache.log4j.Logger;

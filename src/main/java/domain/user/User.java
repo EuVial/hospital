@@ -1,7 +1,7 @@
-package dao.entity.user;
+package domain.user;
 
 import dao.Identified;
-import dao.entity.Entity;
+import domain.Entity;
 
 public class User extends Entity implements Identified<Integer> {
     private Integer id = null;

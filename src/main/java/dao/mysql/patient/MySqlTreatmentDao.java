@@ -1,10 +1,10 @@
 package dao.mysql.patient;
 
 import dao.PersistException;
-import dao.entity.patient.DiagnosisToPatient;
-import dao.entity.patient.Treatment;
-import dao.entity.patient.TreatmentType;
-import dao.entity.user.User;
+import domain.patient.DiagnosisToPatient;
+import domain.patient.Treatment;
+import domain.patient.TreatmentType;
+import domain.user.User;
 import dao.mysql.AbstractJDBCDao;
 import org.apache.log4j.Logger;
 

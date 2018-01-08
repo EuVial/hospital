@@ -2,8 +2,8 @@ package controller.user;
 
 import controller.Action;
 import controller.Forward;
-import dao.entity.user.User;
-import dao.entity.user.UserRole;
+import domain.user.User;
+import domain.user.UserRole;
 import service.ServiceException;
 import service.user.UserService;
 import util.FactoryException;

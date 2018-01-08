@@ -2,7 +2,7 @@ package controller.patient;
 
 import controller.Action;
 import controller.Forward;
-import dao.entity.patient.Patient;
+import domain.patient.Patient;
 import service.ServiceException;
 import service.patient.PatientService;
 import util.FactoryException;

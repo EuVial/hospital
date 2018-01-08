@@ -1,7 +1,7 @@
 package controller;
 
-import dao.entity.user.User;
-import dao.entity.user.UserRole;
+import domain.user.User;
+import domain.user.UserRole;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

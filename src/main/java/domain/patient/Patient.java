@@ -1,7 +1,7 @@
-package dao.entity.patient;
+package domain.patient;
 
 import dao.Identified;
-import dao.entity.Entity;
+import domain.Entity;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package controller;
 
-import dao.entity.user.User;
+import domain.user.User;
 import service.ServiceException;
 import service.user.UserService;
 import util.FactoryException;

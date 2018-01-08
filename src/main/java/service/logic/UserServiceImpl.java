@@ -1,6 +1,6 @@
 package service.logic;
 
-import dao.entity.user.User;
+import domain.user.User;
 import dao.mysql.user.MySqlUserDao;
 import dao.PersistException;
 import service.ServiceException;
