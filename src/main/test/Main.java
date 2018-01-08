@@ -1,9 +1,9 @@
 import dao.Dao;
-import dao.datasource.DataSource;
-import dao.entity.user.User;
-import dao.entity.user.UserRole;
-import dao.mysql.user.MySqlUserDao;
 import dao.PersistException;
+import dao.datasource.DataSource;
+import dao.mysql.user.MySqlUserDao;
+import domain.user.User;
+import domain.user.UserRole;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@
 <fmt:setBundle basename="resources"/>
 
 <c:if test="${empty patient}">
-    <jsp:useBean id="patient" class="dao.entity.patient.Patient"/>
+    <jsp:useBean id="patient" class="domain.patient.Patient"/>
 </c:if>
 <c:choose>
     <c:when test="${not empty patient.id}">
