@@ -12,23 +12,89 @@
     <title>${title}</title>
     <c:url var="urlCss" value="/spectre.css"/>
     <link href="${urlCss}" rel="stylesheet">
+    <c:url var="urlCss2" value="/spectre-exp.css"/>
+    <link href="${urlCss2}" rel="stylesheet">
+    <c:url var="urlCss3" value="/docs.css"/>
+    <link href="${urlCss3}" rel="stylesheet">
 </head>
     <body>
-        <div class="column col-4 col-xs-12">
-
-        </div>
+        <%--<div class="docs-container off-canvas off-canvas-sidebar-show">--%>
+            <%--<div id="sidebar" class="docs-sidebar off-canvas-sidebar">--%>
+                <%--<div class="docs-nav">--%>
         <div class="columns">
-            <h3><fmt:message key="application.title"/></h3>
-            <c:if test="${not empty currentUser}">
-                <c:url var="urlLogout" value="/logout.html"/>
-                <div class="column col-2">
-                    <fmt:message key="application.welcome"/> ${currentUser.login} (<fmt:message key="${currentUser.role.name}"/>).
-                    <a href="${urlLogout}">
-                        <fmt:message key="application.button.logout"/>
-                    </a>
-                </div>
-            </c:if>
-            <jsp:doBody/>
+            <div class="column col-2 col-ml-auto">
+                <ul class="menu">
+                    <li class="menu-item">
+                        <div class="tile tile-centered">
+                            <div class="tile-icon">
+                                <c:choose>
+                                    <c:when test="${currentUser.role eq 'ADMIN'}">
+                                        <img src="../../img/avatars/admin.png" class="avatar avatar-xl" alt="admin logo">
+                                    </c:when>
+                                    <c:when test="${currentUser.role eq 'DOCTOR'}">
+                                        <img src="../../img/avatars/nurse.png" class="avatar avatar-xl" alt="doctor logo">
+                                    </c:when>
+                                    <c:when test="${currentUser.role eq 'NURSE'}">
+                                        <img src="../../img/avatars/doctor.png" class="avatar avatar-xl" alt="nurse logo">
+                                    </c:when>
+                                </c:choose>
+                            </div>
+                            <div class="tile-content">${currentUser.login}<br/>
+                                <fmt:message key="${currentUser.role.name}"/><br/>
+                                <%--<c:url var="urlLogout" value="/logout.html"/>--%>
+                                <%--<a href="${urlLogout}">--%>
+                                    <%--<img src="../../img/action/logout.png" class="avatar" alt="logout">--%>
+                                <%--</a>--%>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li class="menu-item">
+                        <c:choose>
+                            <c:when test="${currentUser.role eq 'ADMIN'}">
+                                <c:url var="urlUserList" value="/user/list.html"/>
+                                <a href="${urlUserList}"><fmt:message key="user.list.title"/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <c:url var="urlPatientList" value="/patient/list.html"/>
+                                <a href="${urlPatientList}"><fmt:message key="patient.list.title"/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+
+                    <li class="menu-item">
+                        <c:choose>
+                            <c:when test="${currentUser.role eq 'ADMIN'}">
+                                <c:url var="urlUserEdit" value="/user/edit.html"/>
+                                <a href="${urlUserEdit}"><fmt:message key="user.edit.title.add"/></a>
+                            </c:when>
+                            <c:otherwise>
+                                <c:url var="urlPatientEdit" value="/patient/edit.html"/>
+                                <a href="${urlPatientEdit}"><fmt:message key="patient.edit.title.add"/></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li class="menu-item">
+                        <c:url var="urlLogout" value="/logout.html"/>
+                        <a href="${urlLogout}">
+                            <fmt:message key="application.button.logout"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="column col-6 col-mr-auto">
+                <%--<div id="content" class="docs-content off-canvas-content">--%>
+                <jsp:doBody/>
+            </div>
         </div>
+                <%--</div>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
     </body>
 </html>

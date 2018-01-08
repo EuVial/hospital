@@ -31,7 +31,7 @@
             <%--</div>--%>
         <%--</c:if>--%>
         <div class="columns">
-            <div class="column col-12">
+            <div class="column col-xs-12">
                 <div class="empty">
                     <div class="form-group">
                         <h4><fmt:message key="application.title"/></h4>
@@ -42,7 +42,7 @@
                         </i>
                     </div>
 
-                    <div class="column col-4 col-mx-auto">
+                    <div class="column col-2 col-mx-auto">
                         <jsp:doBody/>
                     </div>
                 </div>

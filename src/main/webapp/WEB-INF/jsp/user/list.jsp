@@ -12,14 +12,14 @@
 <fmt:message key="user.list.title" var="application.title"/>
 
 <u:html title="${title}">
-    <h2>${application.title}</h2>
+    <h4>${application.title}</h4>
     <table class="table table-striped">
         <thead>
             <tr>
-                <th><fmt:message key="user.list.table.login"/></th>
-                <th><fmt:message key="user.list.table.firstname"/></th>
-                <th><fmt:message key="user.list.table.lastname"/></th>
-                <th><fmt:message key="user.list.table.role"/></th>
+                <td><fmt:message key="user.list.table.login"/></td>
+                <td><fmt:message key="user.list.table.firstname"/></td>
+                <td><fmt:message key="user.list.table.lastname"/></td>
+                <td><fmt:message key="user.list.table.role"/></td>
                 <%--<th>Специализация</th>--%>
                 <td>&nbsp;</td>
             </tr>
