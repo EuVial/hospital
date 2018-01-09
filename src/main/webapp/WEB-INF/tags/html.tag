@@ -5,23 +5,45 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+<%--<c:set var="language" value="${pageContext.request.locale.language}"/>--%>
+
+<%--<c:out value="${pageContext.request.locale.language}"/>--%>
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>${title}</title>
-    <c:url var="urlCss" value="/spectre.css"/>
-    <link href="${urlCss}" rel="stylesheet">
-    <c:url var="urlCss2" value="/spectre-exp.css"/>
-    <link href="${urlCss2}" rel="stylesheet">
-    <c:url var="urlCss3" value="/docs.css"/>
-    <link href="${urlCss3}" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>${title}</title>
+        <c:url var="urlCss" value="/spectre.css"/>
+        <link href="${urlCss}" rel="stylesheet">
+        <c:url var="urlCss2" value="/spectre-exp.css"/>
+        <link href="${urlCss2}" rel="stylesheet">
+        <c:url var="urlCss3" value="/docs.css"/>
+        <link href="${urlCss3}" rel="stylesheet">
+        <c:url var="urlCss4" value="/spectre-icons.css"/>
+        <link href="${urlCss4}" rel="stylesheet">
+    </head>
     <body>
-        <%--<div class="docs-container off-canvas off-canvas-sidebar-show">--%>
-            <%--<div id="sidebar" class="docs-sidebar off-canvas-sidebar">--%>
-                <%--<div class="docs-nav">--%>
+        <%--<div class="docs-navbar">--%>
+            <%--<c:choose>--%>
+                <%--<c:when test="${pageContext.request.locale.language eq 'ru'}">--%>
+                    <%--<c:set var="language" value="en"/>--%>
+                <%--</c:when>--%>
+                <%--<c:when test="${pageContext.request.locale.language eq 'en'}">--%>
+                    <%--<c:set var="language" value="ru"/>--%>
+                <%--</c:when>--%>
+                <%--<c:otherwise>--%>
+                    <%--<c:set var="language" value="unk"/>--%>
+                <%--</c:otherwise>--%>
+            <%--</c:choose>--%>
+            <%--<a href="<fmt:setLocale value="${language}" scope="session"/>">--%>
+                <%--<button class="btn btn-link">--%>
+                    <%--${language}--%>
+                <%--</button>--%>
+            <%--</a>--%>
+        <%--</div>--%>
+
         <div class="columns">
+
             <div class="column col-2 col-ml-auto">
                 <ul class="menu">
                     <li class="menu-item">
@@ -32,10 +54,10 @@
                                         <img src="../../img/avatars/admin.png" class="avatar avatar-xl" alt="admin logo">
                                     </c:when>
                                     <c:when test="${currentUser.role eq 'DOCTOR'}">
-                                        <img src="../../img/avatars/nurse.png" class="avatar avatar-xl" alt="doctor logo">
+                                        <img src="../../img/avatars/doctor.png" class="avatar avatar-xl" alt="doctor logo">
                                     </c:when>
                                     <c:when test="${currentUser.role eq 'NURSE'}">
-                                        <img src="../../img/avatars/doctor.png" class="avatar avatar-xl" alt="nurse logo">
+                                        <img src="../../img/avatars/nurse.png" class="avatar avatar-xl" alt="nurse logo">
                                     </c:when>
                                 </c:choose>
                             </div>

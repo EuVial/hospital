@@ -100,10 +100,10 @@
                             <goal>native2ascii</goal>
                         </goals>
                         <configuration>
-                            <dest>target/resources</dest>
-                            <src>src/main/resources</src>
+                            <dest>target/messages</dest>
+                            <src>src/main/messages</src>
                             <encoding>UTF8</encoding>
-                            <includes>resources_ru.properties</includes>
+                            <!--<includes>resources_ru.properties</includes>-->
                         </configuration>
                     </execution>
                 </executions>

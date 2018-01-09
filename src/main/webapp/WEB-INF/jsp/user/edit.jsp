@@ -4,8 +4,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<fmt:setLocale value="${sessionScope.language}"/>
-<fmt:setBundle basename="resources"/>
 
 <c:if test="${empty user}">
     <jsp:useBean id="user" class="domain.user.User"/>
@@ -20,75 +18,96 @@
 </c:choose>
 
 <u:html title="${title}">
-    <h2>${title}</h2>
-    <c:url var="urlUserList" value="/user/list.html"/>
-    <c:url var="urlUserSave" value="/user/save.html"/>
-    <c:url var="urlUserDelete" value="/user/delete.html"/>
-    <form action="${urlUserSave}" method="post">
-        <c:if test="${not empty user.id}">
-            <input name="id" value="${user.id}" type="hidden">
-        </c:if>
-        <label for="login"><fmt:message key="user.edit.form.login"/>:</label>
-        <input id="login" name="login" value="${user.login}">
+    <h4>${title}</h4>
+    <div class="columns">
+        <div class="column col-12">
+            <c:url var="urlUserList" value="/user/list.html"/>
+            <c:url var="urlUserSave" value="/user/save.html"/>
+            <c:url var="urlUserDelete" value="/user/delete.html"/>
+            <form class="form-horizontal" action="${urlUserSave}" method="post">
+                <c:if test="${not empty user.id}">
+                    <input name="id" value="${user.id}" type="hidden">
+                </c:if>
 
-        <label for="first_name"><fmt:message key="user.edit.form.firstname"/>:</label>
-        <input id="first_name" name="first_name" value="${user.firstName}">
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="login"><fmt:message key="user.edit.form.login"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="login" name="login" placeholder="<fmt:message key="user.edit.form.login"/>" value="${user.login}">
+                    </div>
+                </div>
 
-        <label for="last_name"><fmt:message key="user.edit.form.lastname"/>:</label>
-        <input id="last_name" name="last_name" value="${user.lastName}">
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="first_name"><fmt:message key="user.edit.form.firstname"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="first_name" name="first_name" placeholder="<fmt:message key="user.edit.form.firstname"/>" value="${user.firstName}">
+                    </div>
+                </div>
 
-        <%--<label for="specialization">Специализация пользователя:</label>--%>
-        <%--<select id="specialization" name="specialization">--%>
-               <%--value="${user.specialization.title}">--%>
-            <%--<c:forEach var="specialization" items="${specializations}">--%>
-                <%--<c:choose>--%>
-                    <%--<c:when test="${specialization.id == user.specialization.id}">--%>
-                        <%--<c:set var="selected" value="selected"/>--%>
-                    <%--</c:when>--%>
-                    <%--<c:otherwise>--%>
-                        <%--<c:remove var="selected"/>--%>
-                    <%--</c:otherwise>--%>
-                <%--</c:choose>--%>
-                <%--<option value="${specialization.id}" ${selected}>${specialization.title}</option>--%>
-            <%--</c:forEach>--%>
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="last_name"><fmt:message key="user.edit.form.lastname"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="last_name" name="last_name" placeholder="<fmt:message key="user.edit.form.lastname"/>" value="${user.lastName}">
+                    </div>
+                </div>
 
-        <label for="role">
-            <fmt:message key="user.edit.form.role"/>:
-        </label>
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label">
+                    <fmt:message key="user.edit.form.role"/>:
+                        </label>
+                    </div>
+                    <div class="col-5">
+                            <c:forEach var="role" items="${roles}">
+                                <c:choose>
+                                    <c:when test="${role.id == user.role.id}">
+                                        <c:set var="checked" value="checked"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:remove var="checked"/>
+                                    </c:otherwise>
+                                </c:choose>
 
-        <select id="role" name="role">
-            <c:forEach var="role" items="${roles}">
-                <c:choose>
-                    <c:when test="${role.id == user.role.id}">
-                        <c:set var="selected" value="selected"/>
-                    </c:when>
-                    <c:otherwise>
-                        <c:remove var="selected"/>
-                    </c:otherwise>
-                </c:choose>
-                <option value="${role.id}" ${selected}>${role.name}</option>
-            </c:forEach>
-        </select>
+                                <label class="form-radio">
+                                    <input type="radio" value="${role.id}" name="role" ${checked}>
+                                    <i class="form-icon"></i> <fmt:message key="${role.name}"/>
+                                    <%--<option value="${role.id}" ${checked}>${role.name}</option>--%>
+                                </label>
+                            </c:forEach>
+                    </div>
+                </div>
+                    <%--TODO: ADD PASSWORD RESET BUTTON--%>
+                <button class="btn btn-primary btn-action btn-lg">
+                    <%--<fmt:message key="user.edit.button.save"/>--%>
+                    <i class="icon icon-check"></i>
+                </button>
 
-            <%--TODO: ADD PASSWORD RESET BUTTON--%>
-        <button class="save"><fmt:message key="user.edit.button.save"/></button>
+                <c:if test="${not empty user.id}">
+                    <c:if test="${not userCanBeDeleted}">
+                        <c:set var="disabled" value="disabled"/>
+                    </c:if>
 
-        <c:if test="${not empty user.id}">
-            <c:if test="${not userCanBeDeleted}">
-                <c:set var="disabled" value="disabled"/>
-            </c:if>
+                    <button class="btn btn-primary btn-action btn-lg" formaction="${urlUserDelete}" formmethod="post" ${disabled}>
+                        <%--<fmt:message key="user.edit.button.delete"/>--%>
+                        <i class="icon icon-delete"></i>
+                    </button>
+                </c:if>
 
-            <button class="delete" formaction="${urlUserDelete}" formmethod="post" ${disabled}>
-                <fmt:message key="user.edit.button.delete"/>
-            </button>
-        </c:if>
+                <button class="btn btn-primary btn-action btn-lg" type="reset">
+                    <i class="icon icon-refresh"></i>
+                    <%--<fmt:message key="user.edit.button.reset"/>--%>
+                </button>
 
-        <button class="reset" type="reset">
-            <fmt:message key="user.edit.button.reset"/>
-        </button>
-
-        <button class="back" formaction="${urlUserList}" formmethod="get">
-            <fmt:message key="user.edit.button.cancel"/>
-        </button>
-    </form>
+                <button class="btn btn-primary btn-action btn-lg" formaction="${urlUserList}" formmethod="get">
+                    <i class="icon icon-back"></i>
+                    <%--<fmt:message key="user.edit.button.cancel"/>--%>
+                </button>
+            </form>
+        </div>
+    </div>
 </u:html>

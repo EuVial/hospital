@@ -11,7 +11,7 @@
     <!--context parameters-->
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-        <param-value>resources</param-value>
+        <param-value>messages</param-value>
     </context-param>
 
     <!--servlets-->
