@@ -12,11 +12,11 @@
 
 <u:html title="${title}">
 
-    <h4>${application.title}</h4>
     <c:if test="${not empty user.id}">
         <input name="id" value="${user.id}" type="hidden">
     </c:if>
     <div class="container">
+        <%--<h4 class="s-title text-center">${title}</h4>--%>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>

@@ -9,11 +9,8 @@
 
 <fmt:message key="patient.list.title" var="title"/>
 
-<fmt:message key="patient.list.title" var="application.title"/>
-
 <u:html title="${title}">
-
-    <h4>${application.title}</h4>
+    <%--<h4 class="s-title text-center">${title}</h4>--%>
     <c:if test="${not empty user.id}">
         <input name="id" value="${user.id}" type="hidden">
     </c:if>
