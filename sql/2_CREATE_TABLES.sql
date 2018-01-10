@@ -25,23 +25,6 @@ CREATE TABLE `diagnosis` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `patient_diagnosis`
---
-
-DROP TABLE IF EXISTS `patient_diagnosis`;
-CREATE TABLE `patient_diagnosis` (
-  `id` int(11) NOT NULL,
-  `patient_id` int(11) NOT NULL,
-  `diagnosis_id` int(11) NOT NULL,
-  `consultation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `patient_fkey_idx` (`patient_id`),
-  KEY `diagnosis_fkey_idx` (`diagnosis_id`),
-  CONSTRAINT `diagnosis_fkey` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`id`),
-  CONSTRAINT `patient_fkey` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Table structure for table `role`
 --
 
@@ -97,6 +80,26 @@ CREATE TABLE `user` (
   KEY `user_idx_role` (`role_id`),
   CONSTRAINT `user_role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `patient_diagnosis`
+--
+
+DROP TABLE IF EXISTS `patient_diagnosis`;
+CREATE TABLE `patient_diagnosis` (
+  `id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `diagnosis_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,
+  `consultation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `patient_diagnosis_idx_patient` (`patient_id`),
+  KEY `patient_diagnosis_idx_diagnosis` (`diagnosis_id`),
+  KEY `patient_diagnosis_idx_user` (`doctor_id`),
+  CONSTRAINT `diagnosis_id_fkey` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`id`),
+  CONSTRAINT `patient_id_fkey` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`),
+  CONSTRAINT `user_id_fkey` FOREIGN KEY (`doctor_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Table structure for table `treatment`

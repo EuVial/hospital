@@ -26,14 +26,6 @@ VALUES
   (10,'fracture of the spine');
 
 --
--- Dumping data for table `patient_diagnosis`
---
-INSERT INTO `patient_diagnosis`
-(id, patient_id, diagnosis_id, consultation_date)
-VALUES
-  (1,1,1,'2010-01-20 16:00:00');
-
---
 -- Dumping data for table `role`
 --
 INSERT INTO `role`
@@ -82,6 +74,14 @@ VALUES
   (6,'craster','craster','Gilly','Craster',2),
   (24,'testLogin','testPass','testFN','test',1),
   (26,'q','12345','q','q',0);
+
+--
+-- Dumping data for table `patient_diagnosis`
+--
+INSERT INTO `patient_diagnosis`
+(id, patient_id, diagnosis_id, doctor_id, consultation_date)
+VALUES
+  (1,1,1,1,'2010-01-20 16:00:00');
 
 --
 -- Dumping data for table `treatment`
