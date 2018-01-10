@@ -3,5 +3,5 @@ select * from hospital.patient;
 # SELECT COUNT(*) AS 'count' FROM (SELECT 'id' FROM hospital.treatment WHERE 'performer_id' = 1 LIMIT 1) AS 't';
 # SELECT 'id' FROM hospital.treatment WHERE 'performer_id' = 1 LIMIT 1;
 # SELECT COUNT(*) AS 'count' FROM hospital.treatment WHERE performer_id = 2 LIMIT 1;
-SELECT id, role_id FROM hospital.user WHERE login = 'admin' AND password = 'pass';
+SELECT id, diagnosis_id, doctor_id, consultation_date FROM hospital.patient_diagnosis WHERE patient_id = 1;
 SHOW WARNINGS;

@@ -1,11 +1,11 @@
 package dao.mysql.patient;
 
 import dao.PersistException;
+import dao.mysql.AbstractJDBCDao;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Treatment;
 import domain.patient.TreatmentType;
 import domain.user.User;
-import dao.mysql.AbstractJDBCDao;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -52,12 +52,12 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     public String getUpdateQuery() {
         return "UPDATE hospital.treatment\n" +
                 "SET title = ?, patient_diagnosis_id = ?, type_id = ?, performer_id = ?, done = ?\n" +
-                "WHERE id = ?";
+                "WHERE id = ?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM hospital.treatment WHERE id = ?";
+        return "DELETE FROM hospital.treatment WHERE id = ?;";
     }
 
     @Override
@@ -134,6 +134,11 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
                 Treatment treatment = new Treatment();
                 treatment.setId(resultSet.getInt("id"));
                 treatment.setTitle(resultSet.getString("title"));
+//                diagnosisToPatientId = resultSet.getInt("patient_diagnosis_id");
+//                if (!resultSet.wasNull()) {
+//                    treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+//                    treatment.getDiagnosisToPatient().setId(resultSet.getInt("patient_diagnosis_id"));
+//                }
                 treatment.setDiagnosisToPatient(new DiagnosisToPatient());
                 treatment.getDiagnosisToPatient().setId(diagnosisToPatientId);
                 treatment.setType(TreatmentType.values()[resultSet.getInt("type_id")]);

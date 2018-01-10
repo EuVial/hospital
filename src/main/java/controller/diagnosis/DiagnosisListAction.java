@@ -1,10 +1,10 @@
-package controller.patient;
+package controller.diagnosis;
 
 import controller.Action;
 import controller.Forward;
-import domain.patient.Patient;
+import domain.patient.Diagnosis;
 import service.ServiceException;
-import service.patient.PatientService;
+import service.patient.DiagnosisService;
 import util.FactoryException;
 
 import javax.servlet.ServletException;
@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-public class PatientListAction extends Action {
+public class DiagnosisListAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            PatientService patientService = getServiceFactory().getPatientService();
-            List<Patient> patients = patientService.findAll();
-            req.setAttribute("patients", patients);
+            DiagnosisService service = getServiceFactory().getDiagnosisService();
+            List<Diagnosis> diagnoses = service.findAll();
+            req.setAttribute("diagnoses", diagnoses);
             return null;
         } catch(FactoryException | ServiceException e) {
             throw new ServletException(e);

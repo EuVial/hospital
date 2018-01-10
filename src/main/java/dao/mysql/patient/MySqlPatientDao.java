@@ -47,12 +47,12 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE hospital.patient\n" +
-                "SET first_name = ?, last_name = ?, ward = ?\nWHERE id = ?";
+                "SET first_name = ?, last_name = ?, ward = ?\nWHERE id = ?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM hospital.patient WHERE id = ?";
+        return "DELETE FROM hospital.patient WHERE id = ?;";
     }
 
     @Override

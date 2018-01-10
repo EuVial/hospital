@@ -1,10 +1,10 @@
-package controller.patient;
+package controller.diagnosis;
 
 import controller.Action;
 import controller.Forward;
-import domain.patient.Patient;
+import domain.patient.Diagnosis;
 import service.ServiceException;
-import service.patient.PatientService;
+import service.patient.DiagnosisService;
 import util.FactoryException;
 
 import javax.servlet.ServletException;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class PatientEditAction extends Action {
+public class DiagnosisDeleteAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = null;
@@ -21,19 +21,13 @@ public class PatientEditAction extends Action {
         } catch(NumberFormatException e) {}
         if(id != null) {
             try {
-                PatientService service = getServiceFactory().getPatientService();
-                Patient patient = service.findById(id);
-                req.setAttribute("patient", patient);
-                boolean patientCanBeDeleted = service.canDelete(patient);
-                req.setAttribute("patientCanBeDeleted", patientCanBeDeleted);
-            } catch(FactoryException | ServiceException e) {
+                DiagnosisService service = getServiceFactory().getDiagnosisService();
+                Diagnosis diagnosis = service.findById(id);
+                service.delete(diagnosis);
+            } catch (FactoryException | ServiceException e) {
                 throw new ServletException(e);
             }
         }
-//        req.setAttribute("roles", UserRole.values());
-        return null;
+        return new Forward("/diagnosis/list.html");
     }
 }
-
-
-

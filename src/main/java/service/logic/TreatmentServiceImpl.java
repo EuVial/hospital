@@ -10,7 +10,6 @@ import service.patient.TreatmentService;
 import java.util.List;
 
 public class TreatmentServiceImpl implements TreatmentService {
-    //TODO: Maybe create "EntityServiceImpl" for unification or add default state to EntityService
     //TODO: LOGGER
     private MySqlTreatmentDao treatmentDao;
 

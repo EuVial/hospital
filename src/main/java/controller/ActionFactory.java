@@ -1,6 +1,11 @@
 package controller;
 
+import controller.diagnosis.DiagnosisDeleteAction;
+import controller.diagnosis.DiagnosisEditAction;
+import controller.diagnosis.DiagnosisListAction;
+import controller.diagnosis.DiagnosisSaveAction;
 import controller.patient.*;
+import controller.patient.view.DiseaseHistoryAction;
 import controller.user.UserDeleteAction;
 import controller.user.UserEditAction;
 import controller.user.UserListAction;
@@ -29,6 +34,12 @@ public class ActionFactory {
         actions.put("/patient/save", PatientSaveAction.class);
         actions.put("/patient/delete", PatientDeleteAction.class);
         actions.put("/patient/view", PatientViewAction.class);
+        actions.put("/patient/view/disease_history", DiseaseHistoryAction.class);
+
+        actions.put("/diagnosis/list", DiagnosisListAction.class);
+        actions.put("/diagnosis/edit", DiagnosisEditAction.class);
+        actions.put("/diagnosis/save", DiagnosisSaveAction.class);
+        actions.put("/diagnosis/delete", DiagnosisDeleteAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {

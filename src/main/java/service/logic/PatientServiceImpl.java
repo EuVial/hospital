@@ -1,6 +1,8 @@
 package service.logic;
 
 import dao.PersistException;
+import dao.mysql.patient.MySqlDiagnosisToPatientDao;
+import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
 import dao.mysql.patient.MySqlPatientDao;
 import service.EntityNotExistsException;
@@ -12,15 +14,33 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService {
     //TODO: LOGGER
     private MySqlPatientDao patientDao;
+    private MySqlDiagnosisToPatientDao diagnosisToPatientDao;
 
     public void setPatientDao(MySqlPatientDao patientDao) {
         this.patientDao = patientDao;
     }
 
+    public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
+        this.diagnosisToPatientDao = diagnosisToPatientDao;
+    }
+
     @Override
     public Patient findById(Integer id) throws ServiceException {
         try {
-            return patientDao.read(id);
+            Patient patient = patientDao.read(id);
+            if (patient != null) {
+                List<DiagnosisToPatient> history = diagnosisToPatientDao.readHistoryOfPatient(id);
+                Patient currentPatient;
+                for (DiagnosisToPatient diagnosisToPatient : history) {
+                    currentPatient = diagnosisToPatient.getPatient();
+                    if (currentPatient != null && currentPatient.getId() != null) {
+                        currentPatient = patientDao.read(currentPatient.getId());
+                        diagnosisToPatient.setPatient(currentPatient);
+                    }
+                }
+                patient.setHistory(history);
+            }
+            return patient;
         } catch (PersistException e) {
             throw new ServiceException(e);
         }

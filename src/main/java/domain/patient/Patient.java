@@ -9,8 +9,7 @@ public class Patient extends Entity implements Identified<Integer> {
     private String firstName;
     private String lastName;
     private Integer ward;
-    private List<Diagnosis> diagnosisList;
-    private List<Treatment> treatmentList;
+    private List<DiagnosisToPatient> history;
 
     public String getFirstName() {
         return firstName;
@@ -36,19 +35,11 @@ public class Patient extends Entity implements Identified<Integer> {
         this.ward = ward;
     }
 
-    public List<Diagnosis> getDiagnosisList() {
-        return diagnosisList;
+    public List<DiagnosisToPatient> getHistory() {
+        return history;
     }
 
-    public void setDiagnosisList(List<Diagnosis> diagnosisList) {
-        this.diagnosisList = diagnosisList;
-    }
-
-    public List<Treatment> getTreatmentList() {
-        return treatmentList;
-    }
-
-    public void setTreatmentList(List<Treatment> treatmentList) {
-        this.treatmentList = treatmentList;
+    public void setHistory(List<DiagnosisToPatient> history) {
+        this.history = history;
     }
 }

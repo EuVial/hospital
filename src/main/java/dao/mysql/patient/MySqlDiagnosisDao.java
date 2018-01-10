@@ -15,7 +15,7 @@ import java.util.List;
 public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
 
     private final static Logger LOGGER =
-            Logger.getLogger(String.valueOf(MySqlPatientDao.class));
+            Logger.getLogger(String.valueOf(MySqlDiagnosisDao.class));
 
     private class PersistDiagnosis extends Diagnosis {
         public void setId(int id) {
@@ -47,12 +47,12 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE hospital.diagnosis\n" +
-                "SET title = ?\nWHERE id = ?";
+                "SET title = ?\nWHERE id = ?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM hospital.diagnosis WHERE id = ?";
+        return "DELETE FROM hospital.diagnosis WHERE id = ?;";
     }
 
     @Override
