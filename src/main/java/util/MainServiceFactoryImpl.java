@@ -36,6 +36,7 @@ public class MainServiceFactoryImpl implements ServiceFactory {
         PatientServiceImpl patientService = new PatientServiceImpl();
         patientService.setPatientDao(getPatientDao());
         patientService.setDiagnosisToPatientDao(getDiagnosisToPatientDao());
+        patientService.setTreatmentDao(getTreatmentDao());
         return patientService;
     }
 

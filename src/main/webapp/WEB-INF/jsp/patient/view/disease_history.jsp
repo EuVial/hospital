@@ -31,19 +31,47 @@
     </nav>
 
     <div class="panel-body">
-    <div class="timeline-item">
-        <div class="tile">
-            <div class="tile-content">
-                <c:forEach var="patientDiagnosis" items="${patientDiagnoses}">
-                    <div class="tile-subtitle">
-                        ${patientDiagnosis.diagnosise.title}
-                        <%--Diagnosis name--%>
+        <div class="timeline">
+            <c:forEach var="patientDiagnosis" items="${patientDiagnoses}" varStatus="status">
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <c:choose>
+                            <c:when test="${!status.last}">
+                                <a class="timeline-icon icon-lg tooltip">
+                                    <i class="icon icon-check"></i>
+                                </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="timeline-icon tooltip"></a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
-                    <div class="tile-title">
-                        <%--Treatments name--%>
+                    <div class="timeline-content">
+                        <div class="tile">
+                            <div class="tile-content">
+                                <div class="tile-subtitle">
+                                    <fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/><br/>
+                                    ${patientDiagnosis.diagnosis.title}
+                                    <%--Diagnosis name--%>
+                                </div>
+                                <div class="tile-title">
+                                    <%--Treatments name--%>
+                                </div>
+                            </div>
+                            <div class="tile-action">
+                                <c:url var="urlPatientEdit" value="/patient/view/patient_diagnosis.html">
+                                    <c:param name="id" value="${patientDiagnosis.id}"/>
+                                </c:url>
+                                <a href="${urlPatientEdit}">
+                                    <button class="btn">
+                                        <fmt:message key="patient.view.disease_history.button.view"/>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </c:forEach>
-            </div>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </u:patient_view>

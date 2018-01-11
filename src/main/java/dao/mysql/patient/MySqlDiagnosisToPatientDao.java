@@ -6,6 +6,7 @@ import domain.patient.Diagnosis;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
 import domain.user.User;
+import domain.user.UserRole;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -113,8 +114,50 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         }
     }
 
-    public List<DiagnosisToPatient> readHistoryOfPatient(Integer patientId) throws PersistException {
-        String sql = "SELECT id, diagnosis_id, doctor_id, consultation_date FROM hospital.patient_diagnosis WHERE patient_id = ?";
+//    public List<DiagnosisToPatient> readHistoryOfPatient(Integer patientId) throws PersistException {
+//        String sql = "SELECT id, diagnosis_id, doctor_id, consultation_date FROM hospital.patient_diagnosis WHERE patient_id = ?";
+//        PreparedStatement statement = null;
+//        ResultSet resultSet = null;
+//        // TODO: try-with-resources
+//        try {
+//            statement = getConnection().prepareStatement(sql);
+//            statement.setInt(1, patientId);
+//            resultSet = statement.executeQuery();
+//            List<DiagnosisToPatient> diagnosisToPatients = new ArrayList<>();
+//            while(resultSet.next()) {
+//                DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+//                diagnosisToPatient.setId(resultSet.getInt("id"));
+//                diagnosisToPatient.setPatient(new Patient());
+//                diagnosisToPatient.getPatient().setId(patientId);
+////                patientId = resultSet.getInt("patient_id");
+////                if (!resultSet.wasNull()) {
+////                    diagnosisToPatient.setPatient(new Patient());
+////                    diagnosisToPatient.getPatient().setId(patientId);
+////                }
+//                diagnosisToPatient.setDiagnosis(new Diagnosis());
+//                diagnosisToPatient.getDiagnosis().setId(resultSet.getInt("diagnosis_id"));
+//                diagnosisToPatient.setDoctor(new User());
+//                diagnosisToPatient.getDoctor().setId(resultSet.getInt("doctor_id"));
+//                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("consultation_date").getTime()));
+//
+//                diagnosisToPatients.add(diagnosisToPatient);
+//            }
+//            return diagnosisToPatients;
+//        } catch(SQLException e) {
+//            throw new PersistException(e);
+//        } finally {
+//            try{ statement.close(); } catch(Exception e) {}
+//            try{ resultSet.close(); } catch(Exception e) {}
+//        }
+//    }
+
+    public List<DiagnosisToPatient> readHistory(Integer patientId) throws PersistException {
+        String sql =
+                "SELECT patient_diagnosis.id, diagnosis.title, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
+                "FROM hospital.patient_diagnosis\n" +
+                "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
+                "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
+                "WHERE patient_diagnosis.patient_id = ?;";
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         // TODO: try-with-resources
@@ -125,19 +168,14 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
             List<DiagnosisToPatient> diagnosisToPatients = new ArrayList<>();
             while(resultSet.next()) {
                 DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-                diagnosisToPatient.setId(resultSet.getInt("id"));
-                diagnosisToPatient.setPatient(new Patient());
-                diagnosisToPatient.getPatient().setId(patientId);
-//                patientId = resultSet.getInt("patient_id");
-//                if (!resultSet.wasNull()) {
-//                    diagnosisToPatient.setPatient(new Patient());
-//                    diagnosisToPatient.getPatient().setId(patientId);
-//                }
+                diagnosisToPatient.setId(resultSet.getInt("patient_diagnosis.id"));
                 diagnosisToPatient.setDiagnosis(new Diagnosis());
-                diagnosisToPatient.getDiagnosis().setId(resultSet.getInt("diagnosis_id"));
+                diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
                 diagnosisToPatient.setDoctor(new User());
-                diagnosisToPatient.getDoctor().setId(resultSet.getInt("doctor_id"));
-                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("consultation_date").getTime()));
+                diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
+                diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
+                diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
 
                 diagnosisToPatients.add(diagnosisToPatient);
             }

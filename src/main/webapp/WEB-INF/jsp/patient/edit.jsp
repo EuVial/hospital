@@ -4,9 +4,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%--<fmt:setLocale value="${sessionScope.language}"/>--%>
-<%--<fmt:setBundle basename="messages"/>--%>
-
 <c:if test="${empty patient}">
     <jsp:useBean id="patient" class="domain.patient.Patient"/>
 </c:if>
@@ -20,42 +17,66 @@
 </c:choose>
 
 <u:html title="${title}">
-    <h2>${title}</h2>
-    <c:url var="urlPatientList" value="/patient/list.html"/>
-    <c:url var="urlPatientSave" value="/patient/save.html"/>
-    <c:url var="urlPatientDelete" value="/patient/delete.html"/>
-    <form action="${urlPatientSave}" method="post">
-        <c:if test="${not empty patient.id}">
-            <input name="id" value="${patient.id}" type="hidden">
-        </c:if>
+    <h4>${title}</h4>
+    <div class="columns">
+        <div class="column col-12">
+            <c:url var="urlPatientList" value="/patient/list.html"/>
+            <c:url var="urlPatientSave" value="/patient/save.html"/>
+            <c:url var="urlPatientDelete" value="/patient/delete.html"/>
+            <form class="form-horizontal" action="${urlPatientSave}" method="post">
+                <c:if test="${not empty patient.id}">
+                    <input name="id" value="${patient.id}" type="hidden">
+                </c:if>
 
-        <label for="first_name"><fmt:message key="patient.edit.form.firstname"/>:</label>
-        <input id="first_name" name="first_name" value="${patient.firstName}">
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="first_name"><fmt:message key="patient.edit.form.firstname"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="first_name" name="first_name" placeholder="<fmt:message key="patient.edit.form.firstname"/>" value="${patient.firstName}">
+                    </div>
+                </div>
 
-        <label for="last_name"><fmt:message key="patient.edit.form.lastname"/>:</label>
-        <input id="last_name" name="last_name" value="${patient.lastName}">
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="last_name"><fmt:message key="patient.edit.form.lastname"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="last_name" name="last_name" placeholder="<fmt:message key="patient.edit.form.lastname"/>" value="${patient.lastName}">
+                    </div>
+                </div>
 
-        <label for="ward"><fmt:message key="patient.edit.form.ward"/>:</label>
-        <input id="ward" name="ward" value="${patient.ward}">
+                <div class="form-group">
+                    <div class="col-4">
+                        <label class="form-label" for="ward"><fmt:message key="patient.edit.form.ward"/>:</label>
+                    </div>
+                    <div class="col-5">
+                        <input class="form-input" id="ward" name="ward" type="number" placeholder="00" value="${patient.ward}">
+                    </div>
+                </div>
 
-        <button class="save"><fmt:message key="patient.edit.button.save"/></button>
+                <button class="btn btn-primary btn-action btn-lg">
+                    <i class="icon icon-check"></i>
+                </button>
 
-        <c:if test="${not empty patient.id}">
-            <c:if test="${not patientCanBeDeleted}">
-                <c:set var="disabled" value="disabled"/>
-            </c:if>
+                <c:if test="${not empty patient.id}">
+                    <c:if test="${not patientCanBeDeleted}">
+                        <c:set var="disabled" value="disabled"/>
+                    </c:if>
 
-            <button class="delete" formaction="${urlPatientDelete}" formmethod="post" ${disabled}>
-                <fmt:message key="patient.edit.button.delete"/>
-            </button>
-        </c:if>
+                    <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientDelete}" formmethod="post" ${disabled}>
+                        <i class="icon icon-delete"></i>
+                    </button>
+                </c:if>
 
-        <button class="reset" type="reset">
-            <fmt:message key="patient.edit.button.reset"/>
-        </button>
+                <button class="btn btn-primary btn-action btn-lg" type="reset">
+                    <i class="icon icon-refresh"></i>
+                </button>
 
-        <button class="back" formaction="${urlPatientList}" formmethod="get">
-            <fmt:message key="patient.edit.button.cancel"/>
-        </button>
-    </form>
+                <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientList}" formmethod="get">
+                    <i class="icon icon-back"></i>
+                </button>
+            </form>
+        </div>
+    </div>
 </u:html>

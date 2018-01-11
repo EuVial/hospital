@@ -2,9 +2,11 @@ package service.logic;
 
 import dao.PersistException;
 import dao.mysql.patient.MySqlDiagnosisToPatientDao;
+import dao.mysql.patient.MySqlPatientDao;
+import dao.mysql.patient.MySqlTreatmentDao;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
-import dao.mysql.patient.MySqlPatientDao;
+import domain.patient.Treatment;
 import service.EntityNotExistsException;
 import service.ServiceException;
 import service.patient.PatientService;
@@ -15,6 +17,7 @@ public class PatientServiceImpl implements PatientService {
     //TODO: LOGGER
     private MySqlPatientDao patientDao;
     private MySqlDiagnosisToPatientDao diagnosisToPatientDao;
+    private MySqlTreatmentDao treatmentDao;
 
     public void setPatientDao(MySqlPatientDao patientDao) {
         this.patientDao = patientDao;
@@ -24,15 +27,23 @@ public class PatientServiceImpl implements PatientService {
         this.diagnosisToPatientDao = diagnosisToPatientDao;
     }
 
+    public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
+        this.treatmentDao = treatmentDao;
+    }
+
     @Override
     public Patient findById(Integer id) throws ServiceException {
         try {
             Patient patient = patientDao.read(id);
             if (patient != null) {
-                List<DiagnosisToPatient> history = diagnosisToPatientDao.readHistoryOfPatient(id);
+                List<DiagnosisToPatient> history = diagnosisToPatientDao.readHistory(id);
                 Patient currentPatient;
                 for (DiagnosisToPatient diagnosisToPatient : history) {
                     currentPatient = diagnosisToPatient.getPatient();
+                    List<Treatment> treatmentHistory = treatmentDao.readHistoryOfDiagnosisToPatient(diagnosisToPatient.getId());
+                    if (treatmentHistory != null) {
+                        diagnosisToPatient.setHistory(treatmentHistory);
+                    }
                     if (currentPatient != null && currentPatient.getId() != null) {
                         currentPatient = patientDao.read(currentPatient.getId());
                         diagnosisToPatient.setPatient(currentPatient);
