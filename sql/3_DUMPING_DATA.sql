@@ -6,7 +6,12 @@ USE `hospital`;
 INSERT INTO `patient`
 (id, first_name, last_name, ward)
 VALUES
-  (1,'Eddard','Stark',1);
+  (1,'Eddard','Stark',1),
+  (2, 'Jaime', 'Lannister', 2),
+  (3, 'Myrcelle', 'Baratheon', 2),
+  (4, 'Jorah', 'Mormont', 1),
+  (5, 'Aerys', 'Targaryen', 3),
+  (6, 'Bran', 'Stark', 1);
 
 --
 -- Dumping data for table `diagnosis`
@@ -15,7 +20,7 @@ INSERT INTO `diagnosis`
 (id, title)
 VALUES
   (1,'migraine'),
-  (2,'food poisoning'),
+  (2,'poisoning'),
   (3,'diarrhea'),
   (4,'greyscale'),
   (5,'hand gangrene'),
@@ -81,7 +86,13 @@ VALUES
 INSERT INTO `patient_diagnosis`
 (id, patient_id, diagnosis_id, doctor_id, consultation_date)
 VALUES
-  (1,1,1,1,'2010-01-20 16:00:00');
+  (1,1,1,2,'2010-01-20 16:00:00'),
+  (2,2,7,2, '2009-01-20 16:00:00'),
+  (3,4,4,3, '2009-01-20 15:00:00'),
+  (4,3,2,3, '2009-01-20 11:00:00'),
+  (5,5,8,2, '2007-01-20 16:00:00'),
+  (6,6,9,2, '2009-01-30 16:00:00'),
+  (7,6,10,3, '2013-01-20 16:00:00');
 
 --
 -- Dumping data for table `treatment`
