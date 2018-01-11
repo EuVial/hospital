@@ -12,8 +12,8 @@
                 <c:url var="urlPatientView" value="/patient/view.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
-                <a href="${urlPatientView}"><fmt:message
-                        key="patient.view.panel.profile"/></a>
+                <a href="${urlPatientView}">
+                    <fmt:message key="patient.view.panel.profile"/></a>
             </li>
 
             <li class="tab-item">
@@ -21,8 +21,8 @@
                        value="/patient/view/treatment.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
-                <a href="${urlPatientTreatment}"><fmt:message
-                        key="patient.view.panel.treatment"/></a>
+                <a href="${urlPatientTreatment}">
+                    <fmt:message key="patient.view.panel.treatment"/></a>
             </li>
 
             <li class="tab-item">
@@ -30,8 +30,9 @@
                        value="/patient/view/disease_history.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
-                <a href="${urlPatientHistory}"><fmt:message
-                        key="patient.view.panel.history"/></a>
+                <a href="${urlPatientHistory}">
+                    <fmt:message key="patient.view.panel.history"/>
+                </a>
             </li>
         </ul>
     </nav>
@@ -44,32 +45,36 @@
                 <td>${patientDiagnosis.diagnosis.title}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.table.firstname"/></th>
-                <td>${patient.firstName}</td>
+                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.firstname"/></th>
+                <td>${patientDiagnosis.doctor.firstName}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.table.lastname"/></th>
-                <td>${patient.lastName}</td>
+                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.lastname"/></th>
+                <td>${patientDiagnosis.doctor.lastName}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.table.ward"/></th>
-                <td>${patient.ward}</td>
+                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.role"/></th>
+                <td><fmt:message key="${patientDiagnosis.doctor.role.name}"/></td>
+                <%--Must be always "doctor"--%>
+            </tr>
+            <tr>
+                <th><fmt:message key="patient.view.patient_diagnosis.table.consultation.date"/></th>
+                <td><fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/></td>
             </tr>
             <tr>
                 <th>&nbsp</th>
                 <td>
                     <c:if test="${currentUser.role eq 'DOCTOR'}">
-                        <c:url var="urlPatientEdit" value="/patient/edit.html">
-                            <c:param name="id" value="${patient.id}"/>
+                        <c:url var="urlPatientDiagnosisEdit" value="/patient/view/patient_diagnosis_edit.html">
+                            <c:param name="id" value="${patientDiagnosis.id}"/>
                         </c:url>
-                        <a href="${urlPatientEdit}">
+                        <a href="${urlPatientDiagnosisEdit}">
                             <button class="btn btn-primary btn-action btn-lg">
                                 <i class="icon icon-edit"></i>
                             </button>
                         </a>
                     </c:if>
-                    <c:url var="urlPatientList" value="/patient/list.html"/>
-                    <a href="${urlPatientList}">
+                    <a href="${urlPatientView}">
                         <button class="btn btn-primary btn-action btn-lg">
                             <i class="icon icon-back"></i>
                         </button>

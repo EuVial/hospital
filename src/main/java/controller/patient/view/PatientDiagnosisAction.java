@@ -3,6 +3,7 @@ package controller.patient.view;
 import controller.Action;
 import controller.Forward;
 import domain.patient.DiagnosisToPatient;
+import domain.patient.Patient;
 import service.ServiceException;
 import service.patient.DiagnosisToPatientService;
 import util.FactoryException;
@@ -18,7 +19,11 @@ public class PatientDiagnosisAction extends Action {
         try {
             Integer id = Integer.parseInt(req.getParameter("id"));
             DiagnosisToPatientService service = getServiceFactory().getDiagnosisToPatientService();
-            DiagnosisToPatient diagnosisToPatient = service.findById(id);
+            DiagnosisToPatient diagnosisToPatient = service.readInfo(id);
+            Patient patient = diagnosisToPatient.getPatient();
+            if(patient != null) {
+                req.setAttribute("patient", patient);
+            }
             if(diagnosisToPatient != null) {
                 req.setAttribute("patientDiagnosis", diagnosisToPatient);
                 return null;

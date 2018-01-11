@@ -93,5 +93,14 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
             }
         }
     }
+
+    @Override
+    public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws ServiceException {
+        try {
+            return diagnosisToPatientDao.readInfo(diagnosisToPatientId);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
 }
 

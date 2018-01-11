@@ -187,5 +187,47 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
             try{ resultSet.close(); } catch(Exception e) {}
         }
     }
+
+    public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws PersistException {
+        String sql =
+                "SELECT diagnosis.title, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date," +
+                        "patient.id, patient.first_name, patient.last_name, patient.ward\n" +
+                        "FROM hospital.patient_diagnosis\n" +
+                        "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
+                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
+                        "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
+                        "WHERE patient_diagnosis.id = ?;";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        // TODO: try-with-resources
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, diagnosisToPatientId);
+            resultSet = statement.executeQuery();
+            DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+            diagnosisToPatient.setId(diagnosisToPatientId);
+            diagnosisToPatient.setDiagnosis(new Diagnosis());
+            while(resultSet.next()) {
+                diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                diagnosisToPatient.setDoctor(new User());
+                diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
+                diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
+                diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
+                // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
+                diagnosisToPatient.setPatient(new Patient());
+                diagnosisToPatient.getPatient().setId(resultSet.getInt("patient.id"));
+                diagnosisToPatient.getPatient().setFirstName(resultSet.getString("patient.first_name"));
+                diagnosisToPatient.getPatient().setLastName(resultSet.getString("patient.last_name"));
+                diagnosisToPatient.getPatient().setWard(resultSet.getInt("ward"));
+            }
+            return diagnosisToPatient;
+        } catch(SQLException e) {
+            throw new PersistException(e);
+        } finally {
+            try{ statement.close(); } catch(Exception e) {}
+            try{ resultSet.close(); } catch(Exception e) {}
+        }
+    }
 }
 
