@@ -19,16 +19,16 @@ VALUES
 INSERT INTO `diagnosis`
 (id, title)
 VALUES
-  (1,'migraine'),
-  (2,'poisoning'),
-  (3,'diarrhea'),
-  (4,'greyscale'),
-  (5,'hand gangrene'),
-  (6,'pharyngitis'),
-  (7,'broken hand'),
-  (8,'madness'),
-  (9,'schizophrenia'),
-  (10,'fracture of the spine');
+  (1,'Migraine'),
+  (2,'Poisoning'),
+  (3,'Diarrhea'),
+  (4,'Greyscale'),
+  (5,'Hand gangrene'),
+  (6,'Pharyngitis'),
+  (7,'Broken hand'),
+  (8,'Madness'),
+  (9,'Schizophrenia'),
+  (10,'Fracture of the spine');
 
 --
 -- Dumping data for table `role`
