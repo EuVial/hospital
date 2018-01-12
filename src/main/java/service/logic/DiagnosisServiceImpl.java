@@ -72,4 +72,13 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             }
         }
     }
+
+    @Override
+    public Integer getIdByTitle(String title) throws ServiceException {
+        try {
+            return diagnosisDao.getIdByTitle(title);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

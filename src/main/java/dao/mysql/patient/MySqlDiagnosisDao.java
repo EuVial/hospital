@@ -47,7 +47,8 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
     @Override
     public String getUpdateQuery() {
         return "UPDATE hospital.diagnosis\n" +
-                "SET title = ?\nWHERE id = ?;";
+                "SET title = ?\n" +
+                "WHERE id = ?;";
     }
 
     @Override
@@ -97,5 +98,26 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
             throw new PersistException(e);
         }
     }
-}
 
+    public Integer getIdByTitle(String title) throws PersistException {
+        String sql = "SELECT id FROM hospital.diagnosis WHERE title = ?;";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        // TODO: try-with-resources
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setString(1, title);
+            resultSet = statement.executeQuery();
+            Integer diagnosisId = null;
+            while(resultSet.next()) {
+                diagnosisId = resultSet.getInt("id");
+            }
+            return diagnosisId;
+        } catch(SQLException e) {
+            throw new PersistException(e);
+        } finally {
+            try{ statement.close(); } catch(Exception e) {}
+            try{ resultSet.close(); } catch(Exception e) {}
+        }
+    }
+}

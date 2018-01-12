@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                             <div class="tile-action">
-                                <c:url var="urlPatientEdit" value="/patient/view/patient_diagnosis.html">
+                                <c:url var="urlPatientEdit" value="/patient/view/diagnosis/view.html">
                                     <c:param name="id" value="${patientDiagnosis.id}"/>
                                 </c:url>
                                 <a href="${urlPatientEdit}">

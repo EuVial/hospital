@@ -30,7 +30,6 @@ public class PatientEditAction extends Action {
                 throw new ServletException(e);
             }
         }
-//        req.setAttribute("roles", UserRole.values());
         return null;
     }
 }

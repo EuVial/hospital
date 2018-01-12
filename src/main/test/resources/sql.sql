@@ -16,3 +16,6 @@
 #   JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)
 #   JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)
 # WHERE patient_diagnosis.id = 1;
+
+# SELECT COUNT(*) AS 'count' FROM hospital.treatment WHERE patient_diagnosis_id = ? LIMIT 1;
+SELECT id FROM hospital.diagnosis WHERE title = ?;

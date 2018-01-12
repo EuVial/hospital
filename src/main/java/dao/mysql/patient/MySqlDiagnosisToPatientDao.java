@@ -61,7 +61,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
     @Override
     public String getInitiatesQuery() {
         return "SELECT COUNT(*) AS 'count' FROM hospital.treatment\n" +
-                "WHERE hospital.patient_diagnosis_id = ? LIMIT 1;";
+                "WHERE patient_diagnosis_id = ? LIMIT 1;";
     }
 
     @Override

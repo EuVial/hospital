@@ -13,7 +13,7 @@
                     <div class="panel-header text-center">
                         <h4 class="s-title text-center">${title}</h4>
                         <figure class="avatar avatar-xl">
-                            <img src="../../../img/avatars/patient.png" alt="Patient avatar">
+                            <img src="/img/avatars/patient.png" alt="Patient avatar">
                         </figure>
                     <div class="panel-title h5 mt-10">
                         ${patient.firstName} ${patient.lastName}

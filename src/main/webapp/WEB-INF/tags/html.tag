@@ -51,13 +51,13 @@
                             <div class="tile-icon">
                                 <c:choose>
                                     <c:when test="${currentUser.role eq 'ADMIN'}">
-                                        <img src="../../img/avatars/admin.png" class="avatar avatar-xl" alt="admin logo">
+                                        <img src="/img/avatars/admin.png" class="avatar avatar-xl" alt="admin logo">
                                     </c:when>
                                     <c:when test="${currentUser.role eq 'DOCTOR'}">
-                                        <img src="../../img/avatars/doctor.png" class="avatar avatar-xl" alt="doctor logo">
+                                        <img src="/img/avatars/doctor.png" class="avatar avatar-xl" alt="doctor logo">
                                     </c:when>
                                     <c:when test="${currentUser.role eq 'NURSE'}">
-                                        <img src="../../img/avatars/nurse.png" class="avatar avatar-xl" alt="nurse logo">
+                                        <img src="/img/avatars/nurse.png" class="avatar avatar-xl" alt="nurse logo">
                                     </c:when>
                                 </c:choose>
                             </div>

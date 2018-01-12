@@ -25,7 +25,7 @@
                     <fmt:message key="patient.view.panel.treatment"/></a>
             </li>
 
-            <li class="tab-item">
+            <li class="tab-item active">
                 <c:url var="urlPatientHistory"
                        value="/patient/view/disease_history.html">
                     <c:param name="id" value="${patient.id}"/>
@@ -41,31 +41,31 @@
     <div class="panel-body">
         <table class="table">
             <tr>
-                <th><fmt:message key="patient.view.patient_diagnosis.table.diagnosis.title"/></th>
+                <th><fmt:message key="patient.view.diagnosis.view.table.diagnosis.title"/></th>
                 <td>${patientDiagnosis.diagnosis.title}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.firstname"/></th>
+                <th><fmt:message key="patient.view.diagnosis.view.table.doctor.firstname"/></th>
                 <td>${patientDiagnosis.doctor.firstName}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.lastname"/></th>
+                <th><fmt:message key="patient.view.diagnosis.view.table.doctor.lastname"/></th>
                 <td>${patientDiagnosis.doctor.lastName}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.patient_diagnosis.table.doctor.role"/></th>
+                <th><fmt:message key="patient.view.diagnosis.view.table.doctor.role"/></th>
                 <td><fmt:message key="${patientDiagnosis.doctor.role.name}"/></td>
                 <%--Must be always "doctor"--%>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.patient_diagnosis.table.consultation.date"/></th>
+                <th><fmt:message key="patient.view.diagnosis.view.table.consultation.date"/></th>
                 <td><fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/></td>
             </tr>
             <tr>
                 <th>&nbsp</th>
                 <td>
                     <c:if test="${currentUser.role eq 'DOCTOR'}">
-                        <c:url var="urlPatientDiagnosisEdit" value="/patient/view/patient_diagnosis_edit.html">
+                        <c:url var="urlPatientDiagnosisEdit" value="/patient/view/diagnosis/edit.html">
                             <c:param name="id" value="${patientDiagnosis.id}"/>
                         </c:url>
                         <a href="${urlPatientDiagnosisEdit}">

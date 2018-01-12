@@ -1,4 +1,4 @@
-package controller.patient.view;
+package controller.patient.view.diagnosis;
 
 import controller.Action;
 import controller.Forward;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class PatientDiagnosisAction extends Action {
+public class PatientDiagnosisViewAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
