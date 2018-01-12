@@ -111,7 +111,7 @@ CREATE TABLE `treatment` (
   `title` varchar(45) NOT NULL,
   `patient_diagnosis_id` int(11) NOT NULL,
   `type_id` int(11) NOT NULL,
-  `performer_id` int(11) NOT NULL,
+  `performer_id` int(11) DEFAULT NULL,
   `done` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `treatment_idx_user` (`performer_id`),
