@@ -10,7 +10,6 @@
 </c:if>
 <c:choose>
     <c:when test="${not empty patientDiagnosis.id}">
-        <%--TODO: add diagnosed patient firstname and lastname--%>
         <fmt:message var="title" key="patient.view.diagnosis.view.title.edit"/>
     </c:when>
     <c:otherwise>
@@ -65,23 +64,21 @@
                     <c:if test="${not empty patientDiagnosis.id}">
                         <input name="id" value="${patientDiagnosis.id}" type="hidden">
                     </c:if>
-<%--diagnosis.title,
-patient_diagnosis.consultation_date--%>
                     <div class="form-group">
                         <div class="col-4">
                             <label class="form-label" for="diagnosis.title"><fmt:message key="patient.view.diagnosis.edit.form.diagnosis.title"/>:</label>
                         </div>
                         <div class="col-5">
                             <select class="form-select" id="diagnosis.title" name="diagnosis.title">
+                                <%--<c:forEach var="diagnosis" items="${diagnoses}">--%>
+                                    <%--<c:if test="${diagnosis.id eq patientDiagnosis.diagnosis.id}">--%>
+                                        <%--<c:set var="currentDiagnosisTitle" value="${diagnosis.title}"/>--%>
+                                    <%--</c:if>--%>
+                                <%--</c:forEach>--%>
+                                <%--<option>${currentDiagnosisTitle}</option>--%>
+                                <option>${previousDiagnosisTitle}</option>
                                 <c:forEach var="diagnosis" items="${diagnoses}">
-                                    <c:if test="${diagnosis.id == patientDiagnosis.diagnosis.id}">
-                                        <c:set var="currentDiagnosisTitle" value="${diagnosis.title}"/>
-                                    </c:if>
-                                </c:forEach>
-                                    <%--placeholder="<fmt:message key="patient.view.diagnosis.edit.form.diagnosis.choose"/>">--%>
-                                <option>${currentDiagnosisTitle}</option>
-                                <c:forEach var="diagnosis" items="${diagnoses}">
-                                    <c:if test="${diagnosis.id != patientDiagnosis.diagnosis.id}">
+                                    <c:if test="${diagnosis.title != previousDiagnosisTitle}">
                                         <option>${diagnosis.title}</option>
                                     </c:if>
                                 </c:forEach>

@@ -1,6 +1,7 @@
 package service.logic;
 
 import dao.PersistException;
+import dao.mysql.patient.MySqlDiagnosisDao;
 import dao.mysql.patient.MySqlDiagnosisToPatientDao;
 import dao.mysql.patient.MySqlTreatmentDao;
 import domain.patient.DiagnosisToPatient;
@@ -17,12 +18,18 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
 
     private MySqlTreatmentDao treatmentDao;
 
+    private MySqlDiagnosisDao diagnosisDao;
+
     public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
         this.diagnosisToPatientDao = diagnosisToPatientDao;
     }
 
     public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
+    }
+
+    public void setDiagnosisDao(MySqlDiagnosisDao diagnosisDao) {
+        this.diagnosisDao = diagnosisDao;
     }
 
     @Override

@@ -25,6 +25,10 @@ public class DiseaseHistoryAction extends Action {
             if(patient != null) {
                 req.setAttribute("patient", patient);
                 patientDiagnoses = patient.getHistory();
+//                for(DiagnosisToPatient diagnosisToPatient : patientDiagnoses) {
+//                    List<Treatment> treatments = diagnosisToPatient.getHistory();
+//                    diagnosisToPatient.setHistory(treatments);
+//                }
                 req.setAttribute("patientDiagnoses", patientDiagnoses);
                 return null;
             } else {

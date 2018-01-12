@@ -35,8 +35,10 @@ public class PatientDiagnosisEditAction extends Action {
                 boolean patientDiagnosisCanBeDeleted = service.canDelete(diagnosisToPatient);
                 req.setAttribute("patientDiagnosisCanBeDeleted", patientDiagnosisCanBeDeleted);
 
+                String previousDiagnosisTitle = diagnosisToPatient.getDiagnosis().getTitle();
                 DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
                 List<Diagnosis> diagnoses = diagnosisService.findAll();
+                req.setAttribute("previousDiagnosisTitle", previousDiagnosisTitle);
                 req.setAttribute("diagnoses", diagnoses);
             } catch(FactoryException | ServiceException e) {
                 throw new ServletException(e);

@@ -4,6 +4,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
+
+
 <u:patient_view>
     <nav class="panel-nav">
         <ul class="tab tab-block">
@@ -49,14 +51,41 @@
                     <div class="timeline-content">
                         <div class="tile">
                             <div class="tile-content">
-                                <div class="tile-subtitle">
+                                <div class="tile-subtitle text-primary">
+                                    ${patientDiagnosis.diagnosis.title}<br/>
                                     <fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/><br/>
-                                    ${patientDiagnosis.diagnosis.title}
+                                    <fmt:message key="patient.view.disease_history.tile.treatment"/>
                                     <%--Diagnosis name--%>
                                 </div>
+                                <c:forEach var="treatment" items="${patientDiagnosis.history}">
                                 <div class="tile-title">
-                                    <%--Treatments name--%>
+                                    <c:choose>
+                                        <c:when test="${treatment.type.name eq 'treatment.procedure'}">
+                                            <img src="/img/treatments/procedure.png" height="25"/>
+                                            <%--<figure class="avatar avatar-lg">--%>
+                                                <%--<img src="/img/treatments/procedure.png" width="256">--%>
+                                            <%--</figure>--%>
+                                        </c:when>
+                                        <c:when test="${treatment.type.name eq 'treatment.medicament'}">
+                                            <img src="/img/treatments/medicament.png" height="25"/>
+                                            <%--<figure class="avatar avatar-lg">--%>
+                                                <%--<img src="/img/treatments/medicament.png" width="256">--%>
+                                            <%--</figure>--%>
+                                        </c:when>
+                                        <c:when test="${treatment.type.name eq 'treatment.surgery'}">
+                                            <img src="/img/treatments/surgery.png" height="25"/>
+                                            <%--<figure class="avatar avatar-lg">--%>
+                                                <%--<img src="/img/treatments/surgery.png" width="256">--%>
+                                            <%--</figure>--%>
+                                        </c:when>
+                                        <c:otherwise>
+                                            &nbsp;
+                                        </c:otherwise>
+                                    </c:choose>
+                                        <%--Treatments name--%>
+                                    ${treatment.title}
                                 </div>
+                                </c:forEach>
                             </div>
                             <div class="tile-action">
                                 <c:url var="urlPatientEdit" value="/patient/view/diagnosis/view.html">

@@ -4,7 +4,6 @@ import controller.Action;
 import controller.Forward;
 import domain.patient.Diagnosis;
 import domain.patient.DiagnosisToPatient;
-import domain.patient.Patient;
 import domain.user.User;
 import service.ServiceException;
 import service.patient.DiagnosisService;
@@ -25,25 +24,27 @@ public class PatientDiagnosisSaveAction extends Action {
         try {
             diagnosisToPatient.setId(Integer.parseInt(req.getParameter("id")));
         } catch(NumberFormatException e) {}
-        diagnosisToPatient.setDiagnosis(new Diagnosis());
         String title = req.getParameter("diagnosis.title");
-        diagnosisToPatient.getDiagnosis().setTitle(title);
-        diagnosisToPatient.setPatient(new Patient());
-        diagnosisToPatient.getPatient().setId(Integer.valueOf(req.getParameter("patientId")));
+//        diagnosisToPatient.getPatient().setId(Integer.valueOf(req.getParameter("patientId")));
 //        diagnosisToPatient.getDiagnosis().setId(Integer.valueOf(req.getParameter("diagnosis.id")));
-        if (    diagnosisToPatient.getDiagnosis().getTitle() != null &&
-                diagnosisToPatient.getPatient().getId() != null) {
+        if (title != null) {
             try {
-                urlId = diagnosisToPatient.getPatient().getId();
                 DiagnosisToPatientService diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
                 DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
+                diagnosisToPatient = diagnosisToPatientService.readInfo(diagnosisToPatient.getId());
+                diagnosisToPatient.setDiagnosis(new Diagnosis());
+                diagnosisToPatient.getDiagnosis().setTitle(title);
+
                 User user = (User)req.getSession(false).getAttribute("currentUser");
                 diagnosisToPatient.setDoctor(user);
+
                 if (diagnosisToPatient.getConsultationDate() == null) {
                     diagnosisToPatient.setConsultationDate(new Date());
                 }
                 diagnosisToPatient.getDiagnosis().setId(diagnosisService.getIdByTitle(title));
                 diagnosisToPatientService.save(diagnosisToPatient);
+
+                urlId = diagnosisToPatient.getPatient().getId();
             } catch(FactoryException | ServiceException e) {
                 throw new ServletException(e);
             }

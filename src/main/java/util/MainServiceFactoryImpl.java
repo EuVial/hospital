@@ -74,6 +74,7 @@ public class MainServiceFactoryImpl implements ServiceFactory {
         DiagnosisToPatientServiceImpl diagnosisToPatientService = new DiagnosisToPatientServiceImpl();
         diagnosisToPatientService.setDiagnosisToPatientDao(getDiagnosisToPatientDao());
         diagnosisToPatientService.setTreatmentDao(getTreatmentDao());
+        diagnosisToPatientService.setDiagnosisDao(getDiagnosisDao());
         return diagnosisToPatientService;
     }
 
