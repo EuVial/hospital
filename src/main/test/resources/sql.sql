@@ -18,4 +18,21 @@
 # WHERE patient_diagnosis.id = 1;
 
 # SELECT COUNT(*) AS 'count' FROM hospital.treatment WHERE patient_diagnosis_id = ? LIMIT 1;
-SELECT id FROM hospital.diagnosis WHERE title = ?;
+# SELECT id FROM hospital.diagnosis WHERE title = ?;
+
+# SELECT treatment.title, treatment.type_id, treatment.done, user.first_name, user.last_name, user.role_id, diagnosis.title,
+# patient.id, patient.first_name, patient.last_name, patient.ward
+# FROM hospital.treatment
+#   JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)
+#   JOIN hospital.user ON (treatment.performer_id = user.id)
+#   JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)
+#   JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)
+# WHERE treatment.id = ?;
+
+# UPDATE hospital.treatment
+# SET done = 1, performer_id = ?
+# WHERE id = ?
+
+UPDATE hospital.treatment
+SET done = 1, performer_id = 2
+WHERE id = 7;

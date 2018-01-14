@@ -18,7 +18,7 @@
 
             <li class="tab-item">
                 <c:url var="urlPatientTreatment"
-                       value="/patient/view/treatment.html">
+                       value="/patient/view/treatment/list.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientTreatment}">
@@ -38,6 +38,8 @@
     </nav>
     <%--diagnosis.title, user.first_name, user.last_name, user.role_id,
     patient_diagnosis.consultation_date--%>
+    <fmt:message var="title" key="patient.view.diagnosis.view.title"/>
+    <h5 class="centered">${title}</h5>
     <div class="panel-body">
         <table class="table">
             <tr>
@@ -74,7 +76,10 @@
                             </button>
                         </a>
                     </c:if>
-                    <a href="${urlPatientView}">
+                    <c:url var="urlDiseaseHistory" value="/patient/view/disease_history.html">
+                        <c:param name="id" value="${patient.id}"/>
+                    </c:url>
+                    <a href="${urlDiseaseHistory}">
                         <button class="btn btn-primary btn-action btn-lg">
                             <i class="icon icon-back"></i>
                         </button>

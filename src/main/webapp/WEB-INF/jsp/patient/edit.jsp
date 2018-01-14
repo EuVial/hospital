@@ -16,11 +16,37 @@
     </c:otherwise>
 </c:choose>
 
-<u:html title="${title}">
-    <h4>${title}</h4>
+<u:patient_view>
+    <nav class="panel-nav">
+        <ul class="tab tab-block">
+            <li class="tab-item active">
+                <c:url var="urlPatientView" value="/patient/view.html">
+                    <c:param name="id" value="${patient.id}"/>
+                </c:url>
+                <a href="${urlPatientView}"><fmt:message key="patient.view.panel.profile"/></a>
+            </li>
+
+            <li class="tab-item">
+                <c:url var="urlPatientTreatment" value="/patient/view/treatment/list.html">
+                    <c:param name="id" value="${patient.id}"/>
+                </c:url>
+                <a href="${urlPatientTreatment}"><fmt:message key="patient.view.panel.treatment"/></a>
+            </li>
+
+            <li class="tab-item">
+                <c:url var="urlPatientHistory" value="/patient/view/disease_history.html">
+                    <c:param name="id" value="${patient.id}"/>
+                </c:url>
+                <a href="${urlPatientHistory}"><fmt:message key="patient.view.panel.history"/></a>
+            </li>
+        </ul>
+    </nav>
+
+    <h5 class="centered">${title}</h5>
     <div class="columns">
         <div class="column col-12">
-            <c:url var="urlPatientList" value="/patient/list.html"/>
+            <%--<c:url var="urlPatientList" value="/patient/list.html"/>--%>
+            <c:url var="urlPatientView" value="/patient/view.html?id=${patient.id}"/>
             <c:url var="urlPatientSave" value="/patient/save.html"/>
             <c:url var="urlPatientDelete" value="/patient/delete.html"/>
             <form class="form-horizontal" action="${urlPatientSave}" method="post">
@@ -73,10 +99,10 @@
                     <i class="icon icon-refresh"></i>
                 </button>
 
-                <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientList}" formmethod="get">
+                <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientView}" formmethod="get">
                     <i class="icon icon-back"></i>
                 </button>
             </form>
         </div>
     </div>
-</u:html>
+</u:patient_view>

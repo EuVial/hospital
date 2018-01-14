@@ -30,7 +30,7 @@
 
             <li class="tab-item">
                 <c:url var="urlPatientTreatment"
-                       value="/patient/view/treatment.html">
+                       value="/patient/view/treatment/list.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientTreatment}">
@@ -49,10 +49,8 @@
         </ul>
     </nav>
 
+    <h5 class="centered">${title}</h5>
     <div class="panel-body">
-        <br/>
-        <h5 class="centered">${title}</h5>
-
         <div class="columns">
             <div class="column col-12">
                 <c:url var="urlPatientDiagnosisView" value="/patient/view/diagnosis/view.html">
@@ -94,6 +92,8 @@
                             <%--<input class="form-input" id="consultation_date" name="consultation_date" type="date" placeholder="00" value=<fmt:formatDate pattern="dd.MM.yyyy, HH.mm" value="${patientDiagnosis.consultationDate}"/>/>--%>
                         <%--</div>--%>
                     <%--</div>--%>
+                    <button class="btn"><fmt:message key="patient.view.diagnosis.edit.button.makeAssignment"/></button>
+
 
                     <button class="btn btn-primary btn-action btn-lg">
                         <i class="icon icon-check"></i>

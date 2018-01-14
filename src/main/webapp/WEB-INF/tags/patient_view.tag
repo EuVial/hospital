@@ -37,10 +37,10 @@
 
             <%--<c:url var="urlPatientList" value="/patient/list.html"/>--%>
             <%--<a href="${urlPatientList}" class="back"><fmt:message key="patient.view.button.cancel"/></a>--%>
-                </div>
             </div>
         </div>
     </div>
+
     <%--<h3><fmt:message key="patient.view.subtitle"/></h3>--%>
     <%--<table>--%>
     <%--<tr>--%>

@@ -18,10 +18,10 @@ public class DiseaseHistoryAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            List<DiagnosisToPatient> patientDiagnoses;
             Integer id = Integer.parseInt(req.getParameter("id"));
             PatientService service = getServiceFactory().getPatientService();
             Patient patient = service.findById(id);
+            List<DiagnosisToPatient> patientDiagnoses;
             if(patient != null) {
                 req.setAttribute("patient", patient);
                 patientDiagnoses = patient.getHistory();

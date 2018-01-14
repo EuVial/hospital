@@ -9,6 +9,7 @@ public class Treatment extends Entity implements Identified<Integer> {
     private TreatmentType type;
     private DiagnosisToPatient diagnosisToPatient;
     private User performer;
+    private Patient patient;
     private boolean isDone;
 
     public String getTitle() {
@@ -41,6 +42,14 @@ public class Treatment extends Entity implements Identified<Integer> {
 
     public void setPerformer(User performer) {
         this.performer = performer;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
     public boolean isDone() {

@@ -1,6 +1,7 @@
 package service.logic;
 
 import dao.PersistException;
+import dao.mysql.patient.MySqlPatientDao;
 import domain.patient.Treatment;
 import dao.mysql.patient.MySqlTreatmentDao;
 import service.EntityNotExistsException;
@@ -13,9 +14,13 @@ public class TreatmentServiceImpl implements TreatmentService {
     //TODO: LOGGER
     private MySqlTreatmentDao treatmentDao;
 
+    private MySqlPatientDao patientDao;
+
     public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
     }
+
+    public void setPatientDao(MySqlPatientDao patientDao) { this.patientDao = patientDao; }
 
     @Override
     public Treatment findById(Integer id) throws ServiceException {
@@ -63,6 +68,26 @@ public class TreatmentServiceImpl implements TreatmentService {
         if(treatment.getId() != null) {
             try {
                 treatmentDao.delete(treatment);
+            } catch (PersistException e) {
+                throw new ServiceException(e);
+            }
+        }
+    }
+
+    @Override
+    public Treatment readInfo(Integer treatmentId) throws ServiceException {
+        try {
+            return treatmentDao.readInfo(treatmentId);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public void done(Treatment treatment) throws ServiceException {
+        if(treatment.getId() != null) {
+            try {
+                treatmentDao.done(treatment);
             } catch (PersistException e) {
                 throw new ServiceException(e);
             }

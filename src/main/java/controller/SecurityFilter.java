@@ -47,7 +47,12 @@ public class SecurityFilter implements Filter {
         permissions.put("/patient/view/diagnosis/delete", doctor);
 
         permissions.put("/patient/view/disease_history", employees);
-        permissions.put("/patient/view/treatments", employees);
+
+        permissions.put("/patient/view/treatment/list", employees);
+        permissions.put("/patient/view/treatment/done", employees);
+        permissions.put("/patient/view/treatment/edit", doctor);
+        permissions.put("/patient/view/treatment/save", doctor);
+        permissions.put("/patient/view/treatment/delete", doctor);
     }
 
     @Override

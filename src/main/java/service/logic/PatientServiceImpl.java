@@ -40,7 +40,7 @@ public class PatientServiceImpl implements PatientService {
                 Patient currentPatient;
                 for (DiagnosisToPatient diagnosisToPatient : history) {
                     currentPatient = diagnosisToPatient.getPatient();
-                    List<Treatment> treatmentHistory = treatmentDao.readHistoryOfDiagnosisToPatient(diagnosisToPatient.getId());
+                    List<Treatment> treatmentHistory = treatmentDao.readTreatmentsFromDiagnosisToPatient(diagnosisToPatient.getId());
                     if (treatmentHistory != null) {
                         diagnosisToPatient.setHistory(treatmentHistory);
                     }

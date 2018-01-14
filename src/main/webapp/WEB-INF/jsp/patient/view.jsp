@@ -15,7 +15,7 @@
             </li>
 
             <li class="tab-item">
-                <c:url var="urlPatientTreatment" value="/patient/view/treatment.html">
+                <c:url var="urlPatientTreatment" value="/patient/view/treatment/list.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientTreatment}"><fmt:message key="patient.view.panel.treatment"/></a>

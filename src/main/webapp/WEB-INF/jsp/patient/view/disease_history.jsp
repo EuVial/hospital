@@ -4,8 +4,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-
-
 <u:patient_view>
     <nav class="panel-nav">
         <ul class="tab tab-block">
@@ -17,7 +15,7 @@
             </li>
 
             <li class="tab-item">
-                <c:url var="urlPatientTreatment" value="/patient/view/treatment.html">
+                <c:url var="urlPatientTreatment" value="/patient/view/treatment/list.html">
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientTreatment}"><fmt:message key="patient.view.panel.treatment"/></a>
@@ -32,6 +30,8 @@
         </ul>
     </nav>
 
+    <fmt:message var="title" key="patient.view.disease_history.title"/>
+    <h5 class="centered">${title}</h5>
     <div class="panel-body">
         <div class="timeline">
             <c:forEach var="patientDiagnosis" items="${patientDiagnoses}" varStatus="status">
@@ -63,7 +63,7 @@
                                         <c:when test="${treatment.type.name eq 'treatment.procedure'}">
                                             <img src="/img/treatments/procedure.png" height="25"/>
                                             <%--<figure class="avatar avatar-lg">--%>
-                                                <%--<img src="/img/treatments/procedure.png" width="256">--%>
+                                                <%--<img src="/img/treatment/procedure.png" width="256">--%>
                                             <%--</figure>--%>
                                         </c:when>
                                         <c:when test="${treatment.type.name eq 'treatment.medicament'}">

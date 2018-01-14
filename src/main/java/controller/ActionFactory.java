@@ -10,6 +10,7 @@ import controller.patient.view.diagnosis.PatientDiagnosisDeleteAction;
 import controller.patient.view.diagnosis.PatientDiagnosisEditAction;
 import controller.patient.view.diagnosis.PatientDiagnosisSaveAction;
 import controller.patient.view.diagnosis.PatientDiagnosisViewAction;
+import controller.patient.view.treatment.*;
 import controller.user.UserDeleteAction;
 import controller.user.UserEditAction;
 import controller.user.UserListAction;
@@ -43,6 +44,13 @@ public class ActionFactory {
         actions.put("/patient/view/diagnosis/edit", PatientDiagnosisEditAction.class);
         actions.put("/patient/view/diagnosis/save", PatientDiagnosisSaveAction.class);
         actions.put("/patient/view/diagnosis/delete", PatientDiagnosisDeleteAction.class);
+
+        actions.put("/patient/view/treatment/list", TreatmentListAction.class);
+        actions.put("/patient/view/treatment/edit", TreatmentEditAction.class);
+        actions.put("/patient/view/treatment/save", TreatmentSaveAction.class);
+        actions.put("/patient/view/treatment/delete", TreatmentDeleteAction.class);
+        actions.put("/patient/view/treatment/done", TreatmentDoneAction.class);
+
         actions.put("/patient/view/disease_history", DiseaseHistoryAction.class);
 
         actions.put("/diagnosis/list", DiagnosisListAction.class);

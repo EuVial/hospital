@@ -37,7 +37,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
         try {
             DiagnosisToPatient diagnosisToPatient = diagnosisToPatientDao.read(id);
             if (diagnosisToPatient != null) {
-                List<Treatment> history = treatmentDao.readHistoryOfDiagnosisToPatient(id);
+                List<Treatment> history = treatmentDao.readTreatmentsFromDiagnosisToPatient(id);
                 DiagnosisToPatient currentDiagnosisToPatient;
                 for (Treatment treatment : history) {
                     currentDiagnosisToPatient = treatment.getDiagnosisToPatient();

@@ -32,6 +32,6 @@ public class PatientSaveAction extends Action {
                 throw new ServletException(e);
             }
         }
-        return new Forward("/patient/list.html");
+        return new Forward("/patient/view.html?id=" + patient.getId());
     }
 }

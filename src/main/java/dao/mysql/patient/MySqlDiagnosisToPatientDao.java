@@ -153,7 +153,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     public List<DiagnosisToPatient> readHistory(Integer patientId) throws PersistException {
         String sql =
-                "SELECT patient_diagnosis.id, diagnosis.title, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
+                "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
                 "FROM hospital.patient_diagnosis\n" +
                 "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
                 "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
@@ -172,6 +172,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 diagnosisToPatient.setDiagnosis(new Diagnosis());
                 diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
                 diagnosisToPatient.setDoctor(new User());
+                diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
                 diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
                 diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
                 diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
@@ -190,7 +191,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws PersistException {
         String sql =
-                "SELECT diagnosis.title, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date," +
+                "SELECT diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date," +
                         "patient.id, patient.first_name, patient.last_name, patient.ward\n" +
                         "FROM hospital.patient_diagnosis\n" +
                         "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
@@ -206,10 +207,11 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
             resultSet = statement.executeQuery();
             DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
             diagnosisToPatient.setId(diagnosisToPatientId);
-            diagnosisToPatient.setDiagnosis(new Diagnosis());
             while(resultSet.next()) {
+                diagnosisToPatient.setDiagnosis(new Diagnosis());
                 diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
                 diagnosisToPatient.setDoctor(new User());
+                diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
                 diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
                 diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
                 diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);

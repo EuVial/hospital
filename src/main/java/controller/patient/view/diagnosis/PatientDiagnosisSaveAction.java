@@ -44,14 +44,14 @@ public class PatientDiagnosisSaveAction extends Action {
                 diagnosisToPatient.getDiagnosis().setId(diagnosisService.getIdByTitle(title));
                 diagnosisToPatientService.save(diagnosisToPatient);
 
-                urlId = diagnosisToPatient.getPatient().getId();
+                urlId = diagnosisToPatient.getId();
             } catch(FactoryException | ServiceException e) {
                 throw new ServletException(e);
             }
         }
 
         if (urlId != null) {
-            return new Forward("/patient/view.html?id=" + urlId);
+            return new Forward("/patient/view/diagnosis/view.html?id=" + urlId);
         } else {
             return new Forward("/patient/list.html");
         }

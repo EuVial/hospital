@@ -49,6 +49,7 @@ public class MainServiceFactoryImpl implements ServiceFactory {
     public TreatmentService getTreatmentService() throws FactoryException {
         TreatmentServiceImpl treatmentService = new TreatmentServiceImpl();
         treatmentService.setTreatmentDao(getTreatmentDao());
+        treatmentService.setPatientDao(getPatientDao());
         return treatmentService;
     }
 

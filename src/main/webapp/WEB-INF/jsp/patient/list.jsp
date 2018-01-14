@@ -24,7 +24,6 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <%--<jsp:useBean id="users" scope="request" type="java.util.List"/>--%>
             <%--TODO: delete current logged user from list--%>
             <tbody>
                 <c:forEach var="patient" items="${patients}">
@@ -47,7 +46,6 @@
 
                 <c:if test="${currentUser.role eq 'DOCTOR'}">
                     <c:url var="urlPatientEdit" value="/patient/edit.html"/>
-                        <%--<a href="${urlPatientEdit}" class="add-button"><fmt:message key="patient.list.button.add"/></a>--%>
                     <tr>
                         <td></td><td></td><td></td>
                         <td>
@@ -55,7 +53,6 @@
                             <button class="btn btn-primary btn-action btn-lg">
                                 <i class="icon icon-plus"></i>
                             </button>
-                            <%--<fmt:message key="user.list.button.add"/>--%>
                         </a>
                     </c:if>
                 </td>
