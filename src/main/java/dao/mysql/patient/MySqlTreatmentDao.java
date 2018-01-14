@@ -201,6 +201,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             statement.setInt(1, 1);
             statement.setInt(2, treatment.getPerformer().getId());
             statement.setInt(3, treatment.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for update");
             throw new PersistException(e);

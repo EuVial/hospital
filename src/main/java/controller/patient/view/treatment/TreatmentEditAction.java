@@ -6,6 +6,7 @@ import domain.patient.Patient;
 import domain.patient.Treatment;
 import domain.patient.TreatmentType;
 import service.ServiceException;
+import service.patient.PatientService;
 import service.patient.TreatmentService;
 import util.FactoryException;
 
@@ -24,9 +25,11 @@ public class TreatmentEditAction extends Action {
         } catch(NumberFormatException e) {}
         if(id != null) {
             try {
-                TreatmentService service = getServiceFactory().getTreatmentService();
-                treatment = service.readInfo(id);
+                TreatmentService treatmentService = getServiceFactory().getTreatmentService();
+                treatment = treatmentService.readInfo(id);
                 Patient patient = treatment.getPatient();
+                PatientService patientService = getServiceFactory().getPatientService();
+                patient = patientService.findById(patient.getId());
                 if(patient != null) {
                     req.setAttribute("patient", patient);
                 }

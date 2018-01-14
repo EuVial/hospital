@@ -32,7 +32,8 @@
 # UPDATE hospital.treatment
 # SET done = 1, performer_id = ?
 # WHERE id = ?
+SELECT * FROM hospital.treatment WHERE id=51;
 
 UPDATE hospital.treatment
 SET done = 1, performer_id = 2
-WHERE id = 7;
+WHERE id = 51;

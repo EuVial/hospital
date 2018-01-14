@@ -63,14 +63,24 @@
                         <%--<input name="diagnosis_title" value="${treatment.diagnosisToPatient.diagnosis.title}" type="hidden"/>--%>
                     </c:if>
 
-                    <%--<div class="form-group">--%>
-                        <%--<div class="col-4">--%>
-                            <%--<label class="form-label" for="diagnosisTitle"><fmt:message key="patient.view.treatment.edit.form.treatment.title"/>:</label>--%>
-                        <%--</div>--%>
+                    <div class="form-group">
+                        <div class="col-4">
+                            <label class="form-label" for="diagnosisTitle"><fmt:message key="patient.view.treatment.edit.form.treatment.title"/>:</label>
+                        </div>
+                        <div class="col-5">
+                            <select class="form-select" id="diagnosisTitle" name="diagnosisTitle">
+                                <option>${treatment.diagnosisToPatient.diagnosis.title}</option>
+                                <c:forEach var="patientDiagnosis" items="${patient.history}">
+                                    <c:if test="${patientDiagnosis.diagnosis.title != treatment.diagnosisToPatient.diagnosis.title}">
+                                        <option>${patientDiagnosis.diagnosis.title}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
                         <%--<div class="col-5">--%>
                             <%--<input class="form-label" id="diagnosisTitle" name="diagnosisTitle" value="${treatment.diagnosisToPatient.diagnosis.title}">--%>
                         <%--</div>--%>
-                    <%--</div>--%>
+                    </div>
 
                     <%--<div class="form-group">--%>
                         <%--<div class="col-4">--%>

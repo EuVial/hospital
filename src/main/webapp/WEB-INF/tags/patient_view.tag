@@ -8,7 +8,7 @@
 
     <div id="panels" class="container">
         <div class="columns">
-            <div class="column col-10 col-xs-12">
+            <div class="column col-12 col-xs-12">
                 <div class="panel">
                     <div class="panel-header text-center">
                         <h4 class="s-title text-center">${title}</h4>
