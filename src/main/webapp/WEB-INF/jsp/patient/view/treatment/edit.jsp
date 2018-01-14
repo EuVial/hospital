@@ -57,11 +57,14 @@
             <div class="column col-12">
                 <c:url var="urlTreatmentSave" value="/patient/view/treatment/save.html"/>
                 <c:url var="urlTreatmentDelete" value="/patient/view/treatment/delete.html"/>
+                <c:url var="urlTreatmentList" value="/patient/view/treatment/list.html"/>
+
                 <form class="form-horizontal" action="${urlTreatmentSave}" method="post">
                     <c:if test="${not empty treatment.id}">
                         <input name="id" value="${treatment.id}" type="hidden"/>
-                        <input name="patientId" value="${patient.id}" type="hidden"/>
                     </c:if>
+                    <input name="patientId" value="${patient.id}" type="hidden"/>
+
 
                     <div class="form-group">
                         <div class="col-4">
@@ -158,6 +161,13 @@
                     <button class="btn btn-primary btn-action btn-lg" type="reset">
                         <i class="icon icon-refresh"></i>
                     </button>
+
+                    <form action="${urlTreatmentList}" method="get">
+                        <param name="id" value="${patient.id}"/>
+                        <button class="btn btn-primary btn-action btn-lg">
+                            <i class="icon icon-back"></i>
+                        </button>
+                    </form>
                 </form>
             </div>
         </div>

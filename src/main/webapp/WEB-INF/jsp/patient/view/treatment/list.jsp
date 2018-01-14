@@ -58,15 +58,22 @@
 
                         <td>
                             <c:if test="${treatment.diagnosisToPatient.doctor.id == currentUser.id}">
-                                <c:url var="urlTreatmentEdit" value="/patient/view/treatment/edit.html">
-                                    <c:param name="id" value="${treatment.id}"/>
-                                    <c:param name="patientId" value="${patient.id}"/>
-                                </c:url>
-                                <a href="${urlTreatmentEdit}">
+                                <c:url var="urlTreatmentEdit" value="/patient/view/treatment/edit.html"/>
+                                    <%--<c:param name="id" value="${treatment.id}"/>--%>
+                                    <%--<c:param name="patientId" value="${patient.id}"/>--%>
+                                <%--</c:url>--%>
+                                <form action="${urlTreatmentEdit}" method="get">
+                                    <input name="id" value="${treatment.id}" type="hidden"/>
+                                    <input name="patientId" value="${patient.id}" type="hidden"/>
                                     <button class="btn btn-primary btn-action btn-lg">
                                         <i class="icon icon-edit"></i>
                                     </button>
-                                </a>
+                                </form>
+                                <%--<a href="${urlTreatmentEdit}" method="post">--%>
+                                    <%--<button class="btn btn-primary btn-action btn-lg">--%>
+                                        <%--<i class="icon icon-edit"></i>--%>
+                                    <%--</button>--%>
+                                <%--</a>--%>
                             </c:if>
                         </td>
 
@@ -88,10 +95,7 @@
                                     <%--</button>--%>
                                 <%--</a>--%>
                             </c:if>
-
-
                         </td>
-
                     </tr>
                 </c:forEach>
             </tbody>

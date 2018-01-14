@@ -92,8 +92,6 @@
                             <%--<input class="form-input" id="consultation_date" name="consultation_date" type="date" placeholder="00" value=<fmt:formatDate pattern="dd.MM.yyyy, HH.mm" value="${patientDiagnosis.consultationDate}"/>/>--%>
                         <%--</div>--%>
                     <%--</div>--%>
-                    <button class="btn"><fmt:message key="patient.view.diagnosis.edit.button.makeAssignment"/></button>
-
 
                     <button class="btn btn-primary btn-action btn-lg">
                         <i class="icon icon-check"></i>

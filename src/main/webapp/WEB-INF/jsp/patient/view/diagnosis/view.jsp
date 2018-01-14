@@ -64,12 +64,23 @@
                 <td><fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/></td>
             </tr>
             <tr>
-                <th>&nbsp</th>
+                <th>
+
+                </th>
                 <td>
                     <c:if test="${currentUser.role eq 'DOCTOR'}">
                         <c:url var="urlPatientDiagnosisEdit" value="/patient/view/diagnosis/edit.html">
                             <c:param name="id" value="${patientDiagnosis.id}"/>
+                            <c:param name="patientId" value="${patient.id}"/>
                         </c:url>
+
+                        <%--<form action="${urlPatientDiagnosisEdit}" method="get">--%>
+                        <%--<input name="id" value="${patientDiagnosis.id}" type="hidden"/>--%>
+                        <%--<input name="patientId" value="${patient.id}" type="hidden"/>--%>
+                        <%--<button class="btn btn-primary btn-action btn-lg">--%>
+                        <%--<i class="icon icon-edit"></i>--%>
+                        <%--</button>--%>
+                        <%--</form>--%>
                         <a href="${urlPatientDiagnosisEdit}">
                             <button class="btn btn-primary btn-action btn-lg">
                                 <i class="icon icon-edit"></i>
@@ -79,6 +90,13 @@
                     <c:url var="urlDiseaseHistory" value="/patient/view/disease_history.html">
                         <c:param name="id" value="${patient.id}"/>
                     </c:url>
+
+                        <%--<form action="${urlDiseaseHistory}" method="get">--%>
+                        <%--<input name="id" value="${patient.id}" type="hidden"/>--%>
+                        <%--<button class="btn btn-primary btn-action btn-lg">--%>
+                        <%--<i class="icon icon-back"></i>--%>
+                        <%--</button>--%>
+                        <%--</form>--%>
                     <a href="${urlDiseaseHistory}">
                         <button class="btn btn-primary btn-action btn-lg">
                             <i class="icon icon-back"></i>

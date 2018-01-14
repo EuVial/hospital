@@ -88,14 +88,24 @@
                                 </c:forEach>
                             </div>
                             <div class="tile-action">
-                                <c:url var="urlPatientEdit" value="/patient/view/diagnosis/view.html">
-                                    <c:param name="id" value="${patientDiagnosis.id}"/>
-                                </c:url>
-                                <a href="${urlPatientEdit}">
-                                    <button class="btn">
+                                <c:url var="urlPatientEdit" value="/patient/view/diagnosis/view.html"/>
+                                    <%--<c:param name="id" value="${patientDiagnosis.id}"/>--%>
+                                    <%--<c:param name="patientId" value="${patient.id}"/>--%>
+                                <%--</c:url>--%>
+
+                                <form action="${urlPatientEdit}" method="get">
+                                    <input name="id" value="${patientDiagnosis.id}" type="hidden"/>
+                                    <input name="patientId" value="${patient.id}" type="hidden"/>
+                                    <button class="btn" type="submit">
                                         <fmt:message key="patient.view.disease_history.button.view"/>
                                     </button>
-                                </a>
+                                </form>
+
+                                <%--<a href="${urlPatientEdit}">--%>
+                                    <%--<button class="btn">--%>
+                                        <%--<fmt:message key="patient.view.disease_history.button.view"/>--%>
+                                    <%--</button>--%>
+                                <%--</a>--%>
                             </div>
                         </div>
                     </div>

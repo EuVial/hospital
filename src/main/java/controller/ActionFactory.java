@@ -49,6 +49,7 @@ public class ActionFactory {
         actions.put("/patient/view/treatment/edit", TreatmentEditAction.class);
         actions.put("/patient/view/treatment/save", TreatmentSaveAction.class);
         actions.put("/patient/view/treatment/delete", TreatmentDeleteAction.class);
+        actions.put("/patient/view/treatment/view", TreatmentViewAction.class);
         actions.put("/patient/view/treatment/done", TreatmentDoneAction.class);
 
         actions.put("/patient/view/disease_history", DiseaseHistoryAction.class);
