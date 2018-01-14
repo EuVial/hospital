@@ -60,18 +60,19 @@
                 <form class="form-horizontal" action="${urlTreatmentSave}" method="post">
                     <c:if test="${not empty treatment.id}">
                         <input name="id" value="${treatment.id}" type="hidden"/>
-                        <%--<input name="diagnosis_title" value="${treatment.diagnosisToPatient.diagnosis.title}" type="hidden"/>--%>
+                        <input name="patientId" value="${patient.id}" type="hidden"/>
                     </c:if>
 
                     <div class="form-group">
                         <div class="col-4">
-                            <label class="form-label" for="diagnosisTitle"><fmt:message key="patient.view.treatment.edit.form.treatment.title"/>:</label>
+                            <label class="form-label" for="diagnosisTitle"><fmt:message key="patient.view.treatment.edit.form.diagnosis.title"/>:</label>
                         </div>
                         <div class="col-5">
                             <select class="form-select" id="diagnosisTitle" name="diagnosisTitle">
                                 <option>${treatment.diagnosisToPatient.diagnosis.title}</option>
                                 <c:forEach var="patientDiagnosis" items="${patient.history}">
-                                    <c:if test="${patientDiagnosis.diagnosis.title != treatment.diagnosisToPatient.diagnosis.title}">
+                                    <c:if test="${(patientDiagnosis.diagnosis.title != treatment.diagnosisToPatient.diagnosis.title)
+                                                    && (patientDiagnosis.doctor.id eq currentUser.id)}">
                                         <option>${patientDiagnosis.diagnosis.title}</option>
                                     </c:if>
                                 </c:forEach>
@@ -131,6 +132,20 @@
                             </c:forEach>
                         </div>
                     </div>
+
+                    <%--<div class="form-group">--%>
+                        <%--<div class="col-4">--%>
+                            <%--<label class="form-switch">--%>
+                                <%--<c:if test="${treatment.done}">--%>
+                                    <%--<c:set var="switchChecked" value="checked"/>--%>
+                                <%--</c:if>--%>
+                                <%--<input type="checkbox" value="${treatment.done}" name="done" ${switchChecked}>--%>
+                                <%--<i class="form-icon"></i>--%>
+                                <%--<fmt:message key="patient.view.treatment.edit.form.treatment.done"/>--%>
+                            <%--</label>--%>
+                        <%--</div>--%>
+                        <%--</label>--%>
+                    <%--</div>--%>
 
                     <button class="btn btn-primary btn-action btn-lg">
                         <i class="icon icon-check"></i>

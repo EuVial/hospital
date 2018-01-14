@@ -32,8 +32,13 @@
 # UPDATE hospital.treatment
 # SET done = 1, performer_id = ?
 # WHERE id = ?
-SELECT * FROM hospital.treatment WHERE id=51;
+# SELECT * FROM hospital.treatment WHERE id=51;
+#
+# UPDATE hospital.treatment
+# SET done = 1, performer_id = 2
+# WHERE id = 51;
 
-UPDATE hospital.treatment
-SET done = 1, performer_id = 2
-WHERE id = 51;
+SELECT patient_diagnosis.id FROM hospital.patient_diagnosis
+  JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)
+  JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)
+WHERE diagnosis.title = ? AND patient.id = ?;

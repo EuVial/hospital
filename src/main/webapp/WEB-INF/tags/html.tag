@@ -109,7 +109,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="column col-8 col-mr-auto">
+            <div class="column col-6 col-mr-auto">
                 <%--<div id="content" class="docs-content off-canvas-content">--%>
                 <jsp:doBody/>
             </div>

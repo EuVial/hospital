@@ -109,5 +109,14 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws ServiceException {
+        try {
+            return diagnosisToPatientDao.getDiagnosisToPatientId(diagnosisTitle, patientId);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
 }
 

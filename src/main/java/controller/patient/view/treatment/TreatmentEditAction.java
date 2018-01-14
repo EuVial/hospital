@@ -19,17 +19,18 @@ public class TreatmentEditAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = null;
+        Integer patientId = null;
         Treatment treatment;
         try {
             id = Integer.parseInt(req.getParameter("id"));
+            patientId = Integer.parseInt(req.getParameter("patientId"));
         } catch(NumberFormatException e) {}
         if(id != null) {
             try {
                 TreatmentService treatmentService = getServiceFactory().getTreatmentService();
                 treatment = treatmentService.readInfo(id);
-                Patient patient = treatment.getPatient();
                 PatientService patientService = getServiceFactory().getPatientService();
-                patient = patientService.findById(patient.getId());
+                Patient patient = patientService.findById(patientId);
                 if(patient != null) {
                     req.setAttribute("patient", patient);
                 }

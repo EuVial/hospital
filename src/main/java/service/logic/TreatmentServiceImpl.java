@@ -1,9 +1,10 @@
 package service.logic;
 
 import dao.PersistException;
+import dao.mysql.patient.MySqlDiagnosisToPatientDao;
 import dao.mysql.patient.MySqlPatientDao;
-import domain.patient.Treatment;
 import dao.mysql.patient.MySqlTreatmentDao;
+import domain.patient.Treatment;
 import service.EntityNotExistsException;
 import service.ServiceException;
 import service.patient.TreatmentService;
@@ -16,11 +17,17 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     private MySqlPatientDao patientDao;
 
+    private MySqlDiagnosisToPatientDao diagnosisToPatientDao;
+
     public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
     }
 
     public void setPatientDao(MySqlPatientDao patientDao) { this.patientDao = patientDao; }
+
+    public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
+        this.diagnosisToPatientDao = diagnosisToPatientDao;
+    }
 
     @Override
     public Treatment findById(Integer id) throws ServiceException {

@@ -50,6 +50,7 @@ public class MainServiceFactoryImpl implements ServiceFactory {
         TreatmentServiceImpl treatmentService = new TreatmentServiceImpl();
         treatmentService.setTreatmentDao(getTreatmentDao());
         treatmentService.setPatientDao(getPatientDao());
+        treatmentService.setDiagnosisToPatientDao(getDiagnosisToPatientDao());
         return treatmentService;
     }
 

@@ -6,4 +6,6 @@ import service.ServiceException;
 
 public interface DiagnosisToPatientService extends EntityService<DiagnosisToPatient> {
     DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws ServiceException;
+
+    Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws ServiceException;
 }

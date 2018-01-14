@@ -60,6 +60,7 @@
                             <c:if test="${treatment.diagnosisToPatient.doctor.id == currentUser.id}">
                                 <c:url var="urlTreatmentEdit" value="/patient/view/treatment/edit.html">
                                     <c:param name="id" value="${treatment.id}"/>
+                                    <c:param name="patientId" value="${patient.id}"/>
                                 </c:url>
                                 <a href="${urlTreatmentEdit}">
                                     <button class="btn btn-primary btn-action btn-lg">
