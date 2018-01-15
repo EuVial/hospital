@@ -8,15 +8,9 @@
 <c:if test="${empty patientDiagnosis}">
     <jsp:useBean id="patientDiagnosis" class="domain.patient.DiagnosisToPatient"/>
 </c:if>
-<c:choose>
-    <c:when test="${not empty patientDiagnosis.id}">
-        <fmt:message var="title" key="patient.view.diagnosis.view.title.edit"/>
-    </c:when>
-    <c:otherwise>
-        <fmt:message var="title" key="patient.view.diagnosis.view.title.add"/>
-    </c:otherwise>
-</c:choose>
 
+
+<fmt:message var="title" key="patient.discharge.title"/>
 <u:patient_view>
     <nav class="panel-nav">
         <ul class="tab tab-block">
@@ -25,7 +19,7 @@
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientView}">
-                <fmt:message key="patient.view.panel.profile"/></a>
+                    <fmt:message key="patient.view.panel.profile"/></a>
             </li>
 
             <li class="tab-item">
@@ -34,10 +28,10 @@
                     <c:param name="id" value="${patient.id}"/>
                 </c:url>
                 <a href="${urlPatientTreatment}">
-                <fmt:message key="patient.view.panel.treatment"/></a>
+                    <fmt:message key="patient.view.panel.treatment"/></a>
             </li>
 
-           <li class="tab-item active">
+            <li class="tab-item active">
                 <c:url var="urlPatientHistory"
                        value="/patient/view/disease_history.html">
                     <c:param name="id" value="${patient.id}"/>
@@ -53,19 +47,15 @@
     <div class="panel-body">
         <div class="columns">
             <div class="column col-12">
-                <c:url var="urlPatientDiagnosisView" value="/patient/view/diagnosis/view.html">
-                    <c:param name="id" value="${patientDiagnosis.id}"/>
-                </c:url>
-                <c:url var="urlPatientDiagnosisSave" value="/patient/view/diagnosis/save.html"/>
-                <c:url var="urlPatientDiagnosisDelete" value="/patient/view/diagnosis/delete.html"/>
+                <c:url var="urlPatientDiagnosisSave" value="/patient/discharge/done.html"/>
                 <form class="form-horizontal" action="${urlPatientDiagnosisSave}" method="post">
                     <input name="patientId" value="${patient.id}" type="hidden"/>
-                    <c:if test="${not empty patientDiagnosis.id}">
-                        <input name="id" value="${patientDiagnosis.id}" type="hidden">
-                    </c:if>
+                    <%--<c:if test="${not empty patientDiagnosis.id}">--%>
+                        <%--<input name="id" value="${patientDiagnosis.id}" type="hidden">--%>
+                    <%--</c:if>--%>
                     <div class="form-group">
                         <div class="col-4">
-                            <label class="form-label" for="diagnosis.title"><fmt:message key="patient.view.diagnosis.edit.form.diagnosis.title"/>:</label>
+                            <label class="form-label" for="diagnosis.title"><fmt:message key="patient.discharge.diagnosis.title"/>:</label>
                         </div>
                         <div class="col-5">
                             <select class="form-select" id="diagnosis.title" name="diagnosis.title">
@@ -83,22 +73,8 @@
                         <i class="icon icon-check"></i>
                     </button>
 
-                    <c:if test="${not empty patientDiagnosis.id}">
-                        <c:if test="${not patientDiagnosisCanBeDeleted}">
-                            <c:set var="disabled" value="disabled"/>
-                        </c:if>
-
-                        <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientDiagnosisDelete}" formmethod="post" ${disabled}>
-                            <i class="icon icon-delete"></i>
-                        </button>
-                    </c:if>
-
                     <button class="btn btn-primary btn-action btn-lg" type="reset">
                         <i class="icon icon-refresh"></i>
-                    </button>
-
-                    <button class="btn btn-primary btn-action btn-lg" formaction="${urlPatientDiagnosisView}" formmethod="get">
-                        <i class="icon icon-back"></i>
                     </button>
                 </form>
             </div>

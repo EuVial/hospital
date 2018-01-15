@@ -1,11 +1,13 @@
 package service.logic;
 
-import domain.user.User;
-import dao.mysql.user.MySqlUserDao;
 import dao.PersistException;
+import dao.mysql.user.MySqlUserDao;
+import domain.user.User;
+import service.EntityNotExistsException;
 import service.ServiceException;
 import service.user.UserLoginNotUniqueException;
-import service.EntityNotExistsException;
+import service.user.UserNotExistsException;
+import service.user.UserPasswordIncorrectException;
 import service.user.UserService;
 
 import java.util.List;
@@ -97,6 +99,28 @@ public class UserServiceImpl implements UserService {
             } catch (PersistException e) {
                 throw new ServiceException(e);
             }
+        }
+    }
+
+    @Override
+    public void changePassword(Integer userId, String oldPassword, String newPassword) throws ServiceException {
+        try {
+            User user = userDao.read(userId);
+            if(user != null) {
+                if(user.getPassword().equals(oldPassword)) {
+                    if(newPassword == null) {
+                        newPassword = defaultPassword;
+                    }
+                    user.setPassword(newPassword);
+                    userDao.update(user);
+                } else {
+                    throw new UserPasswordIncorrectException(user.getId());
+                }
+            } else {
+                throw new UserNotExistsException(userId);
+            }
+        } catch(PersistException e) {
+            throw new ServiceException(e);
         }
     }
 }

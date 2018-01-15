@@ -99,6 +99,13 @@
                         </c:choose>
                     </li>
 
+                    <li class="menu-item">
+                        <c:url var="urlPasswordEdit" value="/password/edit.html"/>
+                        <a href="${urlPasswordEdit}">
+                            <fmt:message key="application.button.password.change"/>
+                        </a>
+                    </li>
+
                     <li class="divider"></li>
 
                     <li class="menu-item">

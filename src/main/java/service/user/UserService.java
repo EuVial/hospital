@@ -16,4 +16,6 @@ public interface UserService extends EntityService<User> {
 //    void delete(User user) throws ServiceException;
 
     User findByLoginAndPassword(String login, String password) throws ServiceException;
+
+    void changePassword(Integer userId, String oldPassword, String newPassword) throws ServiceException;
 }

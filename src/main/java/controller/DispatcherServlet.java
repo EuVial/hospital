@@ -39,25 +39,28 @@ public class DispatcherServlet extends HttpServlet {
         String url = req.getRequestURI();
         String context = req.getContextPath();
         int postfixIndex = url.lastIndexOf(".html");
-        if (postfixIndex != -1) {
+        if(postfixIndex != -1) {
             url = url.substring(context.length(), postfixIndex);
         } else {
             url = url.substring(context.length());
         }
         Action action = ActionFactory.getAction(url);
-        try (ServiceFactory factory = getServiceFactory()) {
-            action.setServiceFactory(factory);
-            Forward forward = action.execute(req, resp);
-            if (forward != null && forward.isRedirect()) {
-                resp.sendRedirect(context + forward.getUrl());
-            } else {
-                if (forward != null && forward.getUrl() != null) {
-                    url = forward.getUrl();
-                }
-                req.getRequestDispatcher("/WEB-INF/jsp" + url + ".jsp").forward(req, resp);
+        Forward forward = null;
+        if(action != null) {
+            try(ServiceFactory factory = getServiceFactory()) {
+                action.setServiceFactory(factory);
+                forward = action.execute(req, resp);
+            } catch(Exception e) {
+                throw new ServletException(e);
             }
-        } catch(Exception e) {
-            throw new ServletException(e);
+        }
+        if(forward != null && forward.isRedirect()) {
+            resp.sendRedirect(context + forward.getUrl());
+        } else {
+            if(forward != null && forward.getUrl() != null) {
+                url = forward.getUrl();
+            }
+            req.getRequestDispatcher("/WEB-INF/jsp" + url + ".jsp").forward(req, resp);
         }
     }
 }

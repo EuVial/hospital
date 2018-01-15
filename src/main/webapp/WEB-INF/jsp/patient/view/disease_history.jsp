@@ -58,6 +58,9 @@
                                     <fmt:message key="patient.view.disease_history.tile.treatment"/>
                                 </div>
                                 <c:forEach var="treatment" items="${patientDiagnosis.history}">
+                                    <c:if test="${not treatment.isDone}">
+                                        <c:set var="patientExchargeDisabled" value="disabled"/>
+                                    </c:if>
                                     <%--Treatments--%>
                                 <div class="tile-title">
                                     <c:url var="urlTreatmentView" value="/patient/view/treatment/view.html">
@@ -136,6 +139,14 @@
                 <input name="patientId" value="${patient.id}" type="hidden"/>
                 <button class="btn" type="submit">
                     <fmt:message key="patient.view.disease_history.button.makeDiagnosis"/>
+                </button>
+            </form>
+
+            <c:url var="urlPatientDischarge" value="/patient/discharge.html"/>
+            <form action="${urlPatientDischarge}" method="get" ${patientExchargeDisabled}>
+                <input name="patientId" value="${patient.id}" type="hidden"/>
+                <button class="btn"">
+                    <fmt:message key="patient.view.disease_history.button.discharge.patient"/>
                 </button>
             </form>
         </c:if>

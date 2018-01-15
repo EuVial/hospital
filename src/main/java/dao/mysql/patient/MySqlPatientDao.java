@@ -96,7 +96,12 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
-            statement.setInt(3, object.getWard());
+            Object ward = object.getWard();
+            if (ward != null) {
+                statement.setInt(3, (Integer) ward);
+            } else {
+                statement.setNull(3, object.getWard());
+            }
             statement.setInt(4, object.getId());
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for update");

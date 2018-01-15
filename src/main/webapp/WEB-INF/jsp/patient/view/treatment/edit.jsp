@@ -157,9 +157,11 @@
                         <i class="icon icon-check"></i>
                     </button>
 
-                    <button class="btn btn-primary btn-action btn-lg" formaction="${urlTreatmentDelete}" formmethod="post">
-                        <i class="icon icon-delete"></i>
-                    </button>
+                    <c:if test="${not empty treatment.id}">
+                        <button class="btn btn-primary btn-action btn-lg" formaction="${urlTreatmentDelete}" formmethod="post">
+                            <i class="icon icon-delete"></i>
+                        </button>
+                    </c:if>
 
                     <button class="btn btn-primary btn-action btn-lg" type="reset">
                         <i class="icon icon-refresh"></i>

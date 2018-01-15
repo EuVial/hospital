@@ -33,7 +33,6 @@ public class TreatmentDoneAction extends Action {
                 throw new ServletException(e);
             }
         }
-        //TODO: correct forward
         if (urlId != null) {
             return new Forward("/patient/view/treatment/list.html?id=" + urlId);
         } else {

@@ -69,7 +69,7 @@ public class TreatmentSaveAction extends Action {
         }
 
         if (patientId != null) {
-            return new Forward("/patient/view/treatment/list.html?id=" + patientId);
+            return new Forward("/patient/view/disease_history.html?id=" + patientId);
         } else {
             return new Forward("/patient/list.html");
         }

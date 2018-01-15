@@ -24,6 +24,7 @@
             <c:url var="urlUserList" value="/user/list.html"/>
             <c:url var="urlUserSave" value="/user/save.html"/>
             <c:url var="urlUserDelete" value="/user/delete.html"/>
+            <c:url var="urlPasswordReset" value="/password/reset.html"/>
             <form class="form-horizontal" action="${urlUserSave}" method="post">
                 <c:if test="${not empty user.id}">
                     <input name="id" value="${user.id}" type="hidden">
@@ -81,7 +82,11 @@
                             </c:forEach>
                     </div>
                 </div>
-                    <%--TODO: ADD PASSWORD RESET BUTTON--%>
+
+                <c:if test="${not empty user.id}">
+                    <button class="btn btn-primary btn-lg" formaction="${urlPasswordReset}" formmethod="post"><fmt:message key="user.edit.button.password.reset"/></button>
+                </c:if>
+
                 <button class="btn btn-primary btn-action btn-lg">
                     <%--<fmt:message key="user.edit.button.save"/>--%>
                     <i class="icon icon-check"></i>
@@ -97,6 +102,7 @@
                         <i class="icon icon-delete"></i>
                     </button>
                 </c:if>
+
 
                 <button class="btn btn-primary btn-action btn-lg" type="reset">
                     <i class="icon icon-refresh"></i>

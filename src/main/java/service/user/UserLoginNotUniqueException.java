@@ -6,7 +6,7 @@ public class UserLoginNotUniqueException extends ServiceException {
     private String login;
 
     public UserLoginNotUniqueException(String login) {
-        super();
+//        super();
         this.login = login;
     }
 

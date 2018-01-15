@@ -4,6 +4,8 @@ import controller.diagnosis.DiagnosisDeleteAction;
 import controller.diagnosis.DiagnosisEditAction;
 import controller.diagnosis.DiagnosisListAction;
 import controller.diagnosis.DiagnosisSaveAction;
+import controller.password.PasswordResetAction;
+import controller.password.PasswordSaveAction;
 import controller.patient.*;
 import controller.patient.view.DiseaseHistoryAction;
 import controller.patient.view.diagnosis.PatientDiagnosisDeleteAction;
@@ -28,6 +30,8 @@ public class ActionFactory {
 
         actions.put("/login", LoginAction.class);
         actions.put("/logout", LogoutAction.class);
+        actions.put("/password/save", PasswordSaveAction.class);
+        actions.put("/password/reset", PasswordResetAction.class);
 
         actions.put("/user/list", UserListAction.class);
         actions.put("/user/edit", UserEditAction.class);
@@ -39,6 +43,8 @@ public class ActionFactory {
         actions.put("/patient/save", PatientSaveAction.class);
         actions.put("/patient/delete", PatientDeleteAction.class);
         actions.put("/patient/view", PatientViewAction.class);
+        actions.put("/patient/discharge", PatientDischargeAction.class);
+        actions.put("/patient/discharge/done", PatientDischargeDoneAction.class);
 
         actions.put("/patient/view/diagnosis/view", PatientDiagnosisViewAction.class);
         actions.put("/patient/view/diagnosis/edit", PatientDiagnosisEditAction.class);
@@ -62,10 +68,14 @@ public class ActionFactory {
 
     public static Action getAction(String url) throws ServletException {
         Class<?> action = actions.get(url);
-        try {
-            return (Action)action.newInstance();
-        } catch(InstantiationException | IllegalAccessException | NullPointerException e) {
-            throw new ServletException(e);
+        if(action != null) {
+            try {
+                return (Action)action.newInstance();
+            } catch(InstantiationException | IllegalAccessException | NullPointerException e) {
+                throw new ServletException(e);
+            }
+        } else {
+            return null;
         }
     }
 }
