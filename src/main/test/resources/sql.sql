@@ -38,7 +38,17 @@
 # SET done = 1, performer_id = 2
 # WHERE id = 51;
 
-SELECT patient_diagnosis.id FROM hospital.patient_diagnosis
-  JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)
-  JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)
-WHERE diagnosis.title = ? AND patient.id = ?;
+# SELECT patient_diagnosis.id FROM hospital.patient_diagnosis
+#   JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)
+#   JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)
+# WHERE diagnosis.title = ? AND patient.id = ?;
+
+SELECT treatment.title, treatment.type_id, treatment.done,
+                        user.first_name, user.last_name, user.role_id, patient_diagnosis.doctor_id,
+                        diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward
+                        FROM hospital.treatment
+                          JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)
+                          JOIN hospital.user ON (treatment.performer_id = user.id)
+                          JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)
+                          JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)
+                        WHERE treatment.id = ?;

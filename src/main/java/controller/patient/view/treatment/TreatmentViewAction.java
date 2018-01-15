@@ -22,9 +22,14 @@ public class TreatmentViewAction extends Action {
             Integer patientId = Integer.parseInt(req.getParameter("patientId"));
             TreatmentService treatmentService = getServiceFactory().getTreatmentService();
             Treatment treatment = treatmentService.findById(id);
+            if (treatment.getIsDone()) {
+                treatment = treatmentService.readInfoIfDone(id);
+            } else {
+                treatment = treatmentService.readInfo(id);
+            }
             PatientService patientService =getServiceFactory().getPatientService();
             Patient patient = patientService.findById(patientId);
-            if(patient != null) {
+            if (patient != null) {
                 req.setAttribute("patient", patient);
                 req.setAttribute("treatment", treatment);
                 return null;

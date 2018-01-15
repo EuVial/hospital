@@ -59,24 +59,24 @@
                                 </div>
                                 <c:forEach var="treatment" items="${patientDiagnosis.history}">
                                 <div class="tile-title">
+                                    <c:url var="urlTreatmentView" value="/patient/view/treatment/view.html">
+                                        <c:param name="id" value="${treatment.id}"/>
+                                        <c:param name="patientId" value="${patient.id}"/>
+                                    </c:url>
+                                    <a href="${urlTreatmentView}">
+                                        <button class="btn btn-action btn-sm">
+                                            <i class="icon icon-more-horiz"></i>
+                                        </button>
+                                    </a>
                                     <c:choose>
                                         <c:when test="${treatment.type.name eq 'treatment.procedure'}">
                                             <img src="/img/treatments/procedure.png" height="25"/>
-                                            <%--<figure class="avatar avatar-lg">--%>
-                                                <%--<img src="/img/treatment/procedure.png" width="256">--%>
-                                            <%--</figure>--%>
                                         </c:when>
                                         <c:when test="${treatment.type.name eq 'treatment.medicament'}">
                                             <img src="/img/treatments/medicament.png" height="25"/>
-                                            <%--<figure class="avatar avatar-lg">--%>
-                                                <%--<img src="/img/treatments/medicament.png" width="256">--%>
-                                            <%--</figure>--%>
                                         </c:when>
                                         <c:when test="${treatment.type.name eq 'treatment.surgery'}">
                                             <img src="/img/treatments/surgery.png" height="25"/>
-                                            <%--<figure class="avatar avatar-lg">--%>
-                                                <%--<img src="/img/treatments/surgery.png" width="256">--%>
-                                            <%--</figure>--%>
                                         </c:when>
                                         <c:otherwise>
                                             &nbsp;

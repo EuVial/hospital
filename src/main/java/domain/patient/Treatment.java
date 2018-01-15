@@ -51,8 +51,8 @@ public class Treatment extends Entity implements Identified<Integer> {
     public void setPatient(Patient patient) {
         this.patient = patient;
     }
-
-    public boolean isDone() {
+    // this strange name of getter because jsp cannot read this value without getter which starts with "get"
+    public boolean getIsDone() {
         return isDone;
     }
 

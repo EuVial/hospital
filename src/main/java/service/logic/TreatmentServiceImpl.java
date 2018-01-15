@@ -91,6 +91,15 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
+    public Treatment readInfoIfDone(Integer treatmentId) throws ServiceException {
+        try {
+            return treatmentDao.readInfoIfDone(treatmentId);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public void done(Treatment treatment) throws ServiceException {
         if(treatment.getId() != null) {
             try {

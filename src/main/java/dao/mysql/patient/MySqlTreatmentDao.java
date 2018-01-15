@@ -4,6 +4,7 @@ import dao.PersistException;
 import dao.mysql.AbstractJDBCDao;
 import domain.patient.*;
 import domain.user.User;
+import domain.user.UserRole;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -95,7 +96,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             statement.setInt(2, object.getDiagnosisToPatient().getId());
             statement.setInt(3, object.getType().ordinal());
             statement.setInt(4, object.getPerformer().getId());
-            statement.setInt(5, object.isDone() ? 1 : 0);
+            statement.setInt(5, object.getIsDone() ? 1 : 0);
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for insert");
             throw new PersistException(e);
@@ -109,7 +110,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             statement.setInt(2, object.getDiagnosisToPatient().getId());
             statement.setInt(3, object.getType().ordinal());
             statement.setInt(4, object.getPerformer().getId());
-            statement.setInt(5, object.isDone() ? 1 : 0);
+            statement.setInt(5, object.getIsDone() ? 1 : 0);
             statement.setInt(6, object.getId());
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for update");
@@ -150,7 +151,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
 
     public Treatment readInfo(Integer treatmentId) throws PersistException {
         String sql =
-                "SELECT treatment.title, treatment.type_id, treatment.done, " +
+                "SELECT treatment.title, treatment.type_id, treatment.done, patient_diagnosis.doctor_id, " +
 //                        "user.first_name, user.last_name, user.role_id, " +
                         "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n" +
                         "FROM hospital.treatment\n" +
@@ -177,6 +178,57 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
 //                treatment.getPerformer().setLastName(resultSet.getString("user.last_name"));
 //                treatment.getPerformer().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
                 treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+                treatment.getDiagnosisToPatient().setDoctor(new User());
+                treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
+                treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
+                treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
+                treatment.setPatient(new Patient());
+                treatment.getPatient().setId(resultSet.getInt("patient.id"));
+                treatment.getPatient().setFirstName(resultSet.getString("patient.first_name"));
+                treatment.getPatient().setLastName(resultSet.getString("patient.last_name"));
+                treatment.getPatient().setWard(resultSet.getInt("ward"));
+            }
+            return treatment;
+        } catch(SQLException e) {
+            throw new PersistException(e);
+        } finally {
+            try{ statement.close(); } catch(Exception e) {}
+            try{ resultSet.close(); } catch(Exception e) {}
+        }
+    }
+
+    public Treatment readInfoIfDone(Integer treatmentId) throws PersistException {
+        String sql =
+                "SELECT treatment.title, treatment.type_id, treatment.done," +
+                        "user.first_name, user.last_name, user.role_id, patient_diagnosis.doctor_id, " +
+                        "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n" +
+                        "FROM hospital.treatment\n" +
+                        "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n" +
+                        "  JOIN hospital.user ON (treatment.performer_id = user.id)\n" +
+                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
+                        "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
+                        "WHERE treatment.id = ?;";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        // TODO: try-with-resources
+        try {
+            statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, treatmentId);
+            resultSet = statement.executeQuery();
+            Treatment treatment = new Treatment();
+            treatment.setId(treatmentId);
+            while(resultSet.next()) {
+                treatment.setTitle(resultSet.getString("treatment.title"));
+                treatment.setType(TreatmentType.values()[resultSet.getInt("treatment.type_id")]);
+                treatment.setDone(resultSet.getInt("treatment.done") == 1);
+                treatment.setPerformer(new User());
+                treatment.getPerformer().setFirstName(resultSet.getString("user.first_name"));
+                treatment.getPerformer().setLastName(resultSet.getString("user.last_name"));
+                treatment.getPerformer().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+                treatment.getDiagnosisToPatient().setDoctor(new User());
+                treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
                 treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
                 treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
                 // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"

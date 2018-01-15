@@ -31,7 +31,7 @@ public class TreatmentListAction extends Action {
                     for (DiagnosisToPatient diagnosisToPatient : patientDiagnoses) {
                         for (Treatment treatment : diagnosisToPatient.getHistory()) {
                             treatment.setDiagnosisToPatient(diagnosisToPatient);
-                            if (!treatment.isDone())
+                            if (!treatment.getIsDone())
                                 treatments.add(treatment);
                         }
                     }
@@ -39,7 +39,7 @@ public class TreatmentListAction extends Action {
 //                TreatmentService treatmentService = getServiceFactory().getTreatmentService();
 //                for (Treatment treatment : treatmentsData) {
 //                    treatment = treatmentService.readInfo(treatment.getId());
-//                    if (!treatment.isDone()) treatments.add(treatment);
+//                    if (!treatment.getIsDone()) treatments.add(treatment);
 //                }
                 req.setAttribute("treatments", treatments);
                 return null;
