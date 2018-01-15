@@ -47,23 +47,6 @@ CREATE TABLE `treatment_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Table structure for table `role_treatment_type`
---
-
-DROP TABLE IF EXISTS `role_treatment_type`;
-CREATE TABLE `role_treatment_type` (
-  `id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `treatment_type_id` int(11) NOT NULL,
-  `allow` enum('PERFORM','ASSIGN') COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `role_id_fkey_idx` (`role_id`),
-  KEY `treatment_type_id_fkey_idx` (`treatment_type_id`),
-  CONSTRAINT `role_id_fkey` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `treatment_type_id_fkey` FOREIGN KEY (`treatment_type_id`) REFERENCES `treatment_type` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
 -- Table structure for table `user`
 --
 
@@ -87,7 +70,7 @@ CREATE TABLE `user` (
 
 DROP TABLE IF EXISTS `patient_diagnosis`;
 CREATE TABLE `patient_diagnosis` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `patient_id` int(11) NOT NULL,
   `diagnosis_id` int(11) NOT NULL,
   `doctor_id` int(11) NOT NULL,

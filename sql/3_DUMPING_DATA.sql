@@ -58,21 +58,6 @@ VALUES
   (2,'surgery');
 
 --
--- Dumping data for table `role_treatment_type`
---
-INSERT INTO `role_treatment_type`
-(id, role_id, treatment_type_id, allow)
-VALUES
-  (1,1,0,'PERFORM'),
-  (2,1,1,'PERFORM'),
-  (3,1,2,'PERFORM'),
-  (4,1,0,'ASSIGN'),
-  (5,1,1,'ASSIGN'),
-  (6,1,2,'ASSIGN'),
-  (7,2,0,'PERFORM'),
-  (8,2,1,'PERFORM');
-
---
 -- Dumping data for table `user`
 --
 INSERT INTO `user`
