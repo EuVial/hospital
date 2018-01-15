@@ -20,7 +20,7 @@ public class PatientDeleteAction extends Action {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
-        if(id != null) {
+        if (id != null) {
             try {
                 PatientService service = getServiceFactory().getPatientService();
                 Patient patient = service.findById(id);

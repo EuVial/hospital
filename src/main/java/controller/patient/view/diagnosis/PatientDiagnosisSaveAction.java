@@ -4,6 +4,7 @@ import controller.Action;
 import controller.Forward;
 import domain.patient.Diagnosis;
 import domain.patient.DiagnosisToPatient;
+import domain.patient.Patient;
 import domain.user.User;
 import service.ServiceException;
 import service.patient.DiagnosisService;
@@ -20,40 +21,67 @@ public class PatientDiagnosisSaveAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-        Integer urlId = null;
+        Integer patientId = null;
+        Integer patientDiagnosisId = null;
+        DiagnosisToPatientService diagnosisToPatientService = null;
+
         try {
-            diagnosisToPatient.setId(Integer.parseInt(req.getParameter("id")));
+            patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
+
+        try {
+            patientId = Integer.parseInt(req.getParameter("patientId"));
+        } catch(NumberFormatException e) {}
+
+        try {
+            diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
+        } catch (FactoryException e) {
+            throw new ServletException(e);
+        }
+
         String title = req.getParameter("diagnosis.title");
-//        diagnosisToPatient.getPatient().setId(Integer.valueOf(req.getParameter("patientId")));
-//        diagnosisToPatient.getDiagnosis().setId(Integer.valueOf(req.getParameter("diagnosis.id")));
-        if (title != null) {
+        if (patientDiagnosisId != null) {
+//            diagnosisToPatient.setId(patientDiagnosisId);
             try {
-                DiagnosisToPatientService diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
-                DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
-                diagnosisToPatient = diagnosisToPatientService.readInfo(diagnosisToPatient.getId());
-                diagnosisToPatient.setDiagnosis(new Diagnosis());
-                diagnosisToPatient.getDiagnosis().setTitle(title);
-
-                User user = (User)req.getSession(false).getAttribute("currentUser");
-                diagnosisToPatient.setDoctor(user);
-
-                if (diagnosisToPatient.getConsultationDate() == null) {
-                    diagnosisToPatient.setConsultationDate(new Date());
-                }
-                diagnosisToPatient.getDiagnosis().setId(diagnosisService.getIdByTitle(title));
-                diagnosisToPatientService.save(diagnosisToPatient);
-
-                urlId = diagnosisToPatient.getId();
-            } catch(FactoryException | ServiceException e) {
+                diagnosisToPatient = diagnosisToPatientService.findById(patientDiagnosisId);
+            } catch(ServiceException e) {
                 throw new ServletException(e);
             }
         }
 
-        if (urlId != null) {
-            return new Forward("/patient/view/diagnosis/view.html?id=" + urlId);
+        diagnosisToPatient.setPatient(new Patient());
+        diagnosisToPatient.getPatient().setId(patientId);
+
+        try {
+            DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
+            diagnosisToPatient.setDiagnosis(new Diagnosis());
+            diagnosisToPatient.getDiagnosis().setTitle(title);
+            diagnosisToPatient.getDiagnosis().setId(diagnosisService.getIdByTitle(title));
+
+            User user = (User)req.getSession(false).getAttribute("currentUser");
+            diagnosisToPatient.setDoctor(user);
+
+            if (diagnosisToPatient.getConsultationDate() == null) {
+                diagnosisToPatient.setConsultationDate(new Date());
+            }
+        } catch(FactoryException | ServiceException e) {
+            throw new ServletException(e);
+        }
+
+        if (    diagnosisToPatient.getPatient().getId() != null &&
+                diagnosisToPatient.getDiagnosis().getId() != null &&
+                diagnosisToPatient.getDoctor().getId() != null) {
+            try {
+                diagnosisToPatientService.save(diagnosisToPatient);
+            } catch(ServiceException e) {
+                throw new ServletException(e);
+            }
+        }
+
+        if (patientDiagnosisId != null) {
+            return new Forward("/patient/view/diagnosis/view.html?id=" + patientDiagnosisId);
         } else {
-            return new Forward("/patient/list.html");
+            return new Forward("/patient/view/disease_history.html?id=" + patientId);
         }
     }
 }

@@ -8,6 +8,7 @@ import domain.patient.Patient;
 import service.ServiceException;
 import service.patient.DiagnosisService;
 import service.patient.DiagnosisToPatientService;
+import service.patient.PatientService;
 import util.FactoryException;
 
 import javax.servlet.ServletException;
@@ -20,15 +21,30 @@ public class PatientDiagnosisEditAction extends Action {
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = null;
+        Integer patientId = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
-        if(id != null) {
+        try {
+            patientId = Integer.parseInt(req.getParameter("patientId"));
+        } catch(NumberFormatException e) {}
+
+        if (patientId != null) {
+            try {
+                PatientService patientService = getServiceFactory().getPatientService();;
+                Patient patient = patientService.findById(patientId);
+                req.setAttribute("patient", patient);
+            } catch(FactoryException | ServiceException e) {
+                throw new ServletException(e);
+            }
+        }
+
+        if (id != null) {
             try {
                 DiagnosisToPatientService service = getServiceFactory().getDiagnosisToPatientService();
                 DiagnosisToPatient diagnosisToPatient = service.readInfo(id);
                 Patient patient = diagnosisToPatient.getPatient();
-                if(patient != null) {
+                if (patient != null) {
                     req.setAttribute("patient", patient);
                 }
                 req.setAttribute("patientDiagnosis", diagnosisToPatient);
@@ -36,14 +52,20 @@ public class PatientDiagnosisEditAction extends Action {
                 req.setAttribute("patientDiagnosisCanBeDeleted", patientDiagnosisCanBeDeleted);
 
                 String previousDiagnosisTitle = diagnosisToPatient.getDiagnosis().getTitle();
-                DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
-                List<Diagnosis> diagnoses = diagnosisService.findAll();
                 req.setAttribute("previousDiagnosisTitle", previousDiagnosisTitle);
-                req.setAttribute("diagnoses", diagnoses);
             } catch(FactoryException | ServiceException e) {
                 throw new ServletException(e);
             }
         }
+
+        try {
+            DiagnosisService diagnosisService = getServiceFactory().getDiagnosisService();
+            List<Diagnosis> diagnoses = diagnosisService.findAll();
+            req.setAttribute("diagnoses", diagnoses);
+        } catch(FactoryException | ServiceException e) {
+            throw new ServletException(e);
+        }
+
         return null;
     }
 }

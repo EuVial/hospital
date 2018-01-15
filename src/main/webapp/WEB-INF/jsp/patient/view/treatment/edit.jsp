@@ -63,6 +63,9 @@
                     <c:if test="${not empty treatment.id}">
                         <input name="id" value="${treatment.id}" type="hidden"/>
                     </c:if>
+                    <c:if test="${not empty treatment.diagnosisToPatient.id}">
+                        <input name="patientDiagnosisId" value="${treatment.diagnosisToPatient.id}" type="hidden"/>
+                    </c:if>
                     <input name="patientId" value="${patient.id}" type="hidden"/>
 
 

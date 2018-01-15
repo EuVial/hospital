@@ -87,7 +87,7 @@ public class MainServiceFactoryImpl implements ServiceFactory {
 
     @Override
     public Connection getConnection() throws FactoryException {
-        if(connection == null) {
+        if (connection == null) {
             connection = DataSource.getInstance().getConnection();
         }
         return connection;

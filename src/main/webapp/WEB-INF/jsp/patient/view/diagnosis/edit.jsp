@@ -59,6 +59,7 @@
                 <c:url var="urlPatientDiagnosisSave" value="/patient/view/diagnosis/save.html"/>
                 <c:url var="urlPatientDiagnosisDelete" value="/patient/view/diagnosis/delete.html"/>
                 <form class="form-horizontal" action="${urlPatientDiagnosisSave}" method="post">
+                    <input name="patientId" value="${patient.id}" type="hidden"/>
                     <c:if test="${not empty patientDiagnosis.id}">
                         <input name="id" value="${patientDiagnosis.id}" type="hidden">
                     </c:if>

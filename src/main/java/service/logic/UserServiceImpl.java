@@ -54,11 +54,11 @@ public class UserServiceImpl implements UserService {
     public void save(User user) throws ServiceException {
         try {
 //          if the user with the current id exists - try to read the data about him
-            if(user.getId() != null) {
+            if (user.getId() != null) {
                 User storedUser = userDao.read(user.getId());
-                if(storedUser != null) {
+                if (storedUser != null) {
                     user.setPassword(storedUser.getPassword());
-                    if(storedUser.getLogin().equals(user.getLogin()) || userDao.readByLogin(user.getLogin()) == null) {
+                    if (storedUser.getLogin().equals(user.getLogin()) || userDao.readByLogin(user.getLogin()) == null) {
                         userDao.update(user);
                     } else {
                         throw new UserLoginNotUniqueException(user.getLogin());
@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
             } else {
 //              if a new user is saved, then save the new user and assign a standard password
                 user.setPassword(defaultPassword);
-                if(userDao.readByLogin(user.getLogin()) == null) {
+                if (userDao.readByLogin(user.getLogin()) == null) {
                     userDao.persist(user);
                 } else {
                     throw new UserLoginNotUniqueException(user.getLogin());
@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(User user) throws ServiceException {
-        if(user.getId() != null) {
+        if (user.getId() != null) {
             try {
                 userDao.delete(user);
             } catch (PersistException e) {

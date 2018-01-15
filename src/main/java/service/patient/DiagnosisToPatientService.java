@@ -8,4 +8,6 @@ public interface DiagnosisToPatientService extends EntityService<DiagnosisToPati
     DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws ServiceException;
 
     Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws ServiceException;
+
+    String readDiagnosisTitle(Integer diagnosisToPatientId) throws ServiceException;
 }

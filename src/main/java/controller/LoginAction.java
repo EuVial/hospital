@@ -16,11 +16,11 @@ public class LoginAction extends Action {
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-        if(login != null && password != null) {
+        if (login != null && password != null) {
             try {
                 UserService service = getServiceFactory().getUserService();
                 User user = service.findByLoginAndPassword(login, password);
-                if(user != null) {
+                if (user != null) {
                     HttpSession session = req.getSession();
                     session.setAttribute("currentUser", user);
                     return new Forward("/index.html");

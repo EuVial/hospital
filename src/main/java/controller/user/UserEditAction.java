@@ -20,7 +20,7 @@ public class UserEditAction extends Action {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
-        if(id != null) {
+        if (id != null) {
             try {
                 UserService service = getServiceFactory().getUserService();
                 User user = service.findById(id);

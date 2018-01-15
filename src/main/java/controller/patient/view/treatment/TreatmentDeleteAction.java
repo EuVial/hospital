@@ -20,7 +20,7 @@ public class TreatmentDeleteAction extends Action {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
-        if(id != null) {
+        if (id != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();
                 Treatment treatment = service.readInfo(id);

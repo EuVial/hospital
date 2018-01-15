@@ -26,7 +26,7 @@ public class UserSaveAction extends Action {
         try {
             user.setRole(UserRole.values()[Integer.parseInt(req.getParameter("role"))]);
         } catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {}
-        if(     user.getLogin() != null &&
+        if (    user.getLogin() != null &&
                 user.getRole() != null &&
                 user.getFirstName() != null &&
                 user.getLastName() != null) {

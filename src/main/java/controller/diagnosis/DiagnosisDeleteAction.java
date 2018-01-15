@@ -19,7 +19,7 @@ public class DiagnosisDeleteAction extends Action {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch(NumberFormatException e) {}
-        if(id != null) {
+        if (id != null) {
             try {
                 DiagnosisService service = getServiceFactory().getDiagnosisService();
                 Diagnosis diagnosis = service.findById(id);

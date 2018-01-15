@@ -29,7 +29,7 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
             statement.setString(2, password);
             resultSet = statement.executeQuery();
             User user = null;
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(login);
@@ -153,7 +153,7 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             User user = null;
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 user = new User();
                 user.setId(resultSet.getInt("id"));
                 user.setLogin(login);
@@ -177,7 +177,7 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
 //            statement.setInt(1, id);
 //            try (ResultSet resultSet = statement.executeQuery()) {
 //                boolean result = true;
-//                if(resultSet.next()) {
+//                if (resultSet.next()) {
 //                    result = resultSet.getBoolean("count");
 //                }
 //                return result;

@@ -172,7 +172,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean result = true;
-                if(resultSet.next()) {
+                if (resultSet.next()) {
                     result = resultSet.getBoolean("count");
                 }
                 return result;

@@ -66,17 +66,17 @@ public class SecurityFilter implements Filter {
         String url = httpReq.getRequestURI();
         String context = httpReq.getContextPath();
         int postfixIndex = url.lastIndexOf(".html");
-        if(postfixIndex != -1) {
+        if (postfixIndex != -1) {
             url = url.substring(context.length(), postfixIndex);
         } else {
             url = url.substring(context.length());
         }
         Set<UserRole> roles = permissions.get(url);
-        if(roles != null) {
+        if (roles != null) {
             HttpSession session = httpReq.getSession(false);
-            if(session != null) {
+            if (session != null) {
                 User user = (User)session.getAttribute("currentUser");
-                if(user != null && roles.contains(user.getRole())) {
+                if (user != null && roles.contains(user.getRole())) {
                     chain.doFilter(req, resp);
                     return;
                 }

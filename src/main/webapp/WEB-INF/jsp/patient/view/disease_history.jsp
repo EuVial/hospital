@@ -52,12 +52,13 @@
                         <div class="tile">
                             <div class="tile-content">
                                 <div class="tile-subtitle text-primary">
+                                        <%--Diagnosis--%>
                                     ${patientDiagnosis.diagnosis.title}<br/>
                                     <fmt:formatDate pattern="dd.MM.yy, HH:mm" value="${patientDiagnosis.consultationDate}"/><br/>
                                     <fmt:message key="patient.view.disease_history.tile.treatment"/>
-                                    <%--Diagnosis name--%>
                                 </div>
                                 <c:forEach var="treatment" items="${patientDiagnosis.history}">
+                                    <%--Treatments--%>
                                 <div class="tile-title">
                                     <c:url var="urlTreatmentView" value="/patient/view/treatment/view.html">
                                         <c:param name="id" value="${treatment.id}"/>
@@ -68,6 +69,11 @@
                                             <i class="icon icon-more-horiz"></i>
                                         </button>
                                     </a>
+                                    <c:if test="${treatment.isDone}">
+                                        <button class="btn btn-sm">
+                                            <i class="icon icon-check"></i>
+                                        </button>
+                                    </c:if>
                                     <c:choose>
                                         <c:when test="${treatment.type.name eq 'treatment.procedure'}">
                                             <img src="/img/treatments/procedure.png" height="25"/>
@@ -82,7 +88,6 @@
                                             &nbsp;
                                         </c:otherwise>
                                     </c:choose>
-                                        <%--Treatments name--%>
                                     ${treatment.title}
                                 </div>
                                 </c:forEach>
@@ -101,7 +106,20 @@
                                     </button>
                                 </form>
 
-                                <%--<a href="${urlPatientEdit}">--%>
+                                <br/>
+                                
+                                <c:if test="${patientDiagnosis.doctor.id eq currentUser.id}">
+                                    <c:url var="urlTreatmentAdd" value="/patient/view/treatment/edit.html"/>
+                                    <form action="${urlTreatmentAdd}" method="get">
+                                        <input name="patientDiagnosisId" value="${patientDiagnosis.id}" type="hidden"/>
+                                        <input name="patientId" value="${patient.id}" type="hidden"/>
+                                        <button class="btn" type="submit">
+                                            <fmt:message key="patient.view.disease_history.button.makeAssignment"/>
+                                        </button>
+                                    </form>
+                                </c:if>
+
+                            <%--<a href="${urlPatientEdit}">--%>
                                     <%--<button class="btn">--%>
                                         <%--<fmt:message key="patient.view.disease_history.button.view"/>--%>
                                     <%--</button>--%>
@@ -112,5 +130,14 @@
                 </div>
             </c:forEach>
         </div>
+        <c:if test="${currentUser.role eq 'DOCTOR'}">
+            <c:url var="urlDiagnosisAdd" value="/patient/view/diagnosis/edit.html"/>
+            <form action="${urlDiagnosisAdd}" method="get">
+                <input name="patientId" value="${patient.id}" type="hidden"/>
+                <button class="btn" type="submit">
+                    <fmt:message key="patient.view.disease_history.button.makeDiagnosis"/>
+                </button>
+            </form>
+        </c:if>
     </div>
 </u:patient_view>

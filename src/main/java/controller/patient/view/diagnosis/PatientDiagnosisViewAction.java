@@ -21,10 +21,10 @@ public class PatientDiagnosisViewAction extends Action {
             DiagnosisToPatientService service = getServiceFactory().getDiagnosisToPatientService();
             DiagnosisToPatient diagnosisToPatient = service.readInfo(id);
             Patient patient = diagnosisToPatient.getPatient();
-            if(patient != null) {
+            if (patient != null) {
                 req.setAttribute("patient", patient);
             }
-            if(diagnosisToPatient != null) {
+            if (diagnosisToPatient != null) {
                 req.setAttribute("patientDiagnosis", diagnosisToPatient);
                 return null;
             } else {

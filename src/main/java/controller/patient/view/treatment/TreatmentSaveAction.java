@@ -23,21 +23,17 @@ public class TreatmentSaveAction extends Action {
         Treatment treatment = new Treatment();
         String patientDiagnosisTitle;
         Integer patientId = null;
+        Integer patientDiagnosisId = null;
         try {
             treatment.setId(Integer.parseInt(req.getParameter("id")));
+        } catch (NumberFormatException e) {}
+        try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
+        try {
+            patientDiagnosisId = Integer.parseInt(req.getParameter("patientDiagnosisId"));
+        } catch (NumberFormatException e) {}
 
-        // if treatment with that id exists
-//        if(id != null) {
-//            try {
-//                TreatmentService service = getServiceFactory().getTreatmentService();
-//                treatment = service.readInfo(id);
-//                urlId = treatment.getPatient().getId();
-//            } catch (FactoryException | ServiceException e) {
-//                throw new ServletException(e);
-//            }
-//        }
         treatment.setPatient(new Patient());
         treatment.getPatient().setId(patientId);
         patientDiagnosisTitle = req.getParameter("diagnosisTitle");
@@ -49,17 +45,18 @@ public class TreatmentSaveAction extends Action {
         User user = (User) req.getSession(false).getAttribute("currentUser");
         treatment.setPerformer(user);
         treatment.setDiagnosisToPatient(new DiagnosisToPatient());
-        try {
-            DiagnosisToPatientService diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
-            treatment.getDiagnosisToPatient().setId(diagnosisToPatientService.getDiagnosisToPatientId(patientDiagnosisTitle, patientId));
-        } catch (FactoryException | ServiceException e) {
-            throw new ServletException(e);
+        if (patientDiagnosisId != null) {
+            treatment.getDiagnosisToPatient().setId(patientDiagnosisId);
+        } else {
+            try {
+                DiagnosisToPatientService diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
+                treatment.getDiagnosisToPatient().setId(diagnosisToPatientService.getDiagnosisToPatientId(patientDiagnosisTitle, patientId));
+            } catch (FactoryException | ServiceException e) {
+                throw new ServletException(e);
+            }
         }
 
-
-
-        if(treatment.getId() != null &&
-                treatment.getTitle() != null &&
+        if (    treatment.getTitle() != null &&
                 treatment.getDiagnosisToPatient().getId() != null &&
                 treatment.getType() != null &&
                 treatment.getPerformer().getId() != null) {

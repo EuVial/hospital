@@ -24,7 +24,7 @@ public class TreatmentListAction extends Action {
             PatientService service = getServiceFactory().getPatientService();
             Patient patient = service.findById(id);
             List<Treatment> treatments = new ArrayList<>();
-            if(patient != null) {
+            if (patient != null) {
                 req.setAttribute("patient", patient);
                 List<DiagnosisToPatient> patientDiagnoses = patient.getHistory();
                 if (patientDiagnoses != null) {

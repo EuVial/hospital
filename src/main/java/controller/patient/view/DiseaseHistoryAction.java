@@ -22,10 +22,10 @@ public class DiseaseHistoryAction extends Action {
             PatientService service = getServiceFactory().getPatientService();
             Patient patient = service.findById(id);
             List<DiagnosisToPatient> patientDiagnoses;
-            if(patient != null) {
+            if (patient != null) {
                 req.setAttribute("patient", patient);
                 patientDiagnoses = patient.getHistory();
-//                for(DiagnosisToPatient diagnosisToPatient : patientDiagnoses) {
+//                for (DiagnosisToPatient diagnosisToPatient : patientDiagnoses) {
 //                    List<Treatment> treatments = diagnosisToPatient.getHistory();
 //                    diagnosisToPatient.setHistory(treatments);
 //                }

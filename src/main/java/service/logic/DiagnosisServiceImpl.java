@@ -38,9 +38,9 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     @Override
     public void save(Diagnosis diagnosis) throws ServiceException {
         try {
-            if(diagnosis.getId() != null) {
+            if (diagnosis.getId() != null) {
                 Diagnosis storedDiagnosis = diagnosisDao.read(diagnosis.getId());
-                if(storedDiagnosis != null) {
+                if (storedDiagnosis != null) {
                     diagnosisDao.update(diagnosis);
                 } else {
                     throw new EntityNotExistsException(diagnosis.getId());
@@ -64,7 +64,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
 
     @Override
     public void delete(Diagnosis diagnosis) throws ServiceException {
-        if(diagnosis.getId() != null) {
+        if (diagnosis.getId() != null) {
             try {
                 diagnosisDao.delete(diagnosis);
             } catch (PersistException e) {

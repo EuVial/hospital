@@ -69,9 +69,9 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void save(Patient patient) throws ServiceException {
         try {
-            if(patient.getId() != null) {
+            if (patient.getId() != null) {
                 Patient storedPatient = patientDao.read(patient.getId());
-                if(storedPatient != null) {
+                if (storedPatient != null) {
                     patientDao.update(patient);
                 } else {
                     throw new EntityNotExistsException(patient.getId());
@@ -95,7 +95,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(Patient patient) throws ServiceException {
-        if(patient.getId() != null) {
+        if (patient.getId() != null) {
             try {
                 patientDao.delete(patient);
             } catch (PersistException e) {

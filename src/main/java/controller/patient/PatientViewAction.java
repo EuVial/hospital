@@ -19,7 +19,7 @@ public class PatientViewAction extends Action {
             Integer id = Integer.parseInt(req.getParameter("id"));
             PatientService service = getServiceFactory().getPatientService();
             Patient patient = service.findById(id);
-            if(patient != null) {
+            if (patient != null) {
                 req.setAttribute("patient", patient);
                 return null;
             } else {

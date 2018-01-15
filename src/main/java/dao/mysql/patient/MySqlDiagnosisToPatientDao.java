@@ -232,6 +232,36 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         }
     }
 
+    public String readDiagnosisTitle(Integer diagnosisToPatientId) throws PersistException {
+        String sql =
+                "SELECT diagnosis.title " +
+                        "FROM hospital.patient_diagnosis\n" +
+                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
+                        "WHERE patient_diagnosis.id = ?;";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        // TODO: try-with-resources
+        try {
+            String diagnosisTitle = null;
+            statement = getConnection().prepareStatement(sql);
+            statement.setInt(1, diagnosisToPatientId);
+            resultSet = statement.executeQuery();
+            DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+            diagnosisToPatient.setId(diagnosisToPatientId);
+            while(resultSet.next()) {
+                diagnosisTitle = resultSet.getString("diagnosis.title");
+            }
+            return diagnosisTitle;
+        } catch(SQLException e) {
+            throw new PersistException(e);
+        } finally {
+            try{ statement.close(); } catch(Exception e) {}
+            try{ resultSet.close(); } catch(Exception e) {}
+        }
+    }
+
+
+
     public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws PersistException {
         String sql =
                 "SELECT patient_diagnosis.id FROM hospital.patient_diagnosis\n" +

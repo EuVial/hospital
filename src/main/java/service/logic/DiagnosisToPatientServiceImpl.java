@@ -66,9 +66,9 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     @Override
     public void save(DiagnosisToPatient diagnosisToPatient) throws ServiceException {
         try {
-            if(diagnosisToPatient.getId() != null) {
+            if (diagnosisToPatient.getId() != null) {
                 DiagnosisToPatient storedDiagnosis = diagnosisToPatientDao.read(diagnosisToPatient.getId());
-                if(storedDiagnosis != null) {
+                if (storedDiagnosis != null) {
                     diagnosisToPatientDao.update(diagnosisToPatient);
                 } else {
                     throw new EntityNotExistsException(diagnosisToPatient.getId());
@@ -92,7 +92,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
 
     @Override
     public void delete(DiagnosisToPatient diagnosis) throws ServiceException {
-        if(diagnosis.getId() != null) {
+        if (diagnosis.getId() != null) {
             try {
                 diagnosisToPatientDao.delete(diagnosis);
             } catch (PersistException e) {
@@ -118,5 +118,15 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public String readDiagnosisTitle(Integer diagnosisToPatientId) throws ServiceException {
+        try {
+            return diagnosisToPatientDao.readDiagnosisTitle(diagnosisToPatientId);
+        } catch(PersistException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 }
 

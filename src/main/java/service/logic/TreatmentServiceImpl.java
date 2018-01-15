@@ -50,9 +50,9 @@ public class TreatmentServiceImpl implements TreatmentService {
     @Override
     public void save(Treatment treatment) throws ServiceException {
         try {
-            if(treatment.getId() != null) {
+            if (treatment.getId() != null) {
                 Treatment storedTreatment = treatmentDao.read(treatment.getId());
-                if(storedTreatment != null) {
+                if (storedTreatment != null) {
                     treatmentDao.update(treatment);
                 } else {
                     throw new EntityNotExistsException(treatment.getId());
@@ -72,7 +72,7 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     public void delete(Treatment treatment) throws ServiceException {
-        if(treatment.getId() != null) {
+        if (treatment.getId() != null) {
             try {
                 treatmentDao.delete(treatment);
             } catch (PersistException e) {
@@ -101,7 +101,7 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     @Override
     public void done(Treatment treatment) throws ServiceException {
-        if(treatment.getId() != null) {
+        if (treatment.getId() != null) {
             try {
                 treatmentDao.done(treatment);
             } catch (PersistException e) {
