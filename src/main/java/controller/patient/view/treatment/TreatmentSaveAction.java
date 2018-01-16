@@ -29,13 +29,13 @@ public class TreatmentSaveAction extends Action {
         Integer patientDiagnosisId = null;
         try {
             treatment.setId(Integer.parseInt(req.getParameter("id")));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("patientDiagnosisId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         treatment.setPatient(new Patient());
         treatment.getPatient().setId(patientId);

@@ -30,11 +30,11 @@ public class PatientDiagnosisSaveAction extends Action {
 
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         try {
             diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();

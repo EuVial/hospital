@@ -28,7 +28,7 @@ public class PatientDischargeAction extends Action {
         Integer patientId = null;
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         if (patientId != null) {
             try {

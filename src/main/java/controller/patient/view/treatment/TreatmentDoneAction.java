@@ -23,7 +23,7 @@ public class TreatmentDoneAction extends Action {
         Integer urlId = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         if (id != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();

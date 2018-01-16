@@ -27,10 +27,10 @@ public class PatientDiagnosisEditAction extends Action {
         Integer patientId = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         if (patientId != null) {
             try {

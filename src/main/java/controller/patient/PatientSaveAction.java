@@ -22,7 +22,7 @@ public class PatientSaveAction extends Action {
         Patient patient = new Patient();
         try {
             patient.setId(Integer.parseInt(req.getParameter("id")));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         patient.setFirstName(req.getParameter("first_name"));
         patient.setLastName(req.getParameter("last_name"));
         patient.setWard(Integer.valueOf(req.getParameter("ward")));

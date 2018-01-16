@@ -23,7 +23,7 @@ public class UserSaveAction extends Action {
         User user = new User();
         try {
             user.setId(Integer.parseInt(req.getParameter("id")));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         user.setLogin(req.getParameter("login"));
         user.setFirstName(req.getParameter("first_name"));
         user.setLastName(req.getParameter("last_name"));

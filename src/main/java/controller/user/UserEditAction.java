@@ -22,7 +22,7 @@ public class UserEditAction extends Action {
         Integer id = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         if (id != null) {
             try {
                 UserService service = getServiceFactory().getUserService();

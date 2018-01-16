@@ -26,13 +26,13 @@ public class TreatmentEditAction extends Action {
         Treatment treatment;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("patientDiagnosisId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         if (patientDiagnosisId != null) {
             try {
                 treatment = new Treatment();
