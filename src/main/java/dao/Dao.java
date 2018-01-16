@@ -10,21 +10,20 @@ import java.util.List;
  **/
 public interface Dao<PK extends Serializable, T extends Identified<PK>> {
 
-    /** Создает новую запись и соответствующий ей объект */
-//    T create() throws PersistException;
+    /** Returns an object corresponding to a record with a primary key or null */
+    T read(PK key) throws PersistException;
 
-    /** Возвращает объект соответствующий записи с первичным ключом key или null */
-    T read(PK key) throws PersistException, PersistException;
-
-    /** Создает новую запись, соответствующую объекту object */
+    /** Creates a new record that corresponds to the object */
     T persist(T object) throws PersistException;
 
-    /** Сохраняет состояние объекта group в базе данных */
+    /** Saves the state of the object in the database */
     void update(T object) throws PersistException;
 
-    /** Удаляет запись об объекте из базы данных соответствующую первичному ключу key */
+    /** Deletes an entry about the object from the database that corresponds to the primary key */
     void delete(T object) throws PersistException;
 
-    /** Возвращает список объектов соответствующих всем записям в базе данных */
+    /** Returns a list of objects matching all records in the database */
     List<T> getAll() throws PersistException;
+
+    public boolean isInitiatesTransfers(T object) throws PersistException;
 }

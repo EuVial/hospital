@@ -20,28 +20,22 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
 
     public User readByLoginAndPassword(String login, String password) throws PersistException {
         String sql = "SELECT id, role_id FROM hospital.user WHERE login = ? AND password = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            //TODO: try-with-resources
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, login);
             statement.setString(2, password);
-            resultSet = statement.executeQuery();
-            User user = null;
-            if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setRole(UserRole.values()[resultSet.getInt("role_id")]);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                User user = null;
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setLogin(login);
+                    user.setPassword(password);
+                    user.setRole(UserRole.values()[resultSet.getInt("role_id")]);
+                }
+                return user;
             }
-            return user;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
@@ -147,43 +141,25 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
 
     public User readByLogin(String login) throws PersistException {
         String sql = "SELECT id, password, first_name, last_name, role_id FROM hospital.user WHERE login = ?";
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, login);
-            resultSet = statement.executeQuery();
-            User user = null;
-            if (resultSet.next()) {
-                user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setLogin(login);
-                user.setPassword(resultSet.getString("password"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setRole(UserRole.values()[resultSet.getInt("role_id")]);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                User user = null;
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setId(resultSet.getInt("id"));
+                    user.setLogin(login);
+                    user.setPassword(resultSet.getString("password"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setRole(UserRole.values()[resultSet.getInt("role_id")]);
 //                user.setSpecialization(new UserSpecialization());
 //                user.getSpecialization().setId(resultSet.getInt("specialization_id"));
+                }
+                return user;
             }
-            return user;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
         }
     }
-
-//    public boolean isUserInitiatesTransfers(User user) throws PersistException {
-//        Integer id = user.getId();
-//        String sql = "SELECT COUNT(*) AS 'count' FROM hospital.treatment WHERE performer_id = ? LIMIT 1;";
-//        try (PreparedStatement statement = getConnection().prepareStatement(sql)){
-//            statement.setInt(1, id);
-//            try (ResultSet resultSet = statement.executeQuery()) {
-//                boolean result = true;
-//                if (resultSet.next()) {
-//                    result = resultSet.getBoolean("count");
-//                }
-//                return result;
-//            }
-//        } catch(SQLException e) {
-//            throw new PersistException(e);
-//        }
-//    }
 }

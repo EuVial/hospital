@@ -58,7 +58,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     public List<DiagnosisToPatient> findAll() throws ServiceException {
         try {
             return diagnosisToPatientDao.getAll();
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -76,7 +76,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
             } else {
                 diagnosisToPatientDao.persist(diagnosisToPatient);
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -85,7 +85,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     public boolean canDelete(DiagnosisToPatient diagnosisToPatient) throws ServiceException {
         try {
             return !diagnosisToPatientDao.isInitiatesTransfers(diagnosisToPatient);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -105,7 +105,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws ServiceException {
         try {
             return diagnosisToPatientDao.readInfo(diagnosisToPatientId);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -114,7 +114,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws ServiceException {
         try {
             return diagnosisToPatientDao.getDiagnosisToPatientId(diagnosisTitle, patientId);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -123,7 +123,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     public String readDiagnosisTitle(Integer diagnosisToPatientId) throws ServiceException {
         try {
             return diagnosisToPatientDao.readDiagnosisTitle(diagnosisToPatientId);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }

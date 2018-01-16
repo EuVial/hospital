@@ -3,6 +3,7 @@ package controller.password;
 import controller.Action;
 import controller.Forward;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.user.UserService;
 import util.FactoryException;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PasswordSaveAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PasswordSaveAction.class));
+
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String oldPassword = req.getParameter("old-password");
@@ -26,7 +30,8 @@ public class PasswordSaveAction extends Action {
                 if (!oldPassword.equals(user.getPassword()))
                     return new Forward("/password/edit.html?message=password.message.not.equals");
                 service.changePassword(user.getId(), oldPassword, newPassword);
-            } catch(FactoryException | ServiceException e) {
+            } catch (FactoryException | ServiceException e) {
+                LOGGER.error("PasswordSaveAction problem with services" + e);
                 throw new ServletException(e);
             }
         } else {

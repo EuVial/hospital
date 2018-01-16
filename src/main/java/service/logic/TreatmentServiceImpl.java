@@ -33,7 +33,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     public Treatment findById(Integer id) throws ServiceException {
         try {
             return treatmentDao.read(id);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -42,7 +42,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     public List<Treatment> findAll() throws ServiceException {
         try {
             return treatmentDao.getAll();
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -60,7 +60,7 @@ public class TreatmentServiceImpl implements TreatmentService {
             } else {
                 treatmentDao.persist(treatment);
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -85,7 +85,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     public Treatment readInfo(Integer treatmentId) throws ServiceException {
         try {
             return treatmentDao.readInfo(treatmentId);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -94,7 +94,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     public Treatment readInfoIfDone(Integer treatmentId) throws ServiceException {
         try {
             return treatmentDao.readInfoIfDone(treatmentId);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }

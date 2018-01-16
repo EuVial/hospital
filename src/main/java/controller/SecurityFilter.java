@@ -24,10 +24,6 @@ public class SecurityFilter implements Filter {
         employees.add(UserRole.DOCTOR);
         employees.add(UserRole.NURSE);
 
-//        permissions.put("/", null);
-//        permissions.put("/index", null);
-//        permissions.put("/login", null);
-
         permissions.put("/logout", all);
         permissions.put("/password/edit", all);
         permissions.put("/password/save", all);
@@ -90,7 +86,6 @@ public class SecurityFilter implements Filter {
             chain.doFilter(req, resp);
             return;
         }
-//        httpResp.sendRedirect(context + "/login.html");
         httpResp.sendRedirect(context + "/login.html?message=login.message.access.denied");
     }
 

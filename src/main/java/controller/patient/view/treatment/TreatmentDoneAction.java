@@ -4,6 +4,7 @@ import controller.Action;
 import controller.Forward;
 import domain.patient.Treatment;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.TreatmentService;
 import util.FactoryException;
@@ -14,13 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TreatmentDoneAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(TreatmentDoneAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = null;
         Integer urlId = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
         if (id != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();
@@ -30,6 +33,7 @@ public class TreatmentDoneAction extends Action {
                 treatment.setPerformer(user);
                 service.done(treatment);
             } catch (FactoryException | ServiceException e) {
+                LOGGER.error("TreatmentDoneAction problem with services " + e);
                 throw new ServletException(e);
             }
         }

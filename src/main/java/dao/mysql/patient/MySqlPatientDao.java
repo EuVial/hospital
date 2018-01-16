@@ -24,12 +24,6 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
         super(connection);
     }
 
-//    @Override
-//    public Patient create() throws PersistException {
-//        Patient patient = new Patient();
-//        return persist(patient);
-//    }
-
     @Override
     public String getSelectQuery() {
         return "SELECT id, first_name, last_name, ward FROM hospital.patient";

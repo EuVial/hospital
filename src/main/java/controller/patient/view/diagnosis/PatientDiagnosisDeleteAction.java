@@ -3,6 +3,7 @@ package controller.patient.view.diagnosis;
 import controller.Action;
 import controller.Forward;
 import domain.patient.DiagnosisToPatient;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisToPatientService;
 import util.FactoryException;
@@ -13,13 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PatientDiagnosisDeleteAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PatientDiagnosisDeleteAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer urlId = null;
         Integer id = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
         if (id != null) {
             try {
                 DiagnosisToPatientService service = getServiceFactory().getDiagnosisToPatientService();
@@ -27,6 +30,7 @@ public class PatientDiagnosisDeleteAction extends Action {
                 urlId = diagnosisToPatient.getPatient().getId();
                 service.delete(diagnosisToPatient);
             } catch (FactoryException | ServiceException e) {
+                LOGGER.error("PatientDiagnosisDeleteAction problem with services" + e);
                 throw new ServletException(e);
             }
         }

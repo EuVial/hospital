@@ -4,6 +4,7 @@ import controller.Action;
 import controller.Forward;
 import domain.patient.Patient;
 import domain.patient.Treatment;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.PatientService;
 import service.patient.TreatmentService;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TreatmentViewAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(TreatmentViewAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -36,9 +39,10 @@ public class TreatmentViewAction extends Action {
             } else {
                 throw new NumberFormatException();
             }
-        } catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
+            LOGGER.error("TreatmentViewAction problem with services" + e);
             return new Forward("/patient/list.html");
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
             throw new ServletException(e);
         }
     }

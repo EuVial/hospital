@@ -27,12 +27,6 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
         super(connection);
     }
 
-//    @Override
-//    public Patient create() throws PersistException {
-//        Patient patient = new Patient();
-//        return persist(patient);
-//    }
-
     @Override
     public String getSelectQuery() {
         return "SELECT id, title FROM hospital.diagnosis";
@@ -101,23 +95,18 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
 
     public Integer getIdByTitle(String title) throws PersistException {
         String sql = "SELECT id FROM hospital.diagnosis WHERE title = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, title);
-            resultSet = statement.executeQuery();
-            Integer diagnosisId = null;
-            while(resultSet.next()) {
-                diagnosisId = resultSet.getInt("id");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                Integer diagnosisId = null;
+                while (resultSet.next()) {
+                    diagnosisId = resultSet.getInt("id");
+                }
+                return diagnosisId;
             }
-            return diagnosisId;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
+            LOGGER.warn("Cannot get diagnosis id by title from SQL" + e);
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 }

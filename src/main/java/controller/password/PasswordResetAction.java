@@ -3,6 +3,7 @@ package controller.password;
 import controller.Action;
 import controller.Forward;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.user.UserService;
 import util.FactoryException;
@@ -13,17 +14,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PasswordResetAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PasswordResetAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             UserService service = getServiceFactory().getUserService();
             User user = service.findById(Integer.parseInt(req.getParameter("id")));
-            if(user != null) {
+            if (user != null) {
                 service.changePassword(user.getId(), user.getPassword(), null);
             }
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
+            LOGGER.error("PasswordResetAction problem with services" + e);
             throw new ServletException(e);
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
         return new Forward("/user/list.html");
     }
 }

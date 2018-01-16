@@ -1,9 +1,5 @@
 package controller;
 
-import controller.diagnosis.DiagnosisDeleteAction;
-import controller.diagnosis.DiagnosisEditAction;
-import controller.diagnosis.DiagnosisListAction;
-import controller.diagnosis.DiagnosisSaveAction;
 import controller.password.PasswordResetAction;
 import controller.password.PasswordSaveAction;
 import controller.patient.*;
@@ -17,12 +13,15 @@ import controller.user.UserDeleteAction;
 import controller.user.UserEditAction;
 import controller.user.UserListAction;
 import controller.user.UserSaveAction;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ActionFactory {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(ActionFactory.class));
     private static Map<String, Class<? extends Action>> actions = new HashMap<>();
     static {
         actions.put("/", MainAction.class);
@@ -59,19 +58,15 @@ public class ActionFactory {
         actions.put("/patient/view/treatment/done", TreatmentDoneAction.class);
 
         actions.put("/patient/view/disease_history", DiseaseHistoryAction.class);
-
-        actions.put("/diagnosis/list", DiagnosisListAction.class);
-        actions.put("/diagnosis/edit", DiagnosisEditAction.class);
-        actions.put("/diagnosis/save", DiagnosisSaveAction.class);
-        actions.put("/diagnosis/delete", DiagnosisDeleteAction.class);
     }
 
     public static Action getAction(String url) throws ServletException {
         Class<?> action = actions.get(url);
-        if(action != null) {
+        if (action != null) {
             try {
                 return (Action)action.newInstance();
-            } catch(InstantiationException | IllegalAccessException | NullPointerException e) {
+            } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
+                LOGGER.error("Cannot create new instance for action " + e);
                 throw new ServletException(e);
             }
         } else {

@@ -79,7 +79,7 @@ public class PatientServiceImpl implements PatientService {
             } else {
                 patientDao.persist(patient);
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -88,7 +88,7 @@ public class PatientServiceImpl implements PatientService {
     public boolean canDelete(Patient patient) throws ServiceException {
         try {
             return !patientDao.isInitiatesTransfers(patient);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }

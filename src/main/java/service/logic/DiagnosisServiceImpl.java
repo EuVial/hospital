@@ -21,7 +21,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public Diagnosis findById(Integer id) throws ServiceException {
         try {
             return diagnosisDao.read(id);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -30,7 +30,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public List<Diagnosis> findAll() throws ServiceException {
         try {
             return diagnosisDao.getAll();
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -48,7 +48,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             } else {
                 diagnosisDao.persist(diagnosis);
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -57,7 +57,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public boolean canDelete(Diagnosis diagnosis) throws ServiceException {
         try {
             return !diagnosisDao.isInitiatesTransfers(diagnosis);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -77,7 +77,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     public Integer getIdByTitle(String title) throws ServiceException {
         try {
             return diagnosisDao.getIdByTitle(title);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }

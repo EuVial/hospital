@@ -5,6 +5,7 @@ import controller.Forward;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
 import domain.patient.Treatment;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.PatientService;
 import util.FactoryException;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreatmentListAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(TreatmentListAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -36,17 +39,13 @@ public class TreatmentListAction extends Action {
                         }
                     }
                 }
-//                TreatmentService treatmentService = getServiceFactory().getTreatmentService();
-//                for (Treatment treatment : treatmentsData) {
-//                    treatment = treatmentService.readInfo(treatment.getId());
-//                    if (!treatment.getIsDone()) treatments.add(treatment);
-//                }
                 req.setAttribute("treatments", treatments);
                 return null;
             } else {
                 throw new NumberFormatException();
             }
         } catch (FactoryException | ServiceException e) {
+            LOGGER.error("TreatmentListAction problem with services" + e);
             throw new ServletException(e);
         }
     }

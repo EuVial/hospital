@@ -29,12 +29,6 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         super(connection);
     }
 
-//    @Override
-//    public DiagnosisToPatient create() throws PersistException {
-//        DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-//        return persist(diagnosisToPatient);
-//    }
-
     @Override
     public String getSelectQuery() {
         return "SELECT id, patient_id, diagnosis_id, doctor_id, consultation_date FROM hospital.patient_diagnosis";
@@ -114,43 +108,6 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         }
     }
 
-//    public List<DiagnosisToPatient> readHistoryOfPatient(Integer patientId) throws PersistException {
-//        String sql = "SELECT id, diagnosis_id, doctor_id, consultation_date FROM hospital.patient_diagnosis WHERE patient_id = ?";
-//        PreparedStatement statement = null;
-//        ResultSet resultSet = null;
-//        // TODO: try-with-resources
-//        try {
-//            statement = getConnection().prepareStatement(sql);
-//            statement.setInt(1, patientId);
-//            resultSet = statement.executeQuery();
-//            List<DiagnosisToPatient> diagnosisToPatients = new ArrayList<>();
-//            while(resultSet.next()) {
-//                DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-//                diagnosisToPatient.setId(resultSet.getInt("id"));
-//                diagnosisToPatient.setPatient(new Patient());
-//                diagnosisToPatient.getPatient().setId(patientId);
-////                patientId = resultSet.getInt("patient_id");
-////                if (!resultSet.wasNull()) {
-////                    diagnosisToPatient.setPatient(new Patient());
-////                    diagnosisToPatient.getPatient().setId(patientId);
-////                }
-//                diagnosisToPatient.setDiagnosis(new Diagnosis());
-//                diagnosisToPatient.getDiagnosis().setId(resultSet.getInt("diagnosis_id"));
-//                diagnosisToPatient.setDoctor(new User());
-//                diagnosisToPatient.getDoctor().setId(resultSet.getInt("doctor_id"));
-//                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("consultation_date").getTime()));
-//
-//                diagnosisToPatients.add(diagnosisToPatient);
-//            }
-//            return diagnosisToPatients;
-//        } catch(SQLException e) {
-//            throw new PersistException(e);
-//        } finally {
-//            try{ statement.close(); } catch(Exception e) {}
-//            try{ resultSet.close(); } catch(Exception e) {}
-//        }
-//    }
-
     public List<DiagnosisToPatient> readHistory(Integer patientId) throws PersistException {
         String sql =
                 "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
@@ -158,34 +115,27 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
                 "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                 "WHERE patient_diagnosis.patient_id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, patientId);
-            resultSet = statement.executeQuery();
-            List<DiagnosisToPatient> diagnosisToPatients = new ArrayList<>();
-            while(resultSet.next()) {
-                DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-                diagnosisToPatient.setId(resultSet.getInt("patient_diagnosis.id"));
-                diagnosisToPatient.setDiagnosis(new Diagnosis());
-                diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
-                diagnosisToPatient.setDoctor(new User());
-                diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
-                diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
-                diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
-                diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
-
-                diagnosisToPatients.add(diagnosisToPatient);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<DiagnosisToPatient> diagnosisToPatients = new ArrayList<>();
+                while (resultSet.next()) {
+                    DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+                    diagnosisToPatient.setId(resultSet.getInt("patient_diagnosis.id"));
+                    diagnosisToPatient.setDiagnosis(new Diagnosis());
+                    diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                    diagnosisToPatient.setDoctor(new User());
+                    diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
+                    diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
+                    diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
+                    diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
+                    diagnosisToPatients.add(diagnosisToPatient);
+                }
+                return diagnosisToPatients;
             }
-            return diagnosisToPatients;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
@@ -198,37 +148,31 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                         "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                         "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
                         "WHERE patient_diagnosis.id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
-            resultSet = statement.executeQuery();
-            DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-            diagnosisToPatient.setId(diagnosisToPatientId);
-            while(resultSet.next()) {
-                diagnosisToPatient.setDiagnosis(new Diagnosis());
-                diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
-                diagnosisToPatient.setDoctor(new User());
-                diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
-                diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
-                diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
-                diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
-                // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
-                diagnosisToPatient.setPatient(new Patient());
-                diagnosisToPatient.getPatient().setId(resultSet.getInt("patient.id"));
-                diagnosisToPatient.getPatient().setFirstName(resultSet.getString("patient.first_name"));
-                diagnosisToPatient.getPatient().setLastName(resultSet.getString("patient.last_name"));
-                diagnosisToPatient.getPatient().setWard(resultSet.getInt("ward"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+                diagnosisToPatient.setId(diagnosisToPatientId);
+                while (resultSet.next()) {
+                    diagnosisToPatient.setDiagnosis(new Diagnosis());
+                    diagnosisToPatient.getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                    diagnosisToPatient.setDoctor(new User());
+                    diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
+                    diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
+                    diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
+                    diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
+                    // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
+                    diagnosisToPatient.setPatient(new Patient());
+                    diagnosisToPatient.getPatient().setId(resultSet.getInt("patient.id"));
+                    diagnosisToPatient.getPatient().setFirstName(resultSet.getString("patient.first_name"));
+                    diagnosisToPatient.getPatient().setLastName(resultSet.getString("patient.last_name"));
+                    diagnosisToPatient.getPatient().setWard(resultSet.getInt("ward"));
+                }
+                return diagnosisToPatient;
             }
-            return diagnosisToPatient;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
@@ -238,29 +182,21 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                         "FROM hospital.patient_diagnosis\n" +
                         "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                         "WHERE patient_diagnosis.id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            String diagnosisTitle = null;
-            statement = getConnection().prepareStatement(sql);
+        String diagnosisTitle = null;
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
-            resultSet = statement.executeQuery();
-            DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
-            diagnosisToPatient.setId(diagnosisToPatientId);
-            while(resultSet.next()) {
-                diagnosisTitle = resultSet.getString("diagnosis.title");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
+                diagnosisToPatient.setId(diagnosisToPatientId);
+                while (resultSet.next()) {
+                    diagnosisTitle = resultSet.getString("diagnosis.title");
+                }
+                return diagnosisTitle;
             }
-            return diagnosisTitle;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
-
-
 
     public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws PersistException {
         String sql =
@@ -268,24 +204,18 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                         "  JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)\n" +
                         "  JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)\n" +
                         "WHERE diagnosis.title = ? AND patient.id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
         Integer diagnosisToPatientId = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, diagnosisTitle);
             statement.setInt(2, patientId);
-            resultSet = statement.executeQuery();
-            while(resultSet.next()) {
-                diagnosisToPatientId = resultSet.getInt("patient_diagnosis.id");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    diagnosisToPatientId = resultSet.getInt("patient_diagnosis.id");
+                }
+                return diagnosisToPatientId;
             }
-            return diagnosisToPatientId;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 }

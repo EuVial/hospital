@@ -6,6 +6,7 @@ import domain.patient.Diagnosis;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisService;
 import service.patient.DiagnosisToPatientService;
@@ -19,6 +20,8 @@ import java.io.IOException;
 import java.util.Date;
 
 public class PatientDischargeDoneAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PatientDischargeDoneAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
@@ -28,24 +31,25 @@ public class PatientDischargeDoneAction extends Action {
 
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
 
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
 
         try {
             diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
         } catch (FactoryException e) {
+            LOGGER.error("PatientDischargeDoneAction problem with services " + e);
             throw new ServletException(e);
         }
 
         String title = req.getParameter("diagnosis.title");
         if (patientDiagnosisId != null) {
-//            diagnosisToPatient.setId(patientDiagnosisId);
             try {
                 diagnosisToPatient = diagnosisToPatientService.findById(patientDiagnosisId);
-            } catch(ServiceException e) {
+            } catch (ServiceException e) {
+                LOGGER.error("PatientDischargeDoneAction problem with services " + e);
                 throw new ServletException(e);
             }
         }
@@ -65,7 +69,8 @@ public class PatientDischargeDoneAction extends Action {
             if (diagnosisToPatient.getConsultationDate() == null) {
                 diagnosisToPatient.setConsultationDate(new Date());
             }
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
+            LOGGER.error("PatientDischargeDoneAction problem with services " + e);
             throw new ServletException(e);
         }
 
@@ -74,7 +79,8 @@ public class PatientDischargeDoneAction extends Action {
                 diagnosisToPatient.getDoctor().getId() != null) {
             try {
                 diagnosisToPatientService.save(diagnosisToPatient);
-            } catch(ServiceException e) {
+            } catch (ServiceException e) {
+                LOGGER.error("PatientDischargeDoneAction problem with services " + e);
                 throw new ServletException(e);
             }
         }
@@ -83,7 +89,8 @@ public class PatientDischargeDoneAction extends Action {
             Patient patient = patientService.findById(patientId);
             patient.setWard(null);
             patientService.save(patient);
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
+            LOGGER.error("PatientDischargeDoneAction problem with services " + e);
             throw new ServletException(e);
         }
 

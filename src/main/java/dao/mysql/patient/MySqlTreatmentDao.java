@@ -30,12 +30,6 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
         super(connection);
     }
 
-//    @Override
-//    public Patient create() throws PersistException {
-//        Patient patient = new Patient();
-//        return persist(patient);
-//    }
-
     @Override
     public String getSelectQuery() {
         return "SELECT id, title, patient_diagnosis_id, type_id, performer_id, done FROM hospital.treatment";
@@ -120,32 +114,26 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
 
     public List<Treatment> readTreatmentsFromDiagnosisToPatient(Integer diagnosisToPatientId) throws PersistException {
         String sql = "SELECT id, title, type_id, performer_id, done FROM hospital.treatment WHERE patient_diagnosis_id = ?";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
-            resultSet = statement.executeQuery();
-            List<Treatment> treatments = new ArrayList<>();
-            while(resultSet.next()) {
-                Treatment treatment = new Treatment();
-                treatment.setId(resultSet.getInt("id"));
-                treatment.setTitle(resultSet.getString("title"));
-                treatment.setDiagnosisToPatient(new DiagnosisToPatient());
-                treatment.getDiagnosisToPatient().setId(diagnosisToPatientId);
-                treatment.setType(TreatmentType.values()[resultSet.getInt("type_id")]);
-                treatment.setPerformer(new User());
-                treatment.getPerformer().setId(resultSet.getInt("performer_id"));
-                treatment.setDone(resultSet.getInt("done") == 1);
-                treatments.add(treatment);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                List<Treatment> treatments = new ArrayList<>();
+                while (resultSet.next()) {
+                    Treatment treatment = new Treatment();
+                    treatment.setId(resultSet.getInt("id"));
+                    treatment.setTitle(resultSet.getString("title"));
+                    treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+                    treatment.getDiagnosisToPatient().setId(diagnosisToPatientId);
+                    treatment.setType(TreatmentType.values()[resultSet.getInt("type_id")]);
+                    treatment.setPerformer(new User());
+                    treatment.getPerformer().setId(resultSet.getInt("performer_id"));
+                    treatment.setDone(resultSet.getInt("done") == 1);
+                    treatments.add(treatment);
+                }
+                return treatments;
             }
-            return treatments;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
@@ -160,41 +148,31 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
                         "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                         "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
                         "WHERE treatment.id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, treatmentId);
-            resultSet = statement.executeQuery();
-            Treatment treatment = new Treatment();
-            treatment.setId(treatmentId);
-            while(resultSet.next()) {
-                treatment.setTitle(resultSet.getString("treatment.title"));
-                treatment.setType(TreatmentType.values()[resultSet.getInt("treatment.type_id")]);
-                treatment.setDone(resultSet.getInt("treatment.done") == 1);
-//                treatment.setPerformer(new User());
-//                treatment.getPerformer().setFirstName(resultSet.getString("user.first_name"));
-//                treatment.getPerformer().setLastName(resultSet.getString("user.last_name"));
-//                treatment.getPerformer().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                treatment.setDiagnosisToPatient(new DiagnosisToPatient());
-                treatment.getDiagnosisToPatient().setDoctor(new User());
-                treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
-                treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
-                treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
-                // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
-                treatment.setPatient(new Patient());
-                treatment.getPatient().setId(resultSet.getInt("patient.id"));
-                treatment.getPatient().setFirstName(resultSet.getString("patient.first_name"));
-                treatment.getPatient().setLastName(resultSet.getString("patient.last_name"));
-                treatment.getPatient().setWard(resultSet.getInt("ward"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                Treatment treatment = new Treatment();
+                treatment.setId(treatmentId);
+                while (resultSet.next()) {
+                    treatment.setTitle(resultSet.getString("treatment.title"));
+                    treatment.setType(TreatmentType.values()[resultSet.getInt("treatment.type_id")]);
+                    treatment.setDone(resultSet.getInt("treatment.done") == 1);
+                    treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+                    treatment.getDiagnosisToPatient().setDoctor(new User());
+                    treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
+                    treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
+                    treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                    // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
+                    treatment.setPatient(new Patient());
+                    treatment.getPatient().setId(resultSet.getInt("patient.id"));
+                    treatment.getPatient().setFirstName(resultSet.getString("patient.first_name"));
+                    treatment.getPatient().setLastName(resultSet.getString("patient.last_name"));
+                    treatment.getPatient().setWard(resultSet.getInt("ward"));
+                }
+                return treatment;
             }
-            return treatment;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
@@ -209,47 +187,41 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
                         "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                         "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
                         "WHERE treatment.id = ?;";
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        // TODO: try-with-resources
-        try {
-            statement = getConnection().prepareStatement(sql);
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, treatmentId);
-            resultSet = statement.executeQuery();
-            Treatment treatment = new Treatment();
-            treatment.setId(treatmentId);
-            while(resultSet.next()) {
-                treatment.setTitle(resultSet.getString("treatment.title"));
-                treatment.setType(TreatmentType.values()[resultSet.getInt("treatment.type_id")]);
-                treatment.setDone(resultSet.getInt("treatment.done") == 1);
-                treatment.setPerformer(new User());
-                treatment.getPerformer().setFirstName(resultSet.getString("user.first_name"));
-                treatment.getPerformer().setLastName(resultSet.getString("user.last_name"));
-                treatment.getPerformer().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                treatment.setDiagnosisToPatient(new DiagnosisToPatient());
-                treatment.getDiagnosisToPatient().setDoctor(new User());
-                treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
-                treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
-                treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
-                // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
-                treatment.setPatient(new Patient());
-                treatment.getPatient().setId(resultSet.getInt("patient.id"));
-                treatment.getPatient().setFirstName(resultSet.getString("patient.first_name"));
-                treatment.getPatient().setLastName(resultSet.getString("patient.last_name"));
-                treatment.getPatient().setWard(resultSet.getInt("ward"));
+            try (ResultSet resultSet = statement.executeQuery()) {
+                Treatment treatment = new Treatment();
+                treatment.setId(treatmentId);
+                while (resultSet.next()) {
+                    treatment.setTitle(resultSet.getString("treatment.title"));
+                    treatment.setType(TreatmentType.values()[resultSet.getInt("treatment.type_id")]);
+                    treatment.setDone(resultSet.getInt("treatment.done") == 1);
+                    treatment.setPerformer(new User());
+                    treatment.getPerformer().setFirstName(resultSet.getString("user.first_name"));
+                    treatment.getPerformer().setLastName(resultSet.getString("user.last_name"));
+                    treatment.getPerformer().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
+                    treatment.setDiagnosisToPatient(new DiagnosisToPatient());
+                    treatment.getDiagnosisToPatient().setDoctor(new User());
+                    treatment.getDiagnosisToPatient().getDoctor().setId(resultSet.getInt("patient_diagnosis.doctor_id"));
+                    treatment.getDiagnosisToPatient().setDiagnosis(new Diagnosis());
+                    treatment.getDiagnosisToPatient().getDiagnosis().setTitle(resultSet.getString("diagnosis.title"));
+                    // Data about the patient is necessary for the correct operation of the "caps" of the jsp-page and the "back"
+                    treatment.setPatient(new Patient());
+                    treatment.getPatient().setId(resultSet.getInt("patient.id"));
+                    treatment.getPatient().setFirstName(resultSet.getString("patient.first_name"));
+                    treatment.getPatient().setLastName(resultSet.getString("patient.last_name"));
+                    treatment.getPatient().setWard(resultSet.getInt("ward"));
+                }
+                return treatment;
             }
-            return treatment;
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new PersistException(e);
-        } finally {
-            try{ statement.close(); } catch(Exception e) {}
-            try{ resultSet.close(); } catch(Exception e) {}
         }
     }
 
     public void done(Treatment treatment) throws PersistException {
         String sql = "UPDATE hospital.treatment SET done = ?, performer_id = ? WHERE id = ?;";
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, 1);
             statement.setInt(2, treatment.getPerformer().getId());
             statement.setInt(3, treatment.getId());

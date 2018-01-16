@@ -10,56 +10,61 @@ import java.sql.ResultSet;
 import java.util.List;
 
 /**
- * Абстрактный класс предоставляющий базовую реализацию CRUD операций с использованием JDBC.
+ *Abstract class providing the basic implementation of CRUD operations using JDBC.
  *
- * @param <T>  тип объекта персистенции
- * @param <PK> тип первичного ключа
+ * @param <T>  type of persistent object
+ * @param <PK> type of primary key
  */
 public abstract class AbstractJDBCDao<PK extends Integer,
         T extends Identified<PK>> implements Dao<PK, T> {
 
     /**
-     * Возвращает sql запрос для получения всех записей.
-     * <p/>
+     * Returns the sql query to retrieve all records.
+     *
      * SELECT * FROM [Table]
      */
     public abstract String getSelectQuery();
 
     /**
-     * Возвращает sql запрос для вставки новой записи в базу данных.
-     * <p/>
+     * Returns a sql query to insert a new record into the database.
+     *
      * INSERT INTO [Table] ([column, column, ...]) VALUES (?, ?, ...);
      */
     public abstract String getCreateQuery();
 
     /**
-     * Возвращает sql запрос для обновления записи.
-     * <p/>
+     * Returns a sql query to update the record.
+     *
      * UPDATE [Table] SET [column = ?, column = ?, ...] WHERE id = ?;
      */
     public abstract String getUpdateQuery();
 
     /**
-     * Возвращает sql запрос для удаления записи из базы данных.
-     * <p/>
+     * Returns a sql query to delete the record from the database.
+     *
      * DELETE FROM [Table] WHERE id= ?;
      */
     public abstract String getDeleteQuery();
 
+    /**
+     * Returns a sql query checks whether this record is associated with other tables and whether it can be safely removed.
+     *
+     * SELECT COUNT(*) AS 'count' FROM [Initiate table] WHERE id = ? LIMIT 1;
+     */
     public abstract String getInitiatesQuery();
 
     /**
-     * Разбирает ResultSet и возвращает список объектов соответствующих содержимому ResultSet.
+     * Disassembles the ResultSet and returns a list of objects corresponding to the contents of the ResultSet.
      */
     protected abstract List<T> parseResultSet(ResultSet rs) throws PersistException;
 
     /**
-     * Устанавливает аргументы insert запроса в соответствии со значением полей объекта object.
+     * Sets the insert arguments of the request according to the value of the fields of the object.
      */
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws PersistException;
 
     /**
-     * Устанавливает аргументы update запроса в соответствии со значением полей объекта object.
+     * Sets the query update arguments according to the field value of the object.
      */
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws PersistException;
 
@@ -117,7 +122,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
         } catch (Exception e) {
             throw new PersistException(e);
         }
-        // Получаем только что вставленную запись
+        // Get the newly inserted record
         sql = getSelectQuery() + " WHERE id = last_insert_id();";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
@@ -136,7 +141,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     public void update(T object) throws PersistException {
         String sql = getUpdateQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            prepareStatementForUpdate(statement, object); // заполнение аргументов запроса оставим на совесть потомков
+            prepareStatementForUpdate(statement, object);
             int count = statement.executeUpdate();
             if (count != 1) {
                 throw new PersistException("On update modify more then 1 record: " + count);
@@ -165,10 +170,11 @@ public abstract class AbstractJDBCDao<PK extends Integer,
         }
     }
 
+    @Override
     public boolean isInitiatesTransfers(T object) throws PersistException {
         String sql = getInitiatesQuery();
         Integer id = object.getId();
-        try (PreparedStatement statement = getConnection().prepareStatement(sql)){
+        try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 boolean result = true;
@@ -177,7 +183,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
                 }
                 return result;
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw new PersistException(e);
         }
     }

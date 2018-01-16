@@ -3,6 +3,7 @@ package controller.patient.view.treatment;
 import controller.Action;
 import controller.Forward;
 import domain.patient.*;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisToPatientService;
 import service.patient.PatientService;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TreatmentEditAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(TreatmentEditAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Integer id = null;
@@ -49,7 +52,8 @@ public class TreatmentEditAction extends Action {
                     req.setAttribute("patient", patient);
                 }
                 req.setAttribute("treatment", treatment);
-            } catch(FactoryException | ServiceException e) {
+            } catch (FactoryException | ServiceException e) {
+                LOGGER.error("TreatmentEditAction problem with services " + e);
                 throw new ServletException(e);
             }
         }
@@ -63,7 +67,8 @@ public class TreatmentEditAction extends Action {
                     req.setAttribute("patient", patient);
                 }
                 req.setAttribute("treatment", treatment);
-            } catch(FactoryException | ServiceException e) {
+            } catch (FactoryException | ServiceException e) {
+                LOGGER.error("TreatmentEditAction problem with services " + e);
                 throw new ServletException(e);
             }
         }

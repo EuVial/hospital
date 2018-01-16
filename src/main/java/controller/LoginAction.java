@@ -1,6 +1,7 @@
 package controller;
 
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.user.UserService;
 import util.FactoryException;
@@ -12,6 +13,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LoginAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(LoginAction.class));
+
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
@@ -25,10 +29,10 @@ public class LoginAction extends Action {
                     session.setAttribute("currentUser", user);
                     return new Forward("/index.html");
                 } else {
-//                    return new Forward("/login.html?message=login.message");
                     return new Forward("/login.html?message=login.message.incorrect.password");
                 }
-            } catch(FactoryException | ServiceException e) {
+            } catch (FactoryException | ServiceException e) {
+                LOGGER.error("LoginAction problem with services " + e);
                 throw new ServletException(e);
             }
         } else {

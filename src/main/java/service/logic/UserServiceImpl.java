@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     public User findById(Integer id) throws ServiceException {
         try {
             return userDao.read(id);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public User findByLoginAndPassword(String login, String password) throws ServiceException {
         try {
             return userDao.readByLoginAndPassword(login, password);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() throws ServiceException {
         try {
             return userDao.getAll();
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
                     throw new UserLoginNotUniqueException(user.getLogin());
                 }
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
     public boolean canDelete(User user) throws ServiceException {
         try {
             return !userDao.isInitiatesTransfers(user);
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
@@ -106,9 +106,9 @@ public class UserServiceImpl implements UserService {
     public void changePassword(Integer userId, String oldPassword, String newPassword) throws ServiceException {
         try {
             User user = userDao.read(userId);
-            if(user != null) {
-                if(user.getPassword().equals(oldPassword)) {
-                    if(newPassword == null) {
+            if (user != null) {
+                if (user.getPassword().equals(oldPassword)) {
+                    if (newPassword == null) {
                         newPassword = defaultPassword;
                     }
                     user.setPassword(newPassword);
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
             } else {
                 throw new UserNotExistsException(userId);
             }
-        } catch(PersistException e) {
+        } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }

@@ -7,6 +7,7 @@ import domain.patient.Patient;
 import domain.patient.Treatment;
 import domain.patient.TreatmentType;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisToPatientService;
 import service.patient.TreatmentService;
@@ -18,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class TreatmentSaveAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(TreatmentSaveAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Treatment treatment = new Treatment();
@@ -40,7 +43,7 @@ public class TreatmentSaveAction extends Action {
         treatment.setTitle(req.getParameter("title"));
         try {
             treatment.setType(TreatmentType.values()[Integer.parseInt(req.getParameter("type"))]);
-        } catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {}
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {}
         treatment.setDone(false);
         User user = (User) req.getSession(false).getAttribute("currentUser");
         treatment.setPerformer(user);
@@ -52,6 +55,7 @@ public class TreatmentSaveAction extends Action {
                 DiagnosisToPatientService diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
                 treatment.getDiagnosisToPatient().setId(diagnosisToPatientService.getDiagnosisToPatientId(patientDiagnosisTitle, patientId));
             } catch (FactoryException | ServiceException e) {
+                LOGGER.error("TreatmentSaveAction problem with services " + e);
                 throw new ServletException(e);
             }
         }
@@ -63,7 +67,8 @@ public class TreatmentSaveAction extends Action {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();
                 service.save(treatment);
-            } catch(FactoryException | ServiceException e) {
+            } catch (FactoryException | ServiceException e) {
+                LOGGER.error("TreatmentSaveAction problem with services " + e);
                 throw new ServletException(e);
             }
         }

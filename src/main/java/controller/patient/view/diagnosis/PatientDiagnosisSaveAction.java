@@ -6,6 +6,7 @@ import domain.patient.Diagnosis;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
 import domain.user.User;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisService;
 import service.patient.DiagnosisToPatientService;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.util.Date;
 
 public class PatientDiagnosisSaveAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PatientDiagnosisSaveAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
@@ -27,11 +30,11 @@ public class PatientDiagnosisSaveAction extends Action {
 
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
 
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch(NumberFormatException e) {}
+        } catch (NumberFormatException e) {}
 
         try {
             diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
@@ -44,7 +47,8 @@ public class PatientDiagnosisSaveAction extends Action {
 //            diagnosisToPatient.setId(patientDiagnosisId);
             try {
                 diagnosisToPatient = diagnosisToPatientService.findById(patientDiagnosisId);
-            } catch(ServiceException e) {
+            } catch (ServiceException e) {
+                LOGGER.error("PatientDiagnosisSaveAction problem with diagnosisToPatient service" + e);
                 throw new ServletException(e);
             }
         }
@@ -64,7 +68,8 @@ public class PatientDiagnosisSaveAction extends Action {
             if (diagnosisToPatient.getConsultationDate() == null) {
                 diagnosisToPatient.setConsultationDate(new Date());
             }
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
+            LOGGER.error("PatientDiagnosisSaveAction problem with diagnosis service" + e);
             throw new ServletException(e);
         }
 
@@ -73,7 +78,8 @@ public class PatientDiagnosisSaveAction extends Action {
                 diagnosisToPatient.getDoctor().getId() != null) {
             try {
                 diagnosisToPatientService.save(diagnosisToPatient);
-            } catch(ServiceException e) {
+            } catch (ServiceException e) {
+                LOGGER.error("PatientDiagnosisSaveAction problem with diagnosisToPatient service" + e);
                 throw new ServletException(e);
             }
         }

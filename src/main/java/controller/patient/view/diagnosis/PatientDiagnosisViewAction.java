@@ -4,6 +4,7 @@ import controller.Action;
 import controller.Forward;
 import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
+import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisToPatientService;
 import util.FactoryException;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class PatientDiagnosisViewAction extends Action {
+    private final static Logger LOGGER =
+            Logger.getLogger(String.valueOf(PatientDiagnosisViewAction.class));
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -24,15 +27,12 @@ public class PatientDiagnosisViewAction extends Action {
             if (patient != null) {
                 req.setAttribute("patient", patient);
             }
-            if (diagnosisToPatient != null) {
-                req.setAttribute("patientDiagnosis", diagnosisToPatient);
-                return null;
-            } else {
-                throw new NumberFormatException();
-            }
-        } catch(NumberFormatException e) {
+            req.setAttribute("patientDiagnosis", diagnosisToPatient);
+            return null;
+        } catch (NumberFormatException e) {
             return new Forward("/patient/list.html");
-        } catch(FactoryException | ServiceException e) {
+        } catch (FactoryException | ServiceException e) {
+            LOGGER.error("PatientDiagnosisViewAction problem with services");
             throw new ServletException(e);
         }
     }
