@@ -5,9 +5,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%--<c:set var="language" value="${pageContext.request.locale.language}"/>--%>
 
-<%--<c:out value="${pageContext.request.locale.language}"/>--%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,27 +21,7 @@
         <link href="${urlCss4}" rel="stylesheet">
     </head>
     <body>
-        <%--<div class="docs-navbar">--%>
-            <%--<c:choose>--%>
-                <%--<c:when test="${pageContext.request.locale.language eq 'ru'}">--%>
-                    <%--<c:set var="language" value="en"/>--%>
-                <%--</c:when>--%>
-                <%--<c:when test="${pageContext.request.locale.language eq 'en'}">--%>
-                    <%--<c:set var="language" value="ru"/>--%>
-                <%--</c:when>--%>
-                <%--<c:otherwise>--%>
-                    <%--<c:set var="language" value="unk"/>--%>
-                <%--</c:otherwise>--%>
-            <%--</c:choose>--%>
-            <%--<a href="<fmt:setLocale value="${language}" scope="session"/>">--%>
-                <%--<button class="btn btn-link">--%>
-                    <%--${language}--%>
-                <%--</button>--%>
-            <%--</a>--%>
-        <%--</div>--%>
-
         <div class="columns">
-
             <div class="column col-2 col-ml-auto">
                 <ul class="menu">
                     <li class="menu-item">
@@ -63,10 +41,6 @@
                             </div>
                             <div class="tile-content">${currentUser.login}<br/>
                                 <fmt:message key="${currentUser.role.name}"/><br/>
-                                <%--<c:url var="urlLogout" value="/logout.html"/>--%>
-                                <%--<a href="${urlLogout}">--%>
-                                    <%--<img src="../../img/action/logout.png" class="avatar" alt="logout">--%>
-                                <%--</a>--%>
                             </div>
                         </div>
                     </li>
@@ -117,13 +91,8 @@
                 </ul>
             </div>
             <div class="column col-6 col-mr-auto">
-                <%--<div id="content" class="docs-content off-canvas-content">--%>
                 <jsp:doBody/>
             </div>
         </div>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
     </body>
 </html>

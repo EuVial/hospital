@@ -77,7 +77,6 @@
                                 <label class="form-radio">
                                     <input type="radio" value="${role.id}" name="role" ${checked}>
                                     <i class="form-icon"></i> <fmt:message key="${role.name}"/>
-                                    <%--<option value="${role.id}" ${checked}>${role.name}</option>--%>
                                 </label>
                             </c:forEach>
                     </div>
@@ -88,7 +87,6 @@
                 </c:if>
 
                 <button class="btn btn-primary btn-action btn-lg">
-                    <%--<fmt:message key="user.edit.button.save"/>--%>
                     <i class="icon icon-check"></i>
                 </button>
 
@@ -98,7 +96,6 @@
                     </c:if>
 
                     <button class="btn btn-primary btn-action btn-lg" formaction="${urlUserDelete}" formmethod="post" ${disabled}>
-                        <%--<fmt:message key="user.edit.button.delete"/>--%>
                         <i class="icon icon-delete"></i>
                     </button>
                 </c:if>
@@ -106,12 +103,10 @@
 
                 <button class="btn btn-primary btn-action btn-lg" type="reset">
                     <i class="icon icon-refresh"></i>
-                    <%--<fmt:message key="user.edit.button.reset"/>--%>
                 </button>
 
                 <button class="btn btn-primary btn-action btn-lg" formaction="${urlUserList}" formmethod="get">
                     <i class="icon icon-back"></i>
-                    <%--<fmt:message key="user.edit.button.cancel"/>--%>
                 </button>
             </form>
         </div>

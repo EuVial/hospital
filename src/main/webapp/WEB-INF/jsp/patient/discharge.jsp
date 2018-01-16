@@ -9,7 +9,6 @@
     <jsp:useBean id="patientDiagnosis" class="domain.patient.DiagnosisToPatient"/>
 </c:if>
 
-
 <fmt:message var="title" key="patient.discharge.title"/>
 <u:patient_view>
     <nav class="panel-nav">
@@ -50,9 +49,6 @@
                 <c:url var="urlPatientDiagnosisSave" value="/patient/discharge/done.html"/>
                 <form class="form-horizontal" action="${urlPatientDiagnosisSave}" method="post">
                     <input name="patientId" value="${patient.id}" type="hidden"/>
-                    <%--<c:if test="${not empty patientDiagnosis.id}">--%>
-                        <%--<input name="id" value="${patientDiagnosis.id}" type="hidden">--%>
-                    <%--</c:if>--%>
                     <div class="form-group">
                         <div class="col-4">
                             <label class="form-label" for="diagnosis.title"><fmt:message key="patient.discharge.diagnosis.title"/>:</label>
@@ -80,5 +76,4 @@
             </div>
         </div>
     </div>
-
 </u:patient_view>

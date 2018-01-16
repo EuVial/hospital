@@ -17,20 +17,6 @@
         <link href="${urlCss2}" rel="stylesheet">
     </head>
     <body>
-        <%--<c:if test="${not empty currentUser}">--%>
-            <%--<c:url var="urlLogout" value="/logout.html"/>--%>
-            <%--<div class="off-canvas-toggle">--%>
-                <%--<div class="form-group">--%>
-                    <%--<fmt:message key="application.logged"/> ${currentUser.login}--%>
-                    <%--(<span class="text-success"><fmt:message key="${currentUser.role.name}"/></span>).--%>
-                <%--</div>--%>
-                <%--<div class="form-group">--%>
-                    <%--<a href="${urlLogout}">--%>
-                        <%--<fmt:message key="application.button.logout"/>--%>
-                    <%--</a>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-        <%--</c:if>--%>
         <div class="columns">
             <div class="column col-xs-12">
                 <div class="empty">

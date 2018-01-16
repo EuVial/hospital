@@ -49,12 +49,6 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
         super(connection);
     }
 
-//    @Override
-//    public User create() throws PersistException {
-//        User user = new User();
-//        return persist(user);
-//    }
-
     @Override
     public String getSelectQuery() {
         return "SELECT id, login, password, first_name, last_name, role_id " +
@@ -97,8 +91,6 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
                 user.setFirstName(rs.getString("first_name"));
                 user.setLastName(rs.getString("last_name"));
                 user.setRole(UserRole.values()[rs.getInt("role_id")]);
-//                user.setSpecialization(new UserSpecialization());
-//                user.getSpecialization().setId(rs.getInt("specialization_id"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -116,7 +108,6 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
             statement.setString(3, object.getFirstName());
             statement.setString(4, object.getLastName());
             statement.setInt(5, object.getRole().ordinal());
-//            statement.setInt(6, object.getSpecialization().getId());
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for insert");
             throw new PersistException(e);
@@ -131,7 +122,6 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
             statement.setString(3, object.getFirstName());
             statement.setString(4, object.getLastName());
             statement.setInt(5, object.getRole().ordinal());
-//            statement.setInt(6, object.getSpecialization().getId());
             statement.setInt(6, object.getId());
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for update");
@@ -153,8 +143,6 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
                     user.setFirstName(resultSet.getString("first_name"));
                     user.setLastName(resultSet.getString("last_name"));
                     user.setRole(UserRole.values()[resultSet.getInt("role_id")]);
-//                user.setSpecialization(new UserSpecialization());
-//                user.getSpecialization().setId(resultSet.getInt("specialization_id"));
                 }
                 return user;
             }

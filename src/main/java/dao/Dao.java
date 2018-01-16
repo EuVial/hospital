@@ -25,5 +25,6 @@ public interface Dao<PK extends Serializable, T extends Identified<PK>> {
     /** Returns a list of objects matching all records in the database */
     List<T> getAll() throws PersistException;
 
-    public boolean isInitiatesTransfers(T object) throws PersistException;
+    /** Checks whether this record is associated with other tables and whether it can be safely removed. */
+    boolean isInitiatesTransfers(T object) throws PersistException;
 }

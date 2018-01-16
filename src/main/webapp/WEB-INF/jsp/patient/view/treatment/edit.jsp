@@ -84,26 +84,7 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <%--<div class="col-5">--%>
-                            <%--<input class="form-label" id="diagnosisTitle" name="diagnosisTitle" value="${treatment.diagnosisToPatient.diagnosis.title}">--%>
-                        <%--</div>--%>
                     </div>
-
-                    <%--<div class="form-group">--%>
-                        <%--<div class="col-4">--%>
-                            <%--<label class="form-label" for="diagnosis.title"><fmt:message key="patient.view.diagnosis.edit.form.diagnosis.title"/>:</label>--%>
-                        <%--</div>--%>
-                        <%--<div class="col-5">--%>
-                            <%--<select class="form-select" id="diagnosis.title" name="diagnosis.title">--%>
-                                <%--<option>${previousDiagnosisTitle}</option>--%>
-                                <%--<c:forEach var="diagnosis" items="${diagnoses}">--%>
-                                    <%--<c:if test="${diagnosis.title != previousDiagnosisTitle}">--%>
-                                        <%--<option>${diagnosis.title}</option>--%>
-                                    <%--</c:if>--%>
-                                <%--</c:forEach>--%>
-                            <%--</select>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
 
                     <div class="form-group">
                         <div class="col-4">

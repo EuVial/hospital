@@ -110,5 +110,4 @@
             </div>
         </div>
     </div>
-
 </u:patient_view>

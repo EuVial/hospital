@@ -45,7 +45,6 @@
     <h5 class="centered">${title}</h5>
     <div class="columns">
         <div class="column col-12">
-            <%--<c:url var="urlPatientList" value="/patient/list.html"/>--%>
             <c:url var="urlPatientView" value="/patient/view.html?id=${patient.id}"/>
             <c:url var="urlPatientSave" value="/patient/save.html"/>
             <c:url var="urlPatientDelete" value="/patient/delete.html"/>
@@ -109,6 +108,5 @@
                 </button>
             </form>
         </div>
-
     </div>
 </u:patient_view>

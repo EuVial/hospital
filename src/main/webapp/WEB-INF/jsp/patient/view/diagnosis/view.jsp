@@ -36,8 +36,6 @@
             </li>
         </ul>
     </nav>
-    <%--diagnosis.title, user.first_name, user.last_name, user.role_id,
-    patient_diagnosis.consultation_date--%>
     <fmt:message var="title" key="patient.view.diagnosis.view.title"/>
     <h5 class="centered">${title}</h5>
     <div class="panel-body">
@@ -74,13 +72,6 @@
                             <c:param name="patientId" value="${patient.id}"/>
                         </c:url>
 
-                        <%--<form action="${urlPatientDiagnosisEdit}" method="get">--%>
-                        <%--<input name="id" value="${patientDiagnosis.id}" type="hidden"/>--%>
-                        <%--<input name="patientId" value="${patient.id}" type="hidden"/>--%>
-                        <%--<button class="btn btn-primary btn-action btn-lg">--%>
-                        <%--<i class="icon icon-edit"></i>--%>
-                        <%--</button>--%>
-                        <%--</form>--%>
                         <a href="${urlPatientDiagnosisEdit}">
                             <button class="btn btn-primary btn-action btn-lg">
                                 <i class="icon icon-edit"></i>
@@ -91,12 +82,6 @@
                         <c:param name="id" value="${patient.id}"/>
                     </c:url>
 
-                        <%--<form action="${urlDiseaseHistory}" method="get">--%>
-                        <%--<input name="id" value="${patient.id}" type="hidden"/>--%>
-                        <%--<button class="btn btn-primary btn-action btn-lg">--%>
-                        <%--<i class="icon icon-back"></i>--%>
-                        <%--</button>--%>
-                        <%--</form>--%>
                     <a href="${urlDiseaseHistory}">
                         <button class="btn btn-primary btn-action btn-lg">
                             <i class="icon icon-back"></i>

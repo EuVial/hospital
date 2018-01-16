@@ -1,8 +1,7 @@
 package dao;
 
 public class PersistException extends Exception {
-    public PersistException() {
-    }
+    public PersistException() {}
 
     public PersistException(String message) {
         super(message);

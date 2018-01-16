@@ -4,13 +4,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
-<%--<fmt:setLocale value="${sessionScope.language}"/>--%>
-<%--<fmt:setBundle basename="messages"/>--%>
 
 <fmt:message key="patient.list.title" var="title"/>
 
 <u:html title="${title}">
-    <%--<h4 class="s-title text-center">${title}</h4>--%>
     <c:if test="${not empty user.id}">
         <input name="id" value="${user.id}" type="hidden">
     </c:if>
@@ -61,32 +58,3 @@
         </table>
     </div>
 </u:html>
-
-<%--<u:html title="${title}">--%>
-    <%--<h2>${application.title}</h2>--%>
-    <%--<table>--%>
-        <%--<tr>--%>
-            <%--<th><fmt:message key="patient.list.table.firstname"/></th>--%>
-            <%--<th><fmt:message key="patient.list.table.lastname"/></th>--%>
-            <%--<th><fmt:message key="patient.list.table.ward"/></th>--%>
-            <%--<td>&nbsp;</td>--%>
-        <%--</tr>--%>
-        <%--<c:forEach var="patient" items="${patients}">--%>
-            <%--<tr>--%>
-                <%--<td class="content">${patient.firstName}</td>--%>
-                <%--<td class="content">${patient.lastName}</td>--%>
-                <%--<td class="content">${patient.ward}</td>--%>
-                <%--<td class="empty">--%>
-                    <%--<c:url var="urlPatientView" value="/patient/view.html">--%>
-                        <%--<c:param name="id" value="${patient.id}"/>--%>
-                    <%--</c:url>--%>
-                    <%--<a href="${urlPatientView}" class="view"></a>--%>
-                <%--</td>--%>
-            <%--</tr>--%>
-        <%--</c:forEach>--%>
-    <%--</table>--%>
-    <%--<c:if test="${currentUser.role eq 'DOCTOR'}">--%>
-        <%--<c:url var="urlPatientEdit" value="/patient/edit.html"/>--%>
-        <%--<a href="${urlPatientEdit}" class="add-button"><fmt:message key="patient.list.button.add"/></a>--%>
-    <%--</c:if>--%>
-<%--</u:html>--%>

@@ -10,7 +10,6 @@ public class User extends Entity implements Identified<Integer> {
     private String firstName;
     private String lastName;
     private UserRole role;
-//    private UserSpecialization specialization;
 
     public User() {
     }
@@ -64,12 +63,4 @@ public class User extends Entity implements Identified<Integer> {
     public void setRole(UserRole role) {
         this.role = role;
     }
-
-//    public UserSpecialization getSpecialization() {
-//        return specialization;
-//    }
-//
-//    public void setSpecialization(UserSpecialization specialization) {
-//        this.specialization = specialization;
-//    }
 }

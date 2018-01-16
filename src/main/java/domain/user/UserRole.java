@@ -5,10 +5,6 @@ public enum UserRole {
     DOCTOR("role.doctor"),
     NURSE("role.nurse");
 
-    public static UserRole getByIdentity(Integer identity) {
-        return UserRole.values()[identity];
-    }
-
     private String name;
 
     UserRole(String name) {

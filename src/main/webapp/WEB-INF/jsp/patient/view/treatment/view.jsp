@@ -59,13 +59,7 @@
             <tr>
                 <th><fmt:message key="patient.view.treatment.view.table.done"/></th>
                 <td>
-                    <%--<c:if test="${treatment.isDone}">--%>
-                        <%--<fmt:message key="patient.view.treatment.view.table.done.true"/>--%>
-                    <%--</c:if>--%>
 
-                    <%--<c:if test="${not treatment.isDone}">--%>
-                        <%--<fmt:message key="patient.view.treatment.view.table.done.false"/>--%>
-                    <%--</c:if>--%>
                     <c:choose>
                         <c:when test="${treatment.isDone}">
                             <fmt:message key="patient.view.treatment.view.table.done.true"/>
@@ -90,13 +84,6 @@
                                     <i class="icon icon-edit"></i>
                                 </button>
                             </a>
-                            <%--<form action="${urlTreatmentEdit}" method="get">--%>
-                                <%--<input name="id" value="${treatment.id}" type="hidden"/>--%>
-                                <%--<input name="patientId" value="${patient.id}" type="hidden"/>--%>
-                                <%--<button class="btn btn-primary btn-action btn-lg">--%>
-                                    <%--<i class="icon icon-edit"></i>--%>
-                                <%--</button>--%>
-                            <%--</form>--%>
                         </c:if>
 
                         <c:if test="${(currentUser.role eq 'DOCTOR') || !(treatment.type eq 'SURGERY')}">
@@ -108,12 +95,6 @@
                                     <i class="icon icon-check"></i>
                                 </button>
                             </a>
-                            <%--<form action="${urlTreatmentDone}" method="post">--%>
-                                <%--<input name="id" value="${treatment.id}" type="hidden"/>--%>
-                                <%--<button class="btn btn-primary btn-action btn-lg" type="submit">--%>
-                                    <%--<i class="icon icon-check"></i>--%>
-                                <%--</button>--%>
-                            <%--</form>--%>
                         </c:if>
 
                         <c:if test="${treatment.diagnosisToPatient.doctor.id == currentUser.id}">

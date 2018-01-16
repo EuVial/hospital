@@ -56,7 +56,6 @@
                         <span class="text-error"><fmt:message key="${param.message}"/></span>
                     </c:if>
                 </div>
-                <%--<a class="back" href="${urlBack}"><fmt:message key="password.change.button.cancel"/></a>--%>
             </form>
         </div>
     </div>

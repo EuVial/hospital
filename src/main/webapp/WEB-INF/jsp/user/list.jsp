@@ -16,7 +16,6 @@
         <input name="id" value="${user.id}" type="hidden">
     </c:if>
     <div class="container">
-        <%--<h4 class="s-title text-center">${title}</h4>--%>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -24,12 +23,9 @@
                     <th><fmt:message key="user.list.table.firstname"/></th>
                     <th><fmt:message key="user.list.table.lastname"/></th>
                     <th><fmt:message key="user.list.table.role"/></th>
-                    <%--<th>Специализация</th>--%>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <%--<jsp:useBean id="users" scope="request" type="java.util.List"/>--%>
-            <%--TODO: delete current logged user from list--%>
             <tbody>
                 <c:forEach var="user" items="${users}">
                     <c:if test="${user.id != currentUser.id}">
@@ -38,7 +34,6 @@
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td><fmt:message key="${user.role.name}"/></td>
-                            <%--<td class="content">${user.specialization.title}</td>--%>
                             <td>
                                 <c:url var="urlUserEdit" value="/user/edit.html">
                                     <c:param name="id" value="${user.id}"/>
@@ -60,7 +55,6 @@
                             <button class="btn btn-primary btn-action btn-lg">
                                 <i class="icon icon-plus"></i>
                             </button>
-                                <%--<fmt:message key="user.list.button.add"/>--%>
                         </a>
                     </td>
                 </tr>

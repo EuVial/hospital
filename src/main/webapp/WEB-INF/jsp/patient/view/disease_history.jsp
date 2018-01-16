@@ -109,8 +109,6 @@
                             <br/> &nbsp;&nbsp;&nbsp;
 
                             <div class="tile-action">
-
-
                                 <c:if test="${patientDiagnosis.doctor.id eq currentUser.id}">
                                     <c:url var="urlTreatmentAdd" value="/patient/view/treatment/edit.html"/>
                                     <form action="${urlTreatmentAdd}" method="get">
