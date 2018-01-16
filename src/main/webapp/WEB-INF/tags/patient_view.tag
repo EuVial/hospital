@@ -19,7 +19,15 @@
                         ${patient.firstName} ${patient.lastName}
                     </div>
                 <div class="panel-subtitle">
-                    <fmt:message key="patient.view.table.ward"/>${patient.ward}
+                    <c:choose>
+                        <c:when test="${patient.ward == 0}">
+                            <fmt:message key="patient.view.table.discharged"/>
+                        </c:when>
+                        <c:otherwise>
+                            <fmt:message key="patient.view.table.ward"/>${patient.ward}
+                        </c:otherwise>
+                    </c:choose>
+
                 </div>
             </div>
 

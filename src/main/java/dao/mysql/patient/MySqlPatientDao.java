@@ -5,10 +5,7 @@ import domain.patient.Patient;
 import dao.mysql.AbstractJDBCDao;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -100,7 +97,7 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
             if (ward != null) {
                 statement.setInt(3, (Integer) ward);
             } else {
-                statement.setNull(3, object.getWard());
+                statement.setNull(3, Types.INTEGER);
             }
             statement.setInt(4, object.getId());
         } catch (SQLException e) {

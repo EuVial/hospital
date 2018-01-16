@@ -45,8 +45,16 @@
                 <td>${patient.lastName}</td>
             </tr>
             <tr>
-                <th><fmt:message key="patient.view.table.ward"/></th>
-                <td>${patient.ward}</td>
+                <c:choose>
+                    <c:when test="${patient.ward == 0}">
+                        <th><fmt:message key="patient.view.table.ward"/></th>
+                        <td><fmt:message key="patient.view.table.discharged"/></td>
+                    </c:when>
+                    <c:otherwise>
+                        <th><fmt:message key="patient.view.table.ward"/></th>
+                        <td>${patient.ward}</td>
+                    </c:otherwise>
+                </c:choose>
             </tr>
             <tr>
                 <th>&nbsp</th>

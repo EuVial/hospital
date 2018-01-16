@@ -77,10 +77,15 @@
                         <label class="form-label" for="ward"><fmt:message key="patient.edit.form.ward"/>:</label>
                     </div>
                     <div class="col-5">
-                        <input class="form-input" id="ward" name="ward" type="number" placeholder="00" value="${patient.ward}">
+                        <input class="form-input" id="ward" name="ward" type="number" placeholder="1" value="${patient.ward}">
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <c:if test="${not empty param.message}">
+                        <span class="text-error"><fmt:message key="${param.message}"/></span>
+                    </c:if>
+                </div>
                 <button class="btn btn-primary btn-action btn-lg">
                     <i class="icon icon-check"></i>
                 </button>
@@ -104,5 +109,6 @@
                 </button>
             </form>
         </div>
+
     </div>
 </u:patient_view>

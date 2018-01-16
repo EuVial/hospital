@@ -22,6 +22,12 @@ public class PatientSaveAction extends Action {
         patient.setFirstName(req.getParameter("first_name"));
         patient.setLastName(req.getParameter("last_name"));
         patient.setWard(Integer.valueOf(req.getParameter("ward")));
+
+        if (patient.getWard() < 1) {
+            return new Forward("/patient/edit.html?id=" + patient.getId() +
+                    "&message=wrong.number");
+        }
+
         if (    patient.getFirstName() != null &&
                 patient.getLastName() != null &&
                 patient.getWard() != null) {
