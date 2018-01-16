@@ -16,7 +16,6 @@ import java.io.IOException;
 public class PasswordSaveAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(PasswordSaveAction.class));
-
     @Override
     public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String oldPassword = req.getParameter("old-password");

@@ -96,21 +96,21 @@
                                 </c:forEach>
                             </div>
                             <div class="tile-action">
-                                <c:url var="urlPatientEdit" value="/patient/view/diagnosis/view.html"/>
-                                    <%--<c:param name="id" value="${patientDiagnosis.id}"/>--%>
-                                    <%--<c:param name="patientId" value="${patient.id}"/>--%>
-                                <%--</c:url>--%>
-
-                                <form action="${urlPatientEdit}" method="get">
+                                <c:url var="urlPatientDiagnosisView" value="/patient/view/diagnosis/view.html"/>
+                                <form action="${urlPatientDiagnosisView}" method="get">
                                     <input name="id" value="${patientDiagnosis.id}" type="hidden"/>
                                     <input name="patientId" value="${patient.id}" type="hidden"/>
                                     <button class="btn" type="submit">
                                         <fmt:message key="patient.view.disease_history.button.view"/>
                                     </button>
                                 </form>
+                            </div>
 
-                                <br/>
-                                
+                            <br/> &nbsp;&nbsp;&nbsp;
+
+                            <div class="tile-action">
+
+
                                 <c:if test="${patientDiagnosis.doctor.id eq currentUser.id}">
                                     <c:url var="urlTreatmentAdd" value="/patient/view/treatment/edit.html"/>
                                     <form action="${urlTreatmentAdd}" method="get">
@@ -121,34 +121,49 @@
                                         </button>
                                     </form>
                                 </c:if>
-
-                            <%--<a href="${urlPatientEdit}">--%>
-                                    <%--<button class="btn">--%>
-                                        <%--<fmt:message key="patient.view.disease_history.button.view"/>--%>
-                                    <%--</button>--%>
-                                <%--</a>--%>
                             </div>
                         </div>
                     </div>
                 </div>
             </c:forEach>
+            <c:if test="${currentUser.role eq 'DOCTOR'}">
+                <div class="timeline-item">
+                    <div class="timeline-left">
+                        <a class="timeline-icon tooltip"></a>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="tile-subtitle text-primary">
+                            <div class="tile-action">
+                                <c:url var="urlDiagnosisAdd" value="/patient/view/diagnosis/edit.html"/>
+                                <form action="${urlDiagnosisAdd}" method="get">
+                                    <input name="patientId" value="${patient.id}" type="hidden"/>
+                                    <button class="btn" type="submit">
+                                        <fmt:message key="patient.view.disease_history.button.makeDiagnosis"/>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile-action">
+                        <c:url var="urlPatientDischarge" value="/patient/discharge.html"/>
+                        <form action="${urlPatientDischarge}" method="get" ${patientExchargeDisabled}>
+                            <input name="patientId" value="${patient.id}" type="hidden"/>
+                            <button class="btn">
+                                <fmt:message key="patient.view.disease_history.button.discharge.patient"/>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </c:if>
         </div>
-        <c:if test="${currentUser.role eq 'DOCTOR'}">
-            <c:url var="urlDiagnosisAdd" value="/patient/view/diagnosis/edit.html"/>
-            <form action="${urlDiagnosisAdd}" method="get">
-                <input name="patientId" value="${patient.id}" type="hidden"/>
-                <button class="btn" type="submit">
-                    <fmt:message key="patient.view.disease_history.button.makeDiagnosis"/>
-                </button>
-            </form>
-
-            <c:url var="urlPatientDischarge" value="/patient/discharge.html"/>
-            <form action="${urlPatientDischarge}" method="get" ${patientExchargeDisabled}>
-                <input name="patientId" value="${patient.id}" type="hidden"/>
-                <button class="btn"">
-                    <fmt:message key="patient.view.disease_history.button.discharge.patient"/>
-                </button>
-            </form>
-        </c:if>
+        <div class="form-group">
+            <c:if test="${not empty param.message}">
+                <span class="text-error"><fmt:message key="${param.message}"/></span>
+            </c:if>
+        </div>
     </div>
 </u:patient_view>
+
+
+
+

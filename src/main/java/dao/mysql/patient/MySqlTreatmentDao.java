@@ -56,8 +56,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     @Override
     public String getInitiatesQuery() {
         //TODO: Set "always can delete"
-        return "1";
-//        return "SELECT COUNT(*) AS 'count' FROM hospital.patient_diagnosis WHERE patient_id = ? LIMIT 1;";
+        return "";
     }
 
     @Override
@@ -140,11 +139,9 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     public Treatment readInfo(Integer treatmentId) throws PersistException {
         String sql =
                 "SELECT treatment.title, treatment.type_id, treatment.done, patient_diagnosis.doctor_id, " +
-//                        "user.first_name, user.last_name, user.role_id, " +
                         "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n" +
                         "FROM hospital.treatment\n" +
                         "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n" +
-//                        "  JOIN hospital.user ON (treatment.performer_id = user.id)\n" +
                         "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
                         "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
                         "WHERE treatment.id = ?;";

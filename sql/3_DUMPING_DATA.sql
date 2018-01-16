@@ -68,9 +68,7 @@ VALUES
   (3,'aemon','aemon','Aemon','Targaryen',1),
   (4,'luwin','luwin','Luwin','Maester',1),
   (5,'tarly','tarly','Samwell','Tarly',2),
-  (6,'craster','craster','Gilly','Craster',2),
-  (24,'testLogin','testPass','testFN','test',1),
-  (26,'q','12345','q','q',0);
+  (6,'craster','craster','Gilly','Craster',2);
 
 --
 -- Dumping data for table `patient_diagnosis`

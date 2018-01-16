@@ -44,11 +44,10 @@ public class PatientDiagnosisSaveAction extends Action {
 
         String title = req.getParameter("diagnosis.title");
         if (patientDiagnosisId != null) {
-//            diagnosisToPatient.setId(patientDiagnosisId);
             try {
                 diagnosisToPatient = diagnosisToPatientService.findById(patientDiagnosisId);
             } catch (ServiceException e) {
-                LOGGER.error("PatientDiagnosisSaveAction problem with diagnosisToPatient service" + e);
+                LOGGER.error("Can't find patient diagnosis by id " + e);
                 throw new ServletException(e);
             }
         }

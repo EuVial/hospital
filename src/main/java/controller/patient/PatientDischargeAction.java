@@ -4,7 +4,9 @@ import controller.Action;
 import controller.Forward;
 import controller.patient.view.treatment.TreatmentListAction;
 import domain.patient.Diagnosis;
+import domain.patient.DiagnosisToPatient;
 import domain.patient.Patient;
+import domain.patient.Treatment;
 import org.apache.log4j.Logger;
 import service.ServiceException;
 import service.patient.DiagnosisService;
@@ -32,6 +34,23 @@ public class PatientDischargeAction extends Action {
             try {
                 PatientService patientService = getServiceFactory().getPatientService();
                 Patient patient = patientService.findById(patientId);
+
+                if (patient.getWard() == null) {
+                    return new Forward("/patient/view/disease_history.html?id=" + patient.getId() + "&message=message.already.discharged");
+                }
+
+                if (patient.getHistory() != null) {
+                    for (DiagnosisToPatient patientDiagnosis : patient.getHistory()) {
+                        if (patientDiagnosis.getHistory() != null) {
+                            for (Treatment treatment : patientDiagnosis.getHistory()) {
+                                if (!treatment.getIsDone()) {
+                                    return new Forward("/patient/view/disease_history.html?id=" + patient.getId() + "&message=message.cant.discharge");
+                                }
+                            }
+                        }
+                    }
+                }
+
                 req.setAttribute("patient", patient);
             } catch (FactoryException | ServiceException e) {
                 LOGGER.error("PatientDischargeAction problem with services" + e);

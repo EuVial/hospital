@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class PatientDischargeDoneAction extends Action {
@@ -31,11 +32,11 @@ public class PatientDischargeDoneAction extends Action {
 
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException e) {}
+        } catch (NumberFormatException ignored) {}
 
         try {
             diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
@@ -67,7 +68,8 @@ public class PatientDischargeDoneAction extends Action {
             diagnosisToPatient.setDoctor(user);
 
             if (diagnosisToPatient.getConsultationDate() == null) {
-                diagnosisToPatient.setConsultationDate(new Date());
+                Timestamp stamp = new Timestamp(System.currentTimeMillis());
+                diagnosisToPatient.setConsultationDate(new Date(stamp.getTime()));
             }
         } catch (FactoryException | ServiceException e) {
             LOGGER.error("PatientDischargeDoneAction problem with services " + e);
@@ -80,7 +82,7 @@ public class PatientDischargeDoneAction extends Action {
             try {
                 diagnosisToPatientService.save(diagnosisToPatient);
             } catch (ServiceException e) {
-                LOGGER.error("PatientDischargeDoneAction problem with services " + e);
+                LOGGER.error("Can't save extended diagnosis " + e);
                 throw new ServletException(e);
             }
         }
