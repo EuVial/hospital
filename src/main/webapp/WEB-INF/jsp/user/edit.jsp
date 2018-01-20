@@ -109,6 +109,13 @@
                     <i class="icon icon-back"></i>
                 </button>
             </form>
+
+            <div class="form-group">
+                <c:if test="${not empty param.message}">
+                    <span class="text-error"><fmt:message key="${param.message}"/></span>
+                </c:if>
+            </div>
+
         </div>
     </div>
 </u:html>
