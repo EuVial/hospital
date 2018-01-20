@@ -27,6 +27,7 @@ public class LoginAction extends Action {
                 if (user != null) {
                     HttpSession session = req.getSession();
                     session.setAttribute("currentUser", user);
+                    LOGGER.info("User successfully logged as " + user.getRole().getName());
                     return new Forward("/index.html");
                 } else {
                     return new Forward("/login.html?message=login.message.incorrect.password");
