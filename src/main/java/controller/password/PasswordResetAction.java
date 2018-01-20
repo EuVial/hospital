@@ -25,7 +25,7 @@ public class PasswordResetAction extends Action {
                 service.changePassword(user.getId(), user.getPassword(), null);
             }
         } catch (FactoryException | ServiceException e) {
-            LOGGER.error("PasswordResetAction problem with services" + e);
+            LOGGER.error("Can't change password record to null" + e);
             throw new ServletException(e);
         } catch (NumberFormatException ignored) {}
         return new Forward("/user/list.html");

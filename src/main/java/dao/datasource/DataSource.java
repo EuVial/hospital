@@ -24,6 +24,7 @@ public class DataSource {
         DataSource.jdbcUrl = jdbcUrl;
         DataSource.jdbcUser = jdbcUser;
         DataSource.jdbcPassword = jdbcPassword;
+        LOGGER.info("Connection pull successfully initialized");
     }
 
     private DataSource() {

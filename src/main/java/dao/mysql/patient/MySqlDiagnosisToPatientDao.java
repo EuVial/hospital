@@ -110,7 +110,8 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     public List<DiagnosisToPatient> readHistory(Integer patientId) throws PersistException {
         String sql =
-                "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
+                "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, " +
+                        "user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
                 "FROM hospital.patient_diagnosis\n" +
                 "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
                 "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
@@ -129,12 +130,14 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                     diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
                     diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
                     diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("patient_diagnosis.consultation_date").getTime()));
+                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp
+                            ("patient_diagnosis.consultation_date").getTime()));
                     diagnosisToPatients.add(diagnosisToPatient);
                 }
                 return diagnosisToPatients;
             }
         } catch (SQLException e) {
+            LOGGER.error("Can't read DiagnosisToPatient list from patient");
             throw new PersistException(e);
         }
     }
@@ -172,6 +175,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 return diagnosisToPatient;
             }
         } catch (SQLException e) {
+            LOGGER.error("Can't read info about extended diagnosis by ID");
             throw new PersistException(e);
         }
     }
@@ -194,6 +198,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 return diagnosisTitle;
             }
         } catch (SQLException e) {
+            LOGGER.error("Can't read title from diagnosis by diagnosisToPatientId");
             throw new PersistException(e);
         }
     }
@@ -215,6 +220,7 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 return diagnosisToPatientId;
             }
         } catch (SQLException e) {
+            LOGGER.error("Can't read patientDiagnosisId by patientID and diagnosis title");
             throw new PersistException(e);
         }
     }
