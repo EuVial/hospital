@@ -34,7 +34,7 @@ public class TreatmentListAction extends Action {
                     for (DiagnosisToPatient diagnosisToPatient : patientDiagnoses) {
                         for (Treatment treatment : diagnosisToPatient.getHistory()) {
                             treatment.setDiagnosisToPatient(diagnosisToPatient);
-                            if (!treatment.getIsDone())
+                            if (!treatment.isDone())
                                 treatments.add(treatment);
                         }
                     }

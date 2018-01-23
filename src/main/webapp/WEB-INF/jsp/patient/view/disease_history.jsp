@@ -58,7 +58,7 @@
                                     <fmt:message key="patient.view.disease_history.tile.treatment"/>
                                 </div>
                                 <c:forEach var="treatment" items="${patientDiagnosis.history}">
-                                    <c:if test="${not treatment.isDone}">
+                                    <c:if test="${not treatment.done}">
                                         <c:set var="patientExchargeDisabled" value="disabled"/>
                                     </c:if>
                                     <%--Treatments--%>
@@ -72,7 +72,7 @@
                                             <i class="icon icon-more-horiz"></i>
                                         </button>
                                     </a>
-                                    <c:if test="${treatment.isDone}">
+                                    <c:if test="${treatment.done}">
                                         <button class="btn btn-sm">
                                             <i class="icon icon-check"></i>
                                         </button>
@@ -142,15 +142,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tile-action">
-                        <c:url var="urlPatientDischarge" value="/patient/discharge.html"/>
-                        <form action="${urlPatientDischarge}" method="get" ${patientExchargeDisabled}>
-                            <input name="patientId" value="${patient.id}" type="hidden"/>
-                            <button class="btn">
-                                <fmt:message key="patient.view.disease_history.button.discharge.patient"/>
-                            </button>
-                        </form>
-                    </div>
+                    <c:if test="${patient.ward != null}">
+                        <div class="tile-action">
+                            <c:url var="urlPatientDischarge" value="/patient/discharge.html"/>
+                            <form action="${urlPatientDischarge}" method="get" ${patientExchargeDisabled}>
+                                <input name="patientId" value="${patient.id}" type="hidden"/>
+                                <button class="btn">
+                                    <fmt:message key="patient.view.disease_history.button.discharge.patient"/>
+                                </button>
+                            </form>
+                        </div>
+                    </c:if>
                 </div>
             </c:if>
         </div>

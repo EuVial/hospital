@@ -26,19 +26,21 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
 
     @Override
     public String getSelectQuery() {
-        return "SELECT id, first_name, last_name, ward FROM hospital.patient";
+        return "SELECT id, first_name, last_name, ward " +
+                "FROM hospital.patient";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.patient (first_name, last_name, ward)\n" +
+        return "INSERT INTO hospital.patient (first_name, last_name, ward) " +
                 "VALUES (?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE hospital.patient\n" +
-                "SET first_name = ?, last_name = ?, ward = ?\nWHERE id = ?;";
+                "SET first_name = ?, last_name = ?, ward = ? " +
+                "WHERE id = ?;";
     }
 
     @Override
@@ -48,7 +50,9 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
 
     @Override
     public String getInitiatesQuery() {
-        return "SELECT COUNT(*) AS 'count' FROM hospital.patient_diagnosis WHERE patient_id = ? LIMIT 1;";
+        return "SELECT COUNT(*) AS 'count' " +
+                "FROM hospital.patient_diagnosis " +
+                "WHERE patient_id = ? LIMIT 1;";
     }
 
     @Override
@@ -61,6 +65,9 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
                 patient.setFirstName(rs.getString("first_name"));
                 patient.setLastName(rs.getString("last_name"));
                 patient.setWard(rs.getInt("ward"));
+                if (rs.wasNull()) {
+                    patient.setWard(null);
+                }
                 result.add(patient);
             }
         } catch (Exception e) {

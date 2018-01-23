@@ -21,13 +21,21 @@
                     <th>&nbsp;</th>
                 </tr>
             </thead>
-            <%--TODO: delete current logged user from list--%>
             <tbody>
                 <c:forEach var="patient" items="${patients}">
                     <tr>
                         <td class="content">${patient.firstName}</td>
                         <td class="content">${patient.lastName}</td>
-                        <td class="content">${patient.ward}</td>
+                        <td class="content">
+                            <c:choose>
+                                <c:when test="${empty patient.ward}">
+                                    <fmt:message key="patient.view.table.discharged"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <fmt:message key="patient.view.table.ward"/>${patient.ward}
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td>
                             <c:url var="urlPatientView" value="/patient/view.html">
                                 <c:param name="id" value="${patient.id}"/>
@@ -46,14 +54,14 @@
                     <tr>
                         <td></td><td></td><td></td>
                         <td>
-                        <a href="${urlPatientEdit}">
-                            <button class="btn btn-primary btn-action btn-lg">
-                                <i class="icon icon-plus"></i>
-                            </button>
-                        </a>
-                    </c:if>
-                </td>
-                </tr>
+                            <a href="${urlPatientEdit}">
+                                <button class="btn btn-primary btn-action btn-lg">
+                                    <i class="icon icon-plus"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                </c:if>
             </tbody>
         </table>
     </div>

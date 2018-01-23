@@ -20,7 +20,7 @@
                         </div>
                         <div class="panel-subtitle">
                             <c:choose>
-                                <c:when test="${patient.ward == 0}">
+                                <c:when test="${empty patient.ward}">
                                     <fmt:message key="patient.view.table.discharged"/>
                                 </c:when>
                                 <c:otherwise>

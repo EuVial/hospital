@@ -10,7 +10,7 @@ public class Treatment extends Entity implements Identified<Integer> {
     private DiagnosisToPatient diagnosisToPatient;
     private User performer;
     private Patient patient;
-    private boolean isDone;
+    private boolean done;
 
     public String getTitle() {
         return title;
@@ -53,11 +53,14 @@ public class Treatment extends Entity implements Identified<Integer> {
     }
 
     // this strange name of getter because jsp cannot read this value without getter which starts with "get"
-    public boolean getIsDone() {
-        return isDone;
+//    public boolean getIsDone() {
+//        return done;
+//    }
+    public boolean isDone() {
+        return done;
     }
 
     public void setDone(boolean done) {
-        isDone = done;
+        this.done = done;
     }
 }

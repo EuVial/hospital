@@ -61,7 +61,7 @@
                 <td>
 
                     <c:choose>
-                        <c:when test="${treatment.isDone}">
+                        <c:when test="${treatment.done}">
                             <fmt:message key="patient.view.treatment.view.table.done.true"/>
                         </c:when>
                         <c:otherwise>
@@ -73,7 +73,7 @@
             <tr>
                 <th>&nbsp</th>
                 <td>
-                    <c:if test="${not treatment.isDone}">
+                    <c:if test="${not treatment.done}">
                         <c:if test="${treatment.diagnosisToPatient.doctor.id == currentUser.id}">
                             <c:url var="urlTreatmentEdit" value="/patient/view/treatment/edit.html">
                                 <c:param name="id" value="${treatment.id}"/>

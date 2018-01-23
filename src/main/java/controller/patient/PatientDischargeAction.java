@@ -43,7 +43,7 @@ public class PatientDischargeAction extends Action {
                     for (DiagnosisToPatient patientDiagnosis : patient.getHistory()) {
                         if (patientDiagnosis.getHistory() != null) {
                             for (Treatment treatment : patientDiagnosis.getHistory()) {
-                                if (!treatment.getIsDone()) {
+                                if (!treatment.isDone()) {
                                     return new Forward("/patient/view/disease_history.html?id=" + patient.getId() + "&message=message.cant.discharge");
                                 }
                             }

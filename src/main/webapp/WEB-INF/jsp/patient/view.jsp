@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <c:choose>
-                    <c:when test="${patient.ward == 0}">
+                    <c:when test="${empty patient.ward}">
                         <th><fmt:message key="patient.view.table.ward"/></th>
                         <td><fmt:message key="patient.view.table.discharged"/></td>
                     </c:when>

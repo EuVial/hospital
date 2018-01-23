@@ -1,5 +1,6 @@
 package controller.patient;
 
+import constants.Constants;
 import controller.Action;
 import controller.Forward;
 import domain.patient.Patient;
@@ -34,6 +35,8 @@ public class PatientSaveAction extends Action {
 
         if (    patient.getFirstName() != null &&
                 patient.getLastName() != null &&
+                patient.getFirstName().matches(Constants.REGEX_NAME) &&
+                patient.getLastName().matches(Constants.REGEX_NAME) &&
                 patient.getWard() != null) {
             try {
                 PatientService service = getServiceFactory().getPatientService();
@@ -44,7 +47,7 @@ public class PatientSaveAction extends Action {
             }
         } else {
             return new Forward("/patient/edit.html?id=" + patient.getId() +
-                    "&message=patient.view.error.message.wrong.ward.number");
+                    "&message=message.incorrect.data");
         }
         return new Forward("/patient/view.html?id=" + patient.getId());
     }

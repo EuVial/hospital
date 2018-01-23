@@ -89,7 +89,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             statement.setInt(2, object.getDiagnosisToPatient().getId());
             statement.setInt(3, object.getType().ordinal());
             statement.setInt(4, object.getPerformer().getId());
-            statement.setInt(5, object.getIsDone() ? 1 : 0);
+            statement.setInt(5, object.isDone() ? 1 : 0);
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for insert");
             throw new PersistException(e);
@@ -103,7 +103,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             statement.setInt(2, object.getDiagnosisToPatient().getId());
             statement.setInt(3, object.getType().ordinal());
             statement.setInt(4, object.getPerformer().getId());
-            statement.setInt(5, object.getIsDone() ? 1 : 0);
+            statement.setInt(5, object.isDone() ? 1 : 0);
             statement.setInt(6, object.getId());
         } catch (SQLException e) {
             LOGGER.warn("Can't prepare statement for update");

@@ -25,7 +25,7 @@ public class TreatmentViewAction extends Action {
             Integer patientId = Integer.parseInt(req.getParameter("patientId"));
             TreatmentService treatmentService = getServiceFactory().getTreatmentService();
             Treatment treatment = treatmentService.findById(id);
-            if (treatment.getIsDone()) {
+            if (treatment.isDone()) {
                 treatment = treatmentService.readInfoIfDone(id);
             } else {
                 treatment = treatmentService.readInfo(id);
