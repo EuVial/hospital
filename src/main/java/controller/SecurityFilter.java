@@ -25,9 +25,13 @@ public class SecurityFilter implements Filter {
         employees.add(UserRole.NURSE);
 
         permissions.put("/logout", all);
+
         permissions.put("/password/edit", all);
         permissions.put("/password/save", all);
         permissions.put("/password/reset", admin);
+
+        permissions.put("/account/edit", all);
+        permissions.put("/account/save", all);
 
         permissions.put("/user/list", admin);
         permissions.put("/user/edit", admin);

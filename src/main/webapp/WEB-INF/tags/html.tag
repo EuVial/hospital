@@ -74,6 +74,13 @@
                     </li>
 
                     <li class="menu-item">
+                        <c:url var="urlAccountEdit" value="/account/edit.html"/>
+                        <a href="${urlAccountEdit}">
+                            <fmt:message key="application.button.account.edit"/>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
                         <c:url var="urlPasswordEdit" value="/password/edit.html"/>
                         <a href="${urlPasswordEdit}">
                             <fmt:message key="application.button.password.change"/>
