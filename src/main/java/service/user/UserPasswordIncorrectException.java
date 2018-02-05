@@ -5,7 +5,7 @@ import service.ServiceException;
 public class UserPasswordIncorrectException extends ServiceException {
     private Integer id;
 
-    public UserPasswordIncorrectException(Integer id) {
+    public UserPasswordIncorrectException(final Integer id) {
         this.id = id;
     }
 

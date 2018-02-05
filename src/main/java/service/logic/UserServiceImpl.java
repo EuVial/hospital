@@ -17,16 +17,16 @@ public class UserServiceImpl implements UserService {
     private MySqlUserDao userDao;
     private String defaultPassword;
 
-    public void setUserDao(MySqlUserDao userDao) {
+    public void setUserDao(final MySqlUserDao userDao) {
         this.userDao = userDao;
     }
 
-    public void setDefaultPassword(String defaultPassword) {
+    public void setDefaultPassword(final String defaultPassword) {
         this.defaultPassword = defaultPassword;
     }
 
     @Override
-    public User findById(Integer id) throws ServiceException {
+    public User findById(final Integer id) throws ServiceException {
         try {
             return userDao.read(id);
         } catch (PersistException e) {
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLoginAndPassword(String login, String password) throws ServiceException {
+    public User findByLoginAndPassword(final String login, final String password) throws ServiceException {
         try {
             return userDao.readByLoginAndPassword(login, password);
         } catch (PersistException e) {
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) throws ServiceException {
+    public void save(final User user) throws ServiceException {
         try {
 //          if the user with the current id exists - try to read the data about him
             if (user.getId() != null) {
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean canDelete(User user) throws ServiceException {
+    public boolean canDelete(final User user) throws ServiceException {
         try {
             return !userDao.isInitiatesTransfers(user);
         } catch (PersistException e) {
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(User user) throws ServiceException {
+    public void delete(final User user) throws ServiceException {
         if (user.getId() != null) {
             try {
                 userDao.delete(user);
@@ -103,7 +103,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Integer userId, String oldPassword, String newPassword) throws ServiceException {
+    public void changePassword(final Integer userId, final String oldPassword, String newPassword)
+            throws ServiceException {
         try {
             User user = userDao.read(userId);
             if (user != null) {

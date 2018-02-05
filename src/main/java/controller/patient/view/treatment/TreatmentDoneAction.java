@@ -17,19 +17,21 @@ import java.io.IOException;
 public class TreatmentDoneAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(TreatmentDoneAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Integer id = null;
         Integer urlId = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         if (id != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();
                 Treatment treatment = service.readInfo(id);
                 urlId = treatment.getPatient().getId();
-                User user = (User)req.getSession(false).getAttribute("currentUser");
+                User user = (User) req.getSession(false).getAttribute("currentUser");
                 treatment.setPerformer(user);
                 service.done(treatment);
             } catch (FactoryException | ServiceException e) {

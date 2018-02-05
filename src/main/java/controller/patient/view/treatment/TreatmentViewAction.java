@@ -18,8 +18,9 @@ import java.io.IOException;
 public class TreatmentViewAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(TreatmentViewAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp) throws ServletException, IOException {
         try {
             Integer id = Integer.parseInt(req.getParameter("id"));
             Integer patientId = Integer.parseInt(req.getParameter("patientId"));
@@ -30,7 +31,7 @@ public class TreatmentViewAction extends Action {
             } else {
                 treatment = treatmentService.readInfo(id);
             }
-            PatientService patientService =getServiceFactory().getPatientService();
+            PatientService patientService = getServiceFactory().getPatientService();
             Patient patient = patientService.findById(patientId);
             if (patient != null) {
                 req.setAttribute("patient", patient);

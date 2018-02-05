@@ -16,13 +16,15 @@ import java.io.IOException;
 public class TreatmentDeleteAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(TreatmentDeleteAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Integer urlId = null;
         Integer id = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         if (id != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();

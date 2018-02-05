@@ -27,12 +27,14 @@ public class DispatcherServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         process(req, resp);
     }
 
@@ -40,7 +42,8 @@ public class DispatcherServlet extends HttpServlet {
         return new MainServiceFactoryImpl();
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void process(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         String url = req.getRequestURI();
         String context = req.getContextPath();
         int postfixIndex = url.lastIndexOf(".html");

@@ -19,25 +19,26 @@ public class PatientSaveAction extends Action {
             Logger.getLogger(String.valueOf(PatientSaveAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Patient patient = new Patient();
         try {
             patient.setId(Integer.parseInt(req.getParameter("id")));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         patient.setFirstName(req.getParameter("first_name"));
         patient.setLastName(req.getParameter("last_name"));
         patient.setWard(Integer.valueOf(req.getParameter("ward")));
 
         if (patient.getWard() < 1) {
-            return new Forward("/patient/edit.html?id=" + patient.getId() +
-                    "&message=patient.view.error.message.wrong.ward.number");
+            return new Forward("/patient/edit.html?id=" + patient.getId()
+                    + "&message=patient.view.error.message.wrong.ward.number");
         }
 
-        if (    patient.getFirstName() != null &&
-                patient.getLastName() != null &&
-                patient.getFirstName().matches(Constants.REGEX_NAME) &&
-                patient.getLastName().matches(Constants.REGEX_NAME) &&
-                patient.getWard() != null) {
+        if (patient.getFirstName() != null
+                && patient.getLastName() != null
+                && patient.getFirstName().matches(Constants.REGEX_NAME)
+                && patient.getLastName().matches(Constants.REGEX_NAME)
+                && patient.getWard() != null) {
             try {
                 PatientService service = getServiceFactory().getPatientService();
                 service.save(patient);
@@ -46,8 +47,8 @@ public class PatientSaveAction extends Action {
                 throw new ServletException(e);
             }
         } else {
-            return new Forward("/patient/edit.html?id=" + patient.getId() +
-                    "&message=message.incorrect.data");
+            return new Forward("/patient/edit.html?id=" + patient.getId()
+                    + "&message=message.incorrect.data");
         }
         return new Forward("/patient/view.html?id=" + patient.getId());
     }

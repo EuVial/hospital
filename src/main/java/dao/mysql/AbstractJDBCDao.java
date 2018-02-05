@@ -75,7 +75,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     }
 
     @Override
-    public T read(Integer key) throws PersistException {
+    public T read(final Integer key) throws PersistException {
         List<T> list;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
@@ -109,7 +109,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     }
 
     @Override
-    public T persist(T object) throws PersistException {
+    public T persist(final T object) throws PersistException {
         T persistInstance;
         // Add record
         String sql = getCreateQuery();
@@ -138,7 +138,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     }
 
     @Override
-    public void update(T object) throws PersistException {
+    public void update(final T object) throws PersistException {
         String sql = getUpdateQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForUpdate(statement, object);
@@ -152,7 +152,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     }
 
     @Override
-    public void delete(T object) throws PersistException {
+    public void delete(final T object) throws PersistException {
         String sql = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             try {
@@ -171,7 +171,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
     }
 
     @Override
-    public boolean isInitiatesTransfers(T object) throws PersistException {
+    public boolean isInitiatesTransfers(final T object) throws PersistException {
         String sql = getInitiatesQuery();
         Integer id = object.getId();
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
@@ -188,7 +188,7 @@ public abstract class AbstractJDBCDao<PK extends Integer,
         }
     }
 
-    public AbstractJDBCDao(Connection connection) {
+    public AbstractJDBCDao(final Connection connection) {
         this.connection = connection;
     }
 }

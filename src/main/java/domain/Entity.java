@@ -9,7 +9,7 @@ public abstract class Entity implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -19,10 +19,10 @@ public abstract class Entity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object entity) {
+    public boolean equals(final Object entity) {
         if (entity != this) {
             if (id != null && entity != null && entity.getClass() == getClass()) {
-                return id.equals(((Entity)entity).id);
+                return id.equals(((Entity) entity).id);
             }
             return false;
         }

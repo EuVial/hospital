@@ -4,12 +4,12 @@ public class Forward {
     private String url;
     private boolean redirect;
 
-    public Forward(String url, boolean redirect) {
+    public Forward(final String url, final boolean redirect) {
         this.url = url;
         this.redirect = redirect;
     }
 
-    public Forward(String url) {
+    public Forward(final String url) {
         this(url, true);
     }
 

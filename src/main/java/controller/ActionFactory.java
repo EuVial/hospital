@@ -64,11 +64,11 @@ public class ActionFactory {
         actions.put("/patient/view/disease_history", DiseaseHistoryAction.class);
     }
 
-    public static Action getAction(String url) throws ServletException {
+    public static Action getAction(final String url) throws ServletException {
         Class<?> action = actions.get(url);
         if (action != null) {
             try {
-                return (Action)action.newInstance();
+                return (Action) action.newInstance();
             } catch (InstantiationException | IllegalAccessException | NullPointerException e) {
                 LOGGER.error("Cannot create new instance for action " + e);
                 throw new ServletException(e);

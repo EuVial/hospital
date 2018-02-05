@@ -13,12 +13,12 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     //TODO: LOGGER
     private MySqlDiagnosisDao diagnosisDao;
 
-    public void setDiagnosisDao(MySqlDiagnosisDao diagnosisDao) {
+    public void setDiagnosisDao(final MySqlDiagnosisDao diagnosisDao) {
         this.diagnosisDao = diagnosisDao;
     }
 
     @Override
-    public Diagnosis findById(Integer id) throws ServiceException {
+    public Diagnosis findById(final Integer id) throws ServiceException {
         try {
             return diagnosisDao.read(id);
         } catch (PersistException e) {
@@ -36,7 +36,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     }
 
     @Override
-    public void save(Diagnosis diagnosis) throws ServiceException {
+    public void save(final Diagnosis diagnosis) throws ServiceException {
         try {
             if (diagnosis.getId() != null) {
                 Diagnosis storedDiagnosis = diagnosisDao.read(diagnosis.getId());
@@ -54,7 +54,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     }
 
     @Override
-    public boolean canDelete(Diagnosis diagnosis) throws ServiceException {
+    public boolean canDelete(final Diagnosis diagnosis) throws ServiceException {
         try {
             return !diagnosisDao.isInitiatesTransfers(diagnosis);
         } catch (PersistException e) {
@@ -63,7 +63,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     }
 
     @Override
-    public void delete(Diagnosis diagnosis) throws ServiceException {
+    public void delete(final Diagnosis diagnosis) throws ServiceException {
         if (diagnosis.getId() != null) {
             try {
                 diagnosisDao.delete(diagnosis);
@@ -74,7 +74,7 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     }
 
     @Override
-    public Integer getIdByTitle(String title) throws ServiceException {
+    public Integer getIdByTitle(final String title) throws ServiceException {
         try {
             return diagnosisDao.getIdByTitle(title);
         } catch (PersistException e) {

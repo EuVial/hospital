@@ -19,18 +19,18 @@ public class TreatmentServiceImpl implements TreatmentService {
 
     private MySqlDiagnosisToPatientDao diagnosisToPatientDao;
 
-    public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
+    public void setTreatmentDao(final MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
     }
 
-    public void setPatientDao(MySqlPatientDao patientDao) { this.patientDao = patientDao; }
+    public void setPatientDao(final MySqlPatientDao patientDao) { this.patientDao = patientDao; }
 
-    public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
+    public void setDiagnosisToPatientDao(final MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
         this.diagnosisToPatientDao = diagnosisToPatientDao;
     }
 
     @Override
-    public Treatment findById(Integer id) throws ServiceException {
+    public Treatment findById(final Integer id) throws ServiceException {
         try {
             return treatmentDao.read(id);
         } catch (PersistException e) {
@@ -48,7 +48,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public void save(Treatment treatment) throws ServiceException {
+    public void save(final Treatment treatment) throws ServiceException {
         try {
             if (treatment.getId() != null) {
                 Treatment storedTreatment = treatmentDao.read(treatment.getId());
@@ -66,12 +66,12 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public boolean canDelete(Treatment treatment) throws ServiceException {
+    public boolean canDelete(final Treatment treatment) throws ServiceException {
         return true;
     }
 
     @Override
-    public void delete(Treatment treatment) throws ServiceException {
+    public void delete(final Treatment treatment) throws ServiceException {
         if (treatment.getId() != null) {
             try {
                 treatmentDao.delete(treatment);
@@ -82,7 +82,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public Treatment readInfo(Integer treatmentId) throws ServiceException {
+    public Treatment readInfo(final Integer treatmentId) throws ServiceException {
         try {
             return treatmentDao.readInfo(treatmentId);
         } catch (PersistException e) {
@@ -91,7 +91,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public Treatment readInfoIfDone(Integer treatmentId) throws ServiceException {
+    public Treatment readInfoIfDone(final Integer treatmentId) throws ServiceException {
         try {
             return treatmentDao.readInfoIfDone(treatmentId);
         } catch (PersistException e) {
@@ -100,7 +100,7 @@ public class TreatmentServiceImpl implements TreatmentService {
     }
 
     @Override
-    public void done(Treatment treatment) throws ServiceException {
+    public void done(final Treatment treatment) throws ServiceException {
         if (treatment.getId() != null) {
             try {
                 treatmentDao.done(treatment);

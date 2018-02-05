@@ -5,13 +5,13 @@ public enum  TreatmentType {
     PROCEDURE("treatment.procedure"),
     SURGERY("treatment.surgery");
 
-    public static TreatmentType getByIdentity(Integer identity) {
+    public static TreatmentType getByIdentity(final Integer identity) {
         return TreatmentType.values()[identity];
     }
 
     private String name;
 
-    TreatmentType(String name) {
+    TreatmentType(final String name) {
         this.name = name;
     }
 

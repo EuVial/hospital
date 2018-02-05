@@ -20,26 +20,29 @@ public class UserSaveAction extends Action {
             Logger.getLogger(String.valueOf(UserSaveAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         User user = new User();
         Integer userId = null;
         try {
             userId = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
-        if (userId != null) user.setId(userId);
+        } catch (NumberFormatException ignored) { }
+        if (userId != null) {
+            user.setId(userId);
+        }
         user.setLogin(req.getParameter("login"));
         user.setFirstName(req.getParameter("first_name"));
         user.setLastName(req.getParameter("last_name"));
         try {
             user.setRole(UserRole.values()[Integer.parseInt(req.getParameter("role"))]);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {}
-        if (    user.getLogin() != null &&
-                user.getRole() != null &&
-                user.getFirstName() != null &&
-                user.getLastName() != null &&
-                user.getLogin().matches(Constants.REGEX_LOGIN) &&
-                user.getFirstName().matches(Constants.REGEX_NAME) &&
-                user.getLastName().matches(Constants.REGEX_NAME)) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) { }
+        if (user.getLogin() != null
+                && user.getRole() != null
+                && user.getFirstName() != null
+                && user.getLastName() != null
+                && user.getLogin().matches(Constants.REGEX_LOGIN)
+                && user.getFirstName().matches(Constants.REGEX_NAME)
+                && user.getLastName().matches(Constants.REGEX_NAME)) {
             try {
                 UserService service = getServiceFactory().getUserService();
                 service.save(user);

@@ -15,32 +15,32 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
             Logger.getLogger(String.valueOf(MySqlPatientDao.class));
 
     private class PersistPatient extends Patient {
-        public void setId(int id) {
+        public void setId(final int id) {
             super.setId(id);
         }
     }
 
-    public MySqlPatientDao(Connection connection) {
+    public MySqlPatientDao(final Connection connection) {
         super(connection);
     }
 
     @Override
     public String getSelectQuery() {
-        return "SELECT id, first_name, last_name, ward " +
-                "FROM hospital.patient";
+        return "SELECT id, first_name, last_name, ward "
+                + "FROM hospital.patient";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.patient (first_name, last_name, ward) " +
-                "VALUES (?, ?, ?);";
+        return "INSERT INTO hospital.patient (first_name, last_name, ward) "
+                + "VALUES (?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE hospital.patient\n" +
-                "SET first_name = ?, last_name = ?, ward = ? " +
-                "WHERE id = ?;";
+        return "UPDATE hospital.patient\n"
+                + "SET first_name = ?, last_name = ?, ward = ? "
+                + "WHERE id = ?;";
     }
 
     @Override
@@ -50,13 +50,13 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
 
     @Override
     public String getInitiatesQuery() {
-        return "SELECT COUNT(*) AS 'count' " +
-                "FROM hospital.patient_diagnosis " +
-                "WHERE patient_id = ? LIMIT 1;";
+        return "SELECT COUNT(*) AS 'count' "
+                + "FROM hospital.patient_diagnosis "
+                + "WHERE patient_id = ? LIMIT 1;";
     }
 
     @Override
-    protected List<Patient> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Patient> parseResultSet(final ResultSet rs) throws PersistException {
         List<Patient> result = new LinkedList<>();
         try {
             while (rs.next()) {
@@ -78,7 +78,8 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Patient object) throws PersistException {
+    protected void prepareStatementForInsert(final PreparedStatement statement, final Patient object)
+            throws PersistException {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
@@ -90,7 +91,8 @@ public class MySqlPatientDao extends AbstractJDBCDao<Integer, Patient> {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Patient object) throws PersistException {
+    protected void prepareStatementForUpdate(final PreparedStatement statement, final Patient object)
+            throws PersistException {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());

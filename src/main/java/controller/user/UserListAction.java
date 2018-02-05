@@ -17,8 +17,10 @@ import java.util.List;
 public class UserListAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(UserListAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
             UserService service = getServiceFactory().getUserService();
             List<User> users = service.findAll();

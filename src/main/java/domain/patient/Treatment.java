@@ -16,7 +16,7 @@ public class Treatment extends Entity implements Identified<Integer> {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -24,7 +24,7 @@ public class Treatment extends Entity implements Identified<Integer> {
         return type;
     }
 
-    public void setType(TreatmentType type) {
+    public void setType(final TreatmentType type) {
         this.type = type;
     }
 
@@ -32,7 +32,7 @@ public class Treatment extends Entity implements Identified<Integer> {
         return diagnosisToPatient;
     }
 
-    public void setDiagnosisToPatient(DiagnosisToPatient diagnosisToPatient) {
+    public void setDiagnosisToPatient(final DiagnosisToPatient diagnosisToPatient) {
         this.diagnosisToPatient = diagnosisToPatient;
     }
 
@@ -40,7 +40,7 @@ public class Treatment extends Entity implements Identified<Integer> {
         return performer;
     }
 
-    public void setPerformer(User performer) {
+    public void setPerformer(final User performer) {
         this.performer = performer;
     }
 
@@ -48,19 +48,15 @@ public class Treatment extends Entity implements Identified<Integer> {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
-    // this strange name of getter because jsp cannot read this value without getter which starts with "get"
-//    public boolean getIsDone() {
-//        return done;
-//    }
     public boolean isDone() {
         return done;
     }
 
-    public void setDone(boolean done) {
+    public void setDone(final boolean done) {
         this.done = done;
     }
 }

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class SecurityFilter implements Filter {
-    private static final Map<String, Set<UserRole>> permissions = new HashMap<>();
+    private static final Map<String, Set<UserRole>> PERMISSIONS = new HashMap<>();
 
     static {
         Set<UserRole> all = new HashSet<>();
@@ -24,50 +24,51 @@ public class SecurityFilter implements Filter {
         employees.add(UserRole.DOCTOR);
         employees.add(UserRole.NURSE);
 
-        permissions.put("/logout", all);
+        PERMISSIONS.put("/logout", all);
 
-        permissions.put("/password/edit", all);
-        permissions.put("/password/save", all);
-        permissions.put("/password/reset", admin);
+        PERMISSIONS.put("/password/edit", all);
+        PERMISSIONS.put("/password/save", all);
+        PERMISSIONS.put("/password/reset", admin);
 
-        permissions.put("/account/edit", all);
-        permissions.put("/account/save", all);
+        PERMISSIONS.put("/account/edit", all);
+        PERMISSIONS.put("/account/save", all);
 
-        permissions.put("/user/list", admin);
-        permissions.put("/user/edit", admin);
-        permissions.put("/user/save", admin);
-        permissions.put("/user/delete", admin);
+        PERMISSIONS.put("/user/list", admin);
+        PERMISSIONS.put("/user/edit", admin);
+        PERMISSIONS.put("/user/save", admin);
+        PERMISSIONS.put("/user/delete", admin);
 
-        permissions.put("/patient/list", employees);
-        permissions.put("/patient/view", employees);
-        permissions.put("/patient/edit", doctor);
-        permissions.put("/patient/save", doctor);
-        permissions.put("/patient/delete", doctor);
-        permissions.put("/patient/discharge", doctor);
-        permissions.put("/patient/discharge/done", doctor);
+        PERMISSIONS.put("/patient/list", employees);
+        PERMISSIONS.put("/patient/view", employees);
+        PERMISSIONS.put("/patient/edit", doctor);
+        PERMISSIONS.put("/patient/save", doctor);
+        PERMISSIONS.put("/patient/delete", doctor);
+        PERMISSIONS.put("/patient/discharge", doctor);
+        PERMISSIONS.put("/patient/discharge/done", doctor);
 
-        permissions.put("/patient/view/diagnosis/view", employees);
-        permissions.put("/patient/view/diagnosis/edit", doctor);
-        permissions.put("/patient/view/diagnosis/save", doctor);
-        permissions.put("/patient/view/diagnosis/delete", doctor);
+        PERMISSIONS.put("/patient/view/diagnosis/view", employees);
+        PERMISSIONS.put("/patient/view/diagnosis/edit", doctor);
+        PERMISSIONS.put("/patient/view/diagnosis/save", doctor);
+        PERMISSIONS.put("/patient/view/diagnosis/delete", doctor);
 
-        permissions.put("/patient/view/disease_history", employees);
+        PERMISSIONS.put("/patient/view/disease_history", employees);
 
-        permissions.put("/patient/view/treatment/list", employees);
-        permissions.put("/patient/view/treatment/done", employees);
-        permissions.put("/patient/view/treatment/edit", doctor);
-        permissions.put("/patient/view/treatment/save", doctor);
-        permissions.put("/patient/view/treatment/delete", doctor);
-        permissions.put("/patient/view/treatment/view", employees);
+        PERMISSIONS.put("/patient/view/treatment/list", employees);
+        PERMISSIONS.put("/patient/view/treatment/done", employees);
+        PERMISSIONS.put("/patient/view/treatment/edit", doctor);
+        PERMISSIONS.put("/patient/view/treatment/save", doctor);
+        PERMISSIONS.put("/patient/view/treatment/delete", doctor);
+        PERMISSIONS.put("/patient/view/treatment/view", employees);
     }
 
     @Override
-    public void init(FilterConfig config) throws ServletException {}
+    public void init(final FilterConfig config) throws ServletException { }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpReq = (HttpServletRequest)req;
-        HttpServletResponse httpResp = (HttpServletResponse)resp;
+    public void doFilter(final ServletRequest req, final ServletResponse resp, final FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest httpReq = (HttpServletRequest) req;
+        HttpServletResponse httpResp = (HttpServletResponse) resp;
         String url = httpReq.getRequestURI();
         String context = httpReq.getContextPath();
         int postfixIndex = url.lastIndexOf(".html");
@@ -76,11 +77,11 @@ public class SecurityFilter implements Filter {
         } else {
             url = url.substring(context.length());
         }
-        Set<UserRole> roles = permissions.get(url);
+        Set<UserRole> roles = PERMISSIONS.get(url);
         if (roles != null) {
             HttpSession session = httpReq.getSession(false);
             if (session != null) {
-                User user = (User)session.getAttribute("currentUser");
+                User user = (User) session.getAttribute("currentUser");
                 if (user != null && roles.contains(user.getRole())) {
                     chain.doFilter(req, resp);
                     return;
@@ -94,5 +95,5 @@ public class SecurityFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() { }
 }

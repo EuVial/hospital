@@ -21,21 +21,23 @@ import java.io.IOException;
 public class TreatmentSaveAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(TreatmentSaveAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Treatment treatment = new Treatment();
         String patientDiagnosisTitle;
         Integer patientId = null;
         Integer patientDiagnosisId = null;
         try {
             treatment.setId(Integer.parseInt(req.getParameter("id")));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("patientDiagnosisId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
 
         treatment.setPatient(new Patient());
         treatment.getPatient().setId(patientId);
@@ -43,7 +45,7 @@ public class TreatmentSaveAction extends Action {
         treatment.setTitle(req.getParameter("title"));
         try {
             treatment.setType(TreatmentType.values()[Integer.parseInt(req.getParameter("type"))]);
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {}
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) { }
         treatment.setDone(false);
         User user = (User) req.getSession(false).getAttribute("currentUser");
         treatment.setPerformer(user);
@@ -60,10 +62,10 @@ public class TreatmentSaveAction extends Action {
             }
         }
 
-        if (    treatment.getTitle() != null &&
-                treatment.getDiagnosisToPatient().getId() != null &&
-                treatment.getType() != null &&
-                treatment.getPerformer().getId() != null) {
+        if (treatment.getTitle() != null
+                && treatment.getDiagnosisToPatient().getId() != null
+                && treatment.getType() != null
+                && treatment.getPerformer().getId() != null) {
             try {
                 TreatmentService service = getServiceFactory().getTreatmentService();
                 service.save(treatment);

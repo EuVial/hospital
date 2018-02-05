@@ -23,8 +23,10 @@ import java.util.Date;
 public class PatientDischargeDoneAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(PatientDischargeDoneAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         DiagnosisToPatient diagnosisToPatient = new DiagnosisToPatient();
         Integer patientId = null;
         Integer patientDiagnosisId = null;
@@ -32,11 +34,11 @@ public class PatientDischargeDoneAction extends Action {
 
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
 
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
 
         try {
             diagnosisToPatientService = getServiceFactory().getDiagnosisToPatientService();
@@ -64,7 +66,7 @@ public class PatientDischargeDoneAction extends Action {
             diagnosisToPatient.getDiagnosis().setTitle(title);
             diagnosisToPatient.getDiagnosis().setId(diagnosisService.getIdByTitle(title));
 
-            User user = (User)req.getSession(false).getAttribute("currentUser");
+            User user = (User) req.getSession(false).getAttribute("currentUser");
             diagnosisToPatient.setDoctor(user);
 
             if (diagnosisToPatient.getConsultationDate() == null) {
@@ -76,9 +78,9 @@ public class PatientDischargeDoneAction extends Action {
             throw new ServletException(e);
         }
 
-        if (    diagnosisToPatient.getPatient().getId() != null &&
-                diagnosisToPatient.getDiagnosis().getId() != null &&
-                diagnosisToPatient.getDoctor().getId() != null) {
+        if (diagnosisToPatient.getPatient().getId() != null
+                && diagnosisToPatient.getDiagnosis().getId() != null
+                && diagnosisToPatient.getDoctor().getId() != null) {
             try {
                 diagnosisToPatientService.save(diagnosisToPatient);
             } catch (ServiceException e) {

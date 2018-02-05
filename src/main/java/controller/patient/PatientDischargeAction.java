@@ -24,11 +24,12 @@ public class PatientDischargeAction extends Action {
             Logger.getLogger(String.valueOf(TreatmentListAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Integer patientId = null;
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
 
         if (patientId != null) {
             try {

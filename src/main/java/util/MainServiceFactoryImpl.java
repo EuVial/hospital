@@ -98,6 +98,6 @@ public class MainServiceFactoryImpl implements ServiceFactory {
         try {
             connection.close();
             connection = null;
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 }

@@ -19,7 +19,8 @@ public class PatientListAction extends Action {
             Logger.getLogger(String.valueOf(PatientListAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
             PatientService patientService = getServiceFactory().getPatientService();
             List<Patient> patients = patientService.findAll();

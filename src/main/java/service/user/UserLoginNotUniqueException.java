@@ -5,7 +5,7 @@ import service.ServiceException;
 public class UserLoginNotUniqueException extends ServiceException {
     private String login;
 
-    public UserLoginNotUniqueException(String login) {
+    public UserLoginNotUniqueException(final String login) {
         this.login = login;
     }
 

@@ -17,8 +17,10 @@ import java.io.IOException;
 public class PatientDiagnosisViewAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(PatientDiagnosisViewAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
             Integer id = Integer.parseInt(req.getParameter("id"));
             DiagnosisToPatientService service = getServiceFactory().getDiagnosisToPatientService();

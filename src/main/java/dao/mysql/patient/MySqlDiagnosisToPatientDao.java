@@ -20,12 +20,12 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
             Logger.getLogger(String.valueOf(MySqlDiagnosisToPatientDao.class));
 
     private class PersistDiagnosisToPatient extends DiagnosisToPatient {
-        public void setId(int id) {
+        public void setId(final int id) {
             super.setId(id);
         }
     }
 
-    public MySqlDiagnosisToPatientDao(Connection connection) {
+    public MySqlDiagnosisToPatientDao(final Connection connection) {
         super(connection);
     }
 
@@ -36,15 +36,15 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.patient_diagnosis (patient_id, diagnosis_id, doctor_id, consultation_date)\n" +
-                "VALUES (?, ?, ?, ?);";
+        return "INSERT INTO hospital.patient_diagnosis (patient_id, diagnosis_id, doctor_id, consultation_date)\n"
+                + "VALUES (?, ?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE hospital.patient_diagnosis\n" +
-                "SET patient_id = ?, diagnosis_id = ?, doctor_id = ?, consultation_date = ?\n" +
-                "WHERE id = ?;";
+        return "UPDATE hospital.patient_diagnosis\n"
+                + "SET patient_id = ?, diagnosis_id = ?, doctor_id = ?, consultation_date = ?\n"
+                + "WHERE id = ?;";
     }
 
     @Override
@@ -54,12 +54,12 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     @Override
     public String getInitiatesQuery() {
-        return "SELECT COUNT(*) AS 'count' FROM hospital.treatment\n" +
-                "WHERE patient_diagnosis_id = ? LIMIT 1;";
+        return "SELECT COUNT(*) AS 'count' FROM hospital.treatment\n"
+                + "WHERE patient_diagnosis_id = ? LIMIT 1;";
     }
 
     @Override
-    protected List<DiagnosisToPatient> parseResultSet(ResultSet resultSet) throws PersistException {
+    protected List<DiagnosisToPatient> parseResultSet(final ResultSet resultSet) throws PersistException {
         List<DiagnosisToPatient> result = new LinkedList<>();
         try {
             while (resultSet.next()) {
@@ -71,7 +71,8 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                 diagnosisToPatient.getDiagnosis().setId(resultSet.getInt("diagnosis_id"));
                 diagnosisToPatient.setDoctor(new User());
                 diagnosisToPatient.getDoctor().setId(resultSet.getInt("doctor_id"));
-                diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp("consultation_date").getTime()));
+                diagnosisToPatient.setConsultationDate(new java.util.Date(
+                        resultSet.getTimestamp("consultation_date").getTime()));
                 result.add(diagnosisToPatient);
             }
         } catch (Exception e) {
@@ -82,7 +83,8 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, DiagnosisToPatient object) throws PersistException {
+    protected void prepareStatementForInsert(final PreparedStatement statement, final DiagnosisToPatient object)
+            throws PersistException {
         try {
             statement.setInt(1, object.getPatient().getId());
             statement.setInt(2, object.getDiagnosis().getId());
@@ -95,7 +97,8 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, DiagnosisToPatient object) throws PersistException {
+    protected void prepareStatementForUpdate(final PreparedStatement statement, final DiagnosisToPatient object)
+            throws PersistException {
         try {
             statement.setInt(1, object.getPatient().getId());
             statement.setInt(2, object.getDiagnosis().getId());
@@ -108,14 +111,14 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         }
     }
 
-    public List<DiagnosisToPatient> readHistory(Integer patientId) throws PersistException {
+    public List<DiagnosisToPatient> readHistory(final Integer patientId) throws PersistException {
         String sql =
-                "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, " +
-                        "user.last_name, user.role_id, patient_diagnosis.consultation_date\n" +
-                "FROM hospital.patient_diagnosis\n" +
-                "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
-                "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
-                "WHERE patient_diagnosis.patient_id = ?;";
+                "SELECT patient_diagnosis.id, diagnosis.title, user.id, user.first_name, "
+                        + "user.last_name, user.role_id, patient_diagnosis.consultation_date\n"
+                + "FROM hospital.patient_diagnosis\n"
+                + "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n"
+                + "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n"
+                + "WHERE patient_diagnosis.patient_id = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, patientId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -129,9 +132,10 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
                     diagnosisToPatient.getDoctor().setId(resultSet.getInt("user.id"));
                     diagnosisToPatient.getDoctor().setFirstName(resultSet.getString("user.first_name"));
                     diagnosisToPatient.getDoctor().setLastName(resultSet.getString("user.last_name"));
-                    diagnosisToPatient.getDoctor().setRole(UserRole.values()[resultSet.getInt("user.role_id")]);
-                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp
-                            ("patient_diagnosis.consultation_date").getTime()));
+                    diagnosisToPatient.getDoctor().setRole(
+                            UserRole.values()[resultSet.getInt("user.role_id")]);
+                    diagnosisToPatient.setConsultationDate(new java.util.Date(resultSet.getTimestamp(
+                            "patient_diagnosis.consultation_date").getTime()));
                     diagnosisToPatients.add(diagnosisToPatient);
                 }
                 return diagnosisToPatients;
@@ -144,13 +148,14 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws PersistException {
         String sql =
-                "SELECT diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, patient_diagnosis.consultation_date," +
-                        "patient.id, patient.first_name, patient.last_name, patient.ward\n" +
-                        "FROM hospital.patient_diagnosis\n" +
-                        "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n" +
-                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
-                        "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
-                        "WHERE patient_diagnosis.id = ?;";
+                "SELECT diagnosis.title, user.id, user.first_name, user.last_name, user.role_id, "
+                        + "patient_diagnosis.consultation_date,"
+                        + "patient.id, patient.first_name, patient.last_name, patient.ward\n"
+                        + "FROM hospital.patient_diagnosis\n"
+                        + "  JOIN hospital.user ON (patient_diagnosis.doctor_id = user.id)\n"
+                        + "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n"
+                        + "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n"
+                        + "WHERE patient_diagnosis.id = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -182,10 +187,10 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
 
     public String readDiagnosisTitle(Integer diagnosisToPatientId) throws PersistException {
         String sql =
-                "SELECT diagnosis.title " +
-                        "FROM hospital.patient_diagnosis\n" +
-                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
-                        "WHERE patient_diagnosis.id = ?;";
+                "SELECT diagnosis.title "
+                        + "FROM hospital.patient_diagnosis\n"
+                        + "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n"
+                        + "WHERE patient_diagnosis.id = ?;";
         String diagnosisTitle = null;
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
@@ -203,12 +208,13 @@ public class MySqlDiagnosisToPatientDao extends AbstractJDBCDao<Integer, Diagnos
         }
     }
 
-    public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws PersistException {
+    public Integer getDiagnosisToPatientId(final String diagnosisTitle, final Integer patientId)
+            throws PersistException {
         String sql =
-                "SELECT patient_diagnosis.id FROM hospital.patient_diagnosis\n" +
-                        "  JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)\n" +
-                        "  JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)\n" +
-                        "WHERE diagnosis.title = ? AND patient.id = ?;";
+                "SELECT patient_diagnosis.id FROM hospital.patient_diagnosis\n"
+                        + "  JOIN hospital.diagnosis ON (hospital.diagnosis.id = hospital.patient_diagnosis.diagnosis_id)\n"
+                        + "  JOIN hospital.patient ON (hospital.patient.id = hospital.patient_diagnosis.patient_id)\n"
+                        + "WHERE diagnosis.title = ? AND patient.id = ?;";
         Integer diagnosisToPatientId = null;
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, diagnosisTitle);

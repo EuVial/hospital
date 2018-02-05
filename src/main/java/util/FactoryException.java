@@ -3,15 +3,15 @@ package util;
 public class FactoryException extends Exception {
     public FactoryException() {}
 
-    public FactoryException(String message, Throwable cause) {
+    public FactoryException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public FactoryException(String message) {
+    public FactoryException(final String message) {
         super(message);
     }
 
-    public FactoryException(Throwable cause) {
+    public FactoryException(final Throwable cause) {
         super(cause);
     }
 }

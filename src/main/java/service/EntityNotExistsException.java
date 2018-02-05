@@ -3,7 +3,7 @@ package service;
 public class EntityNotExistsException extends ServiceException {
     private Integer id;
 
-    public EntityNotExistsException(Integer id) {
+    public EntityNotExistsException(final Integer id) {
         this.id = id;
     }
 

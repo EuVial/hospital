@@ -10,7 +10,7 @@ public class Diagnosis extends Entity implements Identified<Integer> {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 }

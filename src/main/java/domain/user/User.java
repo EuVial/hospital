@@ -20,7 +20,7 @@ public class User extends Entity implements Identified<Integer> {
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class User extends Entity implements Identified<Integer> {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -36,7 +36,7 @@ public class User extends Entity implements Identified<Integer> {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -44,7 +44,7 @@ public class User extends Entity implements Identified<Integer> {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -52,7 +52,7 @@ public class User extends Entity implements Identified<Integer> {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -60,7 +60,7 @@ public class User extends Entity implements Identified<Integer> {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(final UserRole role) {
         this.role = role;
     }
 }

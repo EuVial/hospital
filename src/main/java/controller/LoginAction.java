@@ -17,7 +17,8 @@ public class LoginAction extends Action {
             Logger.getLogger(String.valueOf(LoginAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         if (login != null && password != null) {

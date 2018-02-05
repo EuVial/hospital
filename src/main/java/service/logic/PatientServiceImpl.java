@@ -19,20 +19,20 @@ public class PatientServiceImpl implements PatientService {
     private MySqlDiagnosisToPatientDao diagnosisToPatientDao;
     private MySqlTreatmentDao treatmentDao;
 
-    public void setPatientDao(MySqlPatientDao patientDao) {
+    public void setPatientDao(final MySqlPatientDao patientDao) {
         this.patientDao = patientDao;
     }
 
-    public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
+    public void setDiagnosisToPatientDao(final MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
         this.diagnosisToPatientDao = diagnosisToPatientDao;
     }
 
-    public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
+    public void setTreatmentDao(final MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
     }
 
     @Override
-    public Patient findById(Integer id) throws ServiceException {
+    public Patient findById(final Integer id) throws ServiceException {
         try {
             Patient patient = patientDao.read(id);
             if (patient != null) {
@@ -40,7 +40,8 @@ public class PatientServiceImpl implements PatientService {
                 Patient currentPatient;
                 for (DiagnosisToPatient diagnosisToPatient : history) {
                     currentPatient = diagnosisToPatient.getPatient();
-                    List<Treatment> treatmentHistory = treatmentDao.readTreatmentsFromDiagnosisToPatient(diagnosisToPatient.getId());
+                    List<Treatment> treatmentHistory = treatmentDao
+                            .readTreatmentsFromDiagnosisToPatient(diagnosisToPatient.getId());
                     if (treatmentHistory != null) {
                         diagnosisToPatient.setHistory(treatmentHistory);
                     }
@@ -67,7 +68,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void save(Patient patient) throws ServiceException {
+    public void save(final Patient patient) throws ServiceException {
         try {
             if (patient.getId() != null) {
                 Patient storedPatient = patientDao.read(patient.getId());
@@ -85,7 +86,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public boolean canDelete(Patient patient) throws ServiceException {
+    public boolean canDelete(final Patient patient) throws ServiceException {
         try {
             return !patientDao.isInitiatesTransfers(patient);
         } catch (PersistException e) {
@@ -94,7 +95,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void delete(Patient patient) throws ServiceException {
+    public void delete(final Patient patient) throws ServiceException {
         if (patient.getId() != null) {
             try {
                 patientDao.delete(patient);

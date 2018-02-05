@@ -18,12 +18,12 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
             Logger.getLogger(String.valueOf(MySqlDiagnosisDao.class));
 
     private class PersistDiagnosis extends Diagnosis {
-        public void setId(int id) {
+        public void setId(final int id) {
             super.setId(id);
         }
     }
 
-    public MySqlDiagnosisDao(Connection connection) {
+    public MySqlDiagnosisDao(final Connection connection) {
         super(connection);
     }
 
@@ -34,29 +34,32 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.diagnosis (title)\n" +
-                "VALUES (?);";
+        return "INSERT INTO hospital.diagnosis (title)\n"
+                + "VALUES (?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE hospital.diagnosis\n" +
-                "SET title = ?\n" +
-                "WHERE id = ?;";
+        return "UPDATE hospital.diagnosis\n"
+                + "SET title = ?\n"
+                + "WHERE id = ?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM hospital.diagnosis WHERE id = ?;";
+        return "DELETE FROM hospital.diagnosis\n"
+                + "WHERE id = ?;";
     }
 
     @Override
     public String getInitiatesQuery() {
-        return "SELECT COUNT(*) AS 'count' FROM hospital.patient_diagnosis WHERE diagnosis_id = ? LIMIT 1;";
+        return "SELECT COUNT(*) AS 'count'\n"
+                + "FROM hospital.patient_diagnosis\n"
+                + "WHERE diagnosis_id = ? LIMIT 1;";
     }
 
     @Override
-    protected List<Diagnosis> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Diagnosis> parseResultSet(final ResultSet rs) throws PersistException {
         List<Diagnosis> result = new LinkedList<>();
         try {
             while (rs.next()) {
@@ -73,7 +76,8 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Diagnosis object) throws PersistException {
+    protected void prepareStatementForInsert(final PreparedStatement statement, final Diagnosis object)
+            throws PersistException {
         try {
             statement.setString(1, object.getTitle());
         } catch (SQLException e) {
@@ -83,7 +87,8 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Diagnosis object) throws PersistException {
+    protected void prepareStatementForUpdate(final PreparedStatement statement, final Diagnosis object)
+            throws PersistException {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getId());
@@ -93,7 +98,7 @@ public class MySqlDiagnosisDao extends AbstractJDBCDao<Integer, Diagnosis> {
         }
     }
 
-    public Integer getIdByTitle(String title) throws PersistException {
+    public Integer getIdByTitle(final String title) throws PersistException {
         String sql = "SELECT id FROM hospital.diagnosis WHERE title = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, title);

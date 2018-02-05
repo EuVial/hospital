@@ -15,7 +15,7 @@ public class Patient extends Entity implements Identified<Integer> {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(final String firstName) {
         this.firstName = firstName;
     }
 
@@ -23,7 +23,7 @@ public class Patient extends Entity implements Identified<Integer> {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(final String lastName) {
         this.lastName = lastName;
     }
 
@@ -31,7 +31,7 @@ public class Patient extends Entity implements Identified<Integer> {
         return ward;
     }
 
-    public void setWard(Integer ward) {
+    public void setWard(final Integer ward) {
         this.ward = ward;
     }
 
@@ -39,7 +39,7 @@ public class Patient extends Entity implements Identified<Integer> {
         return history;
     }
 
-    public void setHistory(List<DiagnosisToPatient> history) {
+    public void setHistory(final List<DiagnosisToPatient> history) {
         this.history = history;
     }
 }

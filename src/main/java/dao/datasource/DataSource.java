@@ -19,7 +19,8 @@ public class DataSource {
     private static String jdbcUser;
     private static String jdbcPassword;
 
-    public static void init(String jdbcDriver, String jdbcUrl, String jdbcUser, String jdbcPassword) throws ClassNotFoundException {
+    public static void init(final String jdbcDriver, final String jdbcUrl, final String jdbcUser,
+                            final String jdbcPassword) throws ClassNotFoundException {
         Class.forName(jdbcDriver);
         DataSource.jdbcUrl = jdbcUrl;
         DataSource.jdbcUser = jdbcUser;
@@ -44,8 +45,9 @@ public class DataSource {
         }
 
     public static DataSource getInstance() {
-        if (dataSource == null)
+        if (dataSource == null) {
             dataSource = new DataSource();
+        }
         return dataSource;
     }
 

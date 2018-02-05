@@ -19,15 +19,16 @@ public class AccountSaveAction extends Action {
             Logger.getLogger(String.valueOf(AccountSaveAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = (User)req.getSession(false).getAttribute("currentUser");
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
+        User user = (User) req.getSession(false).getAttribute("currentUser");
         user.setFirstName(req.getParameter("first_name"));
         user.setLastName(req.getParameter("last_name"));
 
-        if (    user.getFirstName() != null &&
-                user.getLastName() != null &&
-                user.getFirstName().matches(Constants.REGEX_NAME) &&
-                user.getLastName().matches(Constants.REGEX_NAME)) {
+        if (user.getFirstName() != null
+                && user.getLastName() != null
+                && user.getFirstName().matches(Constants.REGEX_NAME)
+                && user.getLastName().matches(Constants.REGEX_NAME)) {
             try {
                 UserService service = getServiceFactory().getUserService();
                 service.save(user);

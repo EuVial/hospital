@@ -21,12 +21,12 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
             Logger.getLogger(String.valueOf(MySqlTreatmentDao.class));
 
     private class PersistTreatment extends Treatment {
-        public void setId(int id) {
+        public void setId(final int id) {
             super.setId(id);
         }
     }
 
-    public MySqlTreatmentDao(Connection connection) {
+    public MySqlTreatmentDao(final Connection connection) {
         super(connection);
     }
 
@@ -37,15 +37,15 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.treatment (title, patient_diagnosis_id, type_id, performer_id, done)\n" +
-                "VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO hospital.treatment (title, patient_diagnosis_id, type_id, performer_id, done)\n"
+                + "VALUES (?, ?, ?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE hospital.treatment\n" +
-                "SET title = ?, patient_diagnosis_id = ?, type_id = ?, performer_id = ?, done = ?\n" +
-                "WHERE id = ?;";
+        return "UPDATE hospital.treatment\n"
+                + "SET title = ?, patient_diagnosis_id = ?, type_id = ?, performer_id = ?, done = ?\n"
+                + "WHERE id = ?;";
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     }
 
     @Override
-    protected List<Treatment> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Treatment> parseResultSet(final ResultSet rs) throws PersistException {
         List<Treatment> result = new LinkedList<>();
         try {
             while (rs.next()) {
@@ -83,7 +83,8 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Treatment object) throws PersistException {
+    protected void prepareStatementForInsert(final PreparedStatement statement, final Treatment object)
+            throws PersistException {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getDiagnosisToPatient().getId());
@@ -97,7 +98,8 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Treatment object) throws PersistException {
+    protected void prepareStatementForUpdate(final PreparedStatement statement, final Treatment object)
+            throws PersistException {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getDiagnosisToPatient().getId());
@@ -111,8 +113,10 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
         }
     }
 
-    public List<Treatment> readTreatmentsFromDiagnosisToPatient(Integer diagnosisToPatientId) throws PersistException {
-        String sql = "SELECT id, title, type_id, performer_id, done FROM hospital.treatment WHERE patient_diagnosis_id = ?";
+    public List<Treatment> readTreatmentsFromDiagnosisToPatient(final Integer diagnosisToPatientId)
+            throws PersistException {
+        String sql = "SELECT id, title, type_id, performer_id, done "
+                + "FROM hospital.treatment WHERE patient_diagnosis_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, diagnosisToPatientId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -136,15 +140,15 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
         }
     }
 
-    public Treatment readInfo(Integer treatmentId) throws PersistException {
+    public Treatment readInfo(final Integer treatmentId) throws PersistException {
         String sql =
-                "SELECT treatment.title, treatment.type_id, treatment.done, patient_diagnosis.doctor_id, " +
-                        "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n" +
-                        "FROM hospital.treatment\n" +
-                        "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n" +
-                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
-                        "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
-                        "WHERE treatment.id = ?;";
+                "SELECT treatment.title, treatment.type_id, treatment.done, patient_diagnosis.doctor_id, "
+                        + "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n"
+                        + "FROM hospital.treatment\n"
+                        + "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n"
+                        + "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n"
+                        + "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n"
+                        + "WHERE treatment.id = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, treatmentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -173,17 +177,17 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
         }
     }
 
-    public Treatment readInfoIfDone(Integer treatmentId) throws PersistException {
+    public Treatment readInfoIfDone(final Integer treatmentId) throws PersistException {
         String sql =
-                "SELECT treatment.title, treatment.type_id, treatment.done," +
-                        "user.first_name, user.last_name, user.role_id, patient_diagnosis.doctor_id, " +
-                        "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n" +
-                        "FROM hospital.treatment\n" +
-                        "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n" +
-                        "  JOIN hospital.user ON (treatment.performer_id = user.id)\n" +
-                        "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n" +
-                        "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n" +
-                        "WHERE treatment.id = ?;";
+                "SELECT treatment.title, treatment.type_id, treatment.done,"
+                        + "user.first_name, user.last_name, user.role_id, patient_diagnosis.doctor_id, "
+                        + "diagnosis.title, patient.id, patient.first_name, patient.last_name, patient.ward\n"
+                        + "FROM hospital.treatment\n"
+                        + "  JOIN hospital.patient_diagnosis ON (treatment.patient_diagnosis_id = patient_diagnosis.id)\n"
+                        + "  JOIN hospital.user ON (treatment.performer_id = user.id)\n"
+                        + "  JOIN hospital.diagnosis ON (patient_diagnosis.diagnosis_id = diagnosis.id)\n"
+                        + "  JOIN hospital.patient ON (patient_diagnosis.patient_id = patient.id)\n"
+                        + "WHERE treatment.id = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, treatmentId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -216,7 +220,7 @@ public class MySqlTreatmentDao extends AbstractJDBCDao<Integer, Treatment> {
         }
     }
 
-    public void done(Treatment treatment) throws PersistException {
+    public void done(final Treatment treatment) throws PersistException {
         String sql = "UPDATE hospital.treatment SET done = ?, performer_id = ? WHERE id = ?;";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setInt(1, 1);

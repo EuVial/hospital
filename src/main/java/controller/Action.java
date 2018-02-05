@@ -7,16 +7,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-abstract public class Action {
+abstract class Action {
     private ServiceFactory serviceFactory;
 
     public final ServiceFactory getServiceFactory() {
         return serviceFactory;
     }
 
-    public final void setServiceFactory(ServiceFactory serviceFactory) {
+    public final void setServiceFactory(final ServiceFactory serviceFactory) {
         this.serviceFactory = serviceFactory;
     }
 
-    abstract public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
+    abstract Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException;
 }

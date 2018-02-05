@@ -18,7 +18,8 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(MySqlUserDao.class));
 
-    public User readByLoginAndPassword(String login, String password) throws PersistException {
+    public User readByLoginAndPassword(final String login, final String password)
+            throws PersistException {
         String sql = "SELECT id, role_id FROM hospital.user WHERE login = ? AND password = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, login);
@@ -40,33 +41,34 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
     }
 
     private class PersistUser extends User {
-        public void setId(int id) {
+        public void setId(final int id) {
             super.setId(id);
         }
     }
 
-    public MySqlUserDao(Connection connection) {
+    public MySqlUserDao(final Connection connection) {
         super(connection);
     }
 
     @Override
     public String getSelectQuery() {
-        return "SELECT id, login, password, first_name, last_name, role_id " +
-                "FROM hospital.user";
+        return "SELECT id, login, password, first_name, last_name, role_id "
+                + "FROM hospital.user";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO hospital.user (login, password, first_name, " +
-                "last_name, role_id)\n" +
-                "VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO hospital.user (login, password, first_name, "
+                + "last_name, role_id)\n"
+                + "VALUES (?, ?, ?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE hospital.user\n" +
-                "SET login = ?, password = ?, first_name = ?, last_name = ?, " +
-                "role_id = ?\nWHERE id = ?";
+        return "UPDATE hospital.user\n"
+                + "SET login = ?, password = ?, first_name = ?, last_name = ?, "
+                + "role_id = ?\n"
+                + "WHERE id = ?";
     }
 
     @Override
@@ -80,7 +82,7 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
     }
 
     @Override
-    protected List<User> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<User> parseResultSet(final ResultSet rs) throws PersistException {
         List<User> result = new LinkedList<>();
         try {
             while (rs.next()) {
@@ -101,7 +103,8 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, User object) throws PersistException {
+    protected void prepareStatementForInsert(final PreparedStatement statement, final User object)
+            throws PersistException {
         try {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
@@ -115,7 +118,8 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, User object) throws PersistException {
+    protected void prepareStatementForUpdate(final PreparedStatement statement, final User object)
+            throws PersistException {
         try {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
@@ -129,7 +133,7 @@ public class MySqlUserDao extends AbstractJDBCDao<Integer, User> {
         }
     }
 
-    public User readByLogin(String login) throws PersistException {
+    public User readByLogin(final String login) throws PersistException {
         String sql = "SELECT id, password, first_name, last_name, role_id FROM hospital.user WHERE login = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(sql)) {
             statement.setString(1, login);

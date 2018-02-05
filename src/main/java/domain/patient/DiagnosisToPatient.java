@@ -18,7 +18,7 @@ public class DiagnosisToPatient extends Entity implements Identified<Integer> {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(final Patient patient) {
         this.patient = patient;
     }
 
@@ -26,7 +26,7 @@ public class DiagnosisToPatient extends Entity implements Identified<Integer> {
         return diagnosis;
     }
 
-    public void setDiagnosis(Diagnosis diagnosis) {
+    public void setDiagnosis(final Diagnosis diagnosis) {
         this.diagnosis = diagnosis;
     }
 
@@ -34,7 +34,7 @@ public class DiagnosisToPatient extends Entity implements Identified<Integer> {
         return doctor;
     }
 
-    public void setDoctor(User doctor) {
+    public void setDoctor(final User doctor) {
         this.doctor = doctor;
     }
 
@@ -42,7 +42,7 @@ public class DiagnosisToPatient extends Entity implements Identified<Integer> {
         return consultationDate;
     }
 
-    public void setConsultationDate(Date consultationDate) {
+    public void setConsultationDate(final Date consultationDate) {
         this.consultationDate = consultationDate;
     }
 
@@ -50,7 +50,7 @@ public class DiagnosisToPatient extends Entity implements Identified<Integer> {
         return history;
     }
 
-    public void setHistory(List<Treatment> history) {
+    public void setHistory(final List<Treatment> history) {
         this.history = history;
     }
 }

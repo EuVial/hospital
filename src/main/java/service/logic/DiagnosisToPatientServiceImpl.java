@@ -20,20 +20,20 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
 
     private MySqlDiagnosisDao diagnosisDao;
 
-    public void setDiagnosisToPatientDao(MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
+    public void setDiagnosisToPatientDao(final MySqlDiagnosisToPatientDao diagnosisToPatientDao) {
         this.diagnosisToPatientDao = diagnosisToPatientDao;
     }
 
-    public void setTreatmentDao(MySqlTreatmentDao treatmentDao) {
+    public void setTreatmentDao(final MySqlTreatmentDao treatmentDao) {
         this.treatmentDao = treatmentDao;
     }
 
-    public void setDiagnosisDao(MySqlDiagnosisDao diagnosisDao) {
+    public void setDiagnosisDao(final MySqlDiagnosisDao diagnosisDao) {
         this.diagnosisDao = diagnosisDao;
     }
 
     @Override
-    public DiagnosisToPatient findById(Integer id) throws ServiceException {
+    public DiagnosisToPatient findById(final Integer id) throws ServiceException {
         try {
             DiagnosisToPatient diagnosisToPatient = diagnosisToPatientDao.read(id);
             if (diagnosisToPatient != null) {
@@ -64,7 +64,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public void save(DiagnosisToPatient diagnosisToPatient) throws ServiceException {
+    public void save(final DiagnosisToPatient diagnosisToPatient) throws ServiceException {
         try {
             if (diagnosisToPatient.getId() != null) {
                 DiagnosisToPatient storedDiagnosis = diagnosisToPatientDao.read(diagnosisToPatient.getId());
@@ -82,7 +82,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public boolean canDelete(DiagnosisToPatient diagnosisToPatient) throws ServiceException {
+    public boolean canDelete(final DiagnosisToPatient diagnosisToPatient) throws ServiceException {
         try {
             return !diagnosisToPatientDao.isInitiatesTransfers(diagnosisToPatient);
         } catch (PersistException e) {
@@ -91,7 +91,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public void delete(DiagnosisToPatient diagnosis) throws ServiceException {
+    public void delete(final DiagnosisToPatient diagnosis) throws ServiceException {
         if (diagnosis.getId() != null) {
             try {
                 diagnosisToPatientDao.delete(diagnosis);
@@ -102,7 +102,7 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public DiagnosisToPatient readInfo(Integer diagnosisToPatientId) throws ServiceException {
+    public DiagnosisToPatient readInfo(final Integer diagnosisToPatientId) throws ServiceException {
         try {
             return diagnosisToPatientDao.readInfo(diagnosisToPatientId);
         } catch (PersistException e) {
@@ -111,7 +111,8 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public Integer getDiagnosisToPatientId(String diagnosisTitle, Integer patientId) throws ServiceException {
+    public Integer getDiagnosisToPatientId(final String diagnosisTitle, final Integer patientId)
+            throws ServiceException {
         try {
             return diagnosisToPatientDao.getDiagnosisToPatientId(diagnosisTitle, patientId);
         } catch (PersistException e) {
@@ -120,13 +121,12 @@ public class DiagnosisToPatientServiceImpl implements DiagnosisToPatientService 
     }
 
     @Override
-    public String readDiagnosisTitle(Integer diagnosisToPatientId) throws ServiceException {
+    public String readDiagnosisTitle(final Integer diagnosisToPatientId) throws ServiceException {
         try {
             return diagnosisToPatientDao.readDiagnosisTitle(diagnosisToPatientId);
         } catch (PersistException e) {
             throw new ServiceException(e);
         }
     }
-
 }
 

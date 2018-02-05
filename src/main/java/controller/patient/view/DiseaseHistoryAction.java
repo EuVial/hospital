@@ -18,8 +18,10 @@ import java.util.List;
 public class DiseaseHistoryAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(DiseaseHistoryAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         try {
             Integer id = Integer.parseInt(req.getParameter("id"));
             PatientService service = getServiceFactory().getPatientService();

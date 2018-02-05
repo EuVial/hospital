@@ -18,11 +18,12 @@ public class PatientDeleteAction extends Action {
             Logger.getLogger(String.valueOf(PatientDeleteAction.class));
 
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Integer id = null;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         if (id != null) {
             try {
                 PatientService service = getServiceFactory().getPatientService();

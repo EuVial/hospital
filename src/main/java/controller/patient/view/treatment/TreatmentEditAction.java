@@ -18,21 +18,23 @@ import java.io.IOException;
 public class TreatmentEditAction extends Action {
     private final static Logger LOGGER =
             Logger.getLogger(String.valueOf(TreatmentEditAction.class));
+
     @Override
-    public Forward execute(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public Forward execute(final HttpServletRequest req, final HttpServletResponse resp)
+            throws ServletException, IOException {
         Integer id = null;
         Integer patientId = null;
         Integer patientDiagnosisId = null;
         Treatment treatment;
         try {
             id = Integer.parseInt(req.getParameter("id"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         try {
             patientId = Integer.parseInt(req.getParameter("patientId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         try {
             patientDiagnosisId = Integer.parseInt(req.getParameter("patientDiagnosisId"));
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) { }
         if (patientDiagnosisId != null) {
             try {
                 treatment = new Treatment();
