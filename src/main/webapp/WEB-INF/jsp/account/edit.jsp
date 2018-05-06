@@ -6,7 +6,7 @@
 
 <fmt:message key="account.edit.title" var="title"/>
 <u:html title="${title}">
-    <h4>${title}</h4>
+    <h5>${title}</h5>
     <div class="columns">
         <div class="column col-12">
             <c:url var="urlAccountSave" value="/account/save.html"/>
